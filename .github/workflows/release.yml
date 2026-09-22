@@ -34,13 +34,17 @@ jobs:
           corepack enable
           yarn install --immutable
 
+      - name: Setup Git User
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
       - name: Create Release PR or Publish
         id: changesets
         uses: changesets/action@v1
         with:
           version: yarn run version-packages
-          # Мы используем npx changeset tag для генерации Git-тегов и GitHub Releases
-          publish: npx changeset tag
+          publish: node scripts/release.mjs
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
