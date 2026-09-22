@@ -67,8 +67,8 @@ jobs:
           context: ./frontend
           push: true
           tags: |
-            ghcr.io/aporechniy/@chessapp/frontend:${{ steps.version.outputs.current-version }}
-            ghcr.io/aporechniy/@chessapp/frontend:latest
+            ghcr.io/aporechniy/chessappfrontend:${{ steps.version.outputs.current-version }}
+            ghcr.io/aporechniy/chessappfrontend:latest
 
   build-backend:
     needs: release
@@ -95,5 +95,5 @@ jobs:
           context: ./backend
           push: true
           tags: |
-            ghcr.io/aporechniy/@chessapp/backend:${{ steps.version.outputs.current-version }}
-            ghcr.io/aporechniy/@chessapp/backend:latest
+            ghcr.io/aporechniy/chessappbackend:${{ steps.version.outputs.current-version }}
+            ghcr.io/aporechniy/chessappbackend:latest

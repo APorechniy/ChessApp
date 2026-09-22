@@ -59,7 +59,7 @@ jobs:
           context: ./frontend
           push: true
           tags: |
-            ghcr.io/aporechniy/@chessapp/frontend:${{ steps.version.outputs.current-version }}-beta-${{ steps.get_commit_id.outputs.commit-id }}
+            ghcr.io/aporechniy/chessappfrontend:${{ steps.version.outputs.current-version }}-beta-${{ steps.get_commit_id.outputs.commit-id }}
 
       - name: Add comment to PR
         run: |
@@ -106,7 +106,7 @@ jobs:
           context: ./backend
           push: true
           tags: |
-            ghcr.io/aporechniy/@chessapp/backend:${{ steps.version.outputs.current-version }}-beta-${{ steps.get_commit_id.outputs.commit-id }}
+            ghcr.io/aporechniy/chessappbackend:${{ steps.version.outputs.current-version }}-beta-${{ steps.get_commit_id.outputs.commit-id }}
 
       - name: Add comment to PR
         run: |
