@@ -1,5 +1,11 @@
 # @app/frontend
 
+## 1.0.3
+
+### Patch Changes
+
+- 3fe3080: - Исправляем релизный билд
+
 ## 1.0.2
 
 ### Patch Changes
