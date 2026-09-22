@@ -11,6 +11,7 @@ COPY .yarnrc.yml ./
 COPY .yarn ./.yarn
 COPY package.json yarn.lock ./
 COPY apps/frontend/package.json ./apps/frontend/
+COPY apps/backend/package.json ./apps/backend/
 
 RUN yarn install --immutable
 
