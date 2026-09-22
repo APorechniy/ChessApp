@@ -16,8 +16,8 @@ jobs:
   release:
     runs-on: ubuntu-latest
     outputs:
-      frontend_published: ${{ steps.changesets.outputs.publishedPackages != '' && contains(steps.changesets.outputs.publishedPackages, 'chessappfrontend') }}
-      backend_published: ${{ steps.changesets.outputs.publishedPackages != '' && contains(steps.changesets.outputs.publishedPackages, 'chessappbackend') }}
+      frontend_published: ${{ steps.changesets.outputs.publishedPackages != '' && contains(steps.changesets.outputs.publishedPackages, '@app/frontend') }}
+      backend_published: ${{ steps.changesets.outputs.publishedPackages != '' && contains(steps.changesets.outputs.publishedPackages, '@app/backend') }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -59,7 +59,7 @@ jobs:
 
       - name: Extract version from package.json
         id: version
-        run: echo "current-version=$(jq -r '.version' frontend/package.json)" >> $GITHUB_OUTPUT
+        run: echo "current-version=$(jq -r '.version' apps/frontend/package.json)" >> $GITHUB_OUTPUT
 
       - name: Build and push Frontend
         uses: docker/build-push-action@v5
@@ -67,8 +67,8 @@ jobs:
           context: ./frontend
           push: true
           tags: |
-            ghcr.io/aporechniy/chessappfrontend:${{ steps.version.outputs.current-version }}
-            ghcr.io/aporechniy/chessappfrontend:latest
+            ghcr.io/aporechniy/@chessapp/frontend:${{ steps.version.outputs.current-version }}
+            ghcr.io/aporechniy/@chessapp/frontend:latest
 
   build-backend:
     needs: release
@@ -87,7 +87,7 @@ jobs:
 
       - name: Extract version from package.json
         id: version
-        run: echo "current-version=$(jq -r '.version' backend/package.json)" >> $GITHUB_OUTPUT
+        run: echo "current-version=$(jq -r '.version' apps/backend/package.json)" >> $GITHUB_OUTPUT
 
       - name: Build and push Backend
         uses: docker/build-push-action@v5
@@ -95,5 +95,5 @@ jobs:
           context: ./backend
           push: true
           tags: |
-            ghcr.io/aporechniy/chessappbackend:${{ steps.version.outputs.current-version }}
-            ghcr.io/aporechniy/chessappbackend:latest
+            ghcr.io/aporechniy/@chessapp/backend:${{ steps.version.outputs.current-version }}
+            ghcr.io/aporechniy/@chessapp/backend:latest
