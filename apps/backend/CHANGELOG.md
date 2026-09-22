@@ -1,5 +1,11 @@
 # @app/backend
 
+## 1.0.2
+
+### Patch Changes
+
+- 2754292: - Добавлен релизный скрипт
+
 ## 1.0.1
 
 ### Patch Changes
