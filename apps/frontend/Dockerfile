@@ -44,4 +44,4 @@ USER nextjs
 EXPOSE 3000
 
 WORKDIR /app/apps/frontend
-CMD ["node_modules/.bin/next", "start"]
+CMD ["../../node_modules/.bin/next", "start"]
