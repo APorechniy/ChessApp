@@ -18,7 +18,7 @@ export class AttendanceView {
     learningTopic!: LearningTopicView;
 
     @ViewColumn()
-    student: {
+    student!: {
         id: StudentView["id"],
         firstName: StudentView["firstName"],
         lastName: StudentView["lastName"],

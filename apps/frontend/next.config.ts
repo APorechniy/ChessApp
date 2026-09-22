@@ -1,4 +1,5 @@
 import type { NextConfig } from 'next'
+import path from 'path';
 
 const BACKEND_URL =
   process.env.NODE_ENV === 'production'
@@ -7,7 +8,8 @@ const BACKEND_URL =
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
-  output: 'standalone',
+  outputFileTracingRoot: path.join(__dirname, '../../'),
+
   eslint: {
     dirs: ['pages', 'utils', 'components', 'store', 'hooks'],
   },
