@@ -64,7 +64,7 @@ jobs:
       - name: Build and push Frontend
         uses: docker/build-push-action@v5
         with:
-          context: ./frontend
+          context: ./apps/frontend
           push: true
           tags: |
             ghcr.io/aporechniy/chessappfrontend:${{ steps.version.outputs.current-version }}
@@ -92,7 +92,7 @@ jobs:
       - name: Build and push Backend
         uses: docker/build-push-action@v5
         with:
-          context: ./backend
+          context: ./apps/backend
           push: true
           tags: |
             ghcr.io/aporechniy/chessappbackend:${{ steps.version.outputs.current-version }}
