@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  # Node.js бэкенд
+  backend:
+    container_name: nadym-backend
+    image: ghcr.io/aporechniy/chessappbackend:master-3.3.4
+    environment:
+      MODE: production
+      API_PORT: 8080
+      SECRET_JWT_KEY: PorechnyRepa
+      COOKIE_DOMAIN: nadym.chess-manager.ru
+      COOKIE_SECURE: false
+      COOKIE_SAME_SITE: lax
+      DATABASE_HOST: chess-app-database
+      DATABASE_PORT: 3306
+      DATABASE_USER: nadym_user
+      DATABASE_PASSWORD: AkXw~Vk4Cz0r
+      DATABASE_NAME: nadym_db
+      UKASSA_API: https://api.yookassa.ru
+    networks:
+      - nadym-internal
+    expose:
+      - "8080"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://nadym-backend:8080/healthcheck"]
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  frontend:
+    container_name: nadym-frontend
+    image: ghcr.io/aporechniy/chessappfrontend:master-2.3.0
+    environment:
+      NEXT_PUBLIC_API_HOST: "/api"
+      NEXT_PUBLIC_ATTENDANCE_PRICE: 750
+    ports:
+      - "10001:3000"
+    networks:
+      - nadym-internal
+      - app-network
+    depends_on:
+      backend:
+        condition: service_healthy
+
+networks:
+  nadym-internal:
+    driver: bridge
+    name: nadym-internal
+  app-network:
+    external: true
+    name: app-network

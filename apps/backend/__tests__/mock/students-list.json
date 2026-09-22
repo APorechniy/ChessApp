@@ -1,0 +1,233 @@
+[
+    {
+        "id": "08d48887-34dd-4515-8135-7f506c1c8660",
+        "firstName": "1",
+        "lastName": "1",
+        "birthDate": "2003-11-10",
+        "level": {
+            "id": "b7ce384f-014b-4ac1-a2b8-33f1029bc6d2",
+            "name": "1 год подготовки",
+            "description": "Категория учеников, которые занимаются уже год",
+            "hoursRequired": 100
+        },
+        "fshrId": 0,
+        "fideId": 0,
+        "phone": "78888888888",
+        "email": null,
+        "joinDate": "2025-10-28",
+        "notes": "",
+        "paidLessons": 1,
+        "isExcluded": false,
+        "balance": -6750
+    },
+    {
+        "id": "3e2994c9-05da-416f-9884-12c419a9c9c1",
+        "firstName": "1",
+        "lastName": "1",
+        "birthDate": "2003-11-10",
+        "level": {
+            "id": "e1ec6640-d5df-44ea-a297-82bf2c715941",
+            "name": "Базовый",
+            "description": "Самый самый тестовый основной базовый уровень для масеньких",
+            "hoursRequired": 20
+        },
+        "fshrId": null,
+        "fideId": null,
+        "phone": "+71111111111",
+        "email": "null",
+        "joinDate": "1970-01-01",
+        "notes": null,
+        "paidLessons": 5,
+        "isExcluded": false,
+        "balance": 0
+    },
+    {
+        "id": "08f5a121-0310-4e6b-87e2-5fcbb071d4a9",
+        "firstName": "22",
+        "lastName": "22",
+        "birthDate": "2003-11-10",
+        "level": {
+            "id": "e1ec6640-d5df-44ea-a297-82bf2c715941",
+            "name": "Базовый",
+            "description": "Самый самый тестовый основной базовый уровень для масеньких",
+            "hoursRequired": 20
+        },
+        "fshrId": 0,
+        "fideId": 0,
+        "phone": "77777777777",
+        "email": null,
+        "joinDate": "2025-10-28",
+        "notes": "",
+        "paidLessons": 2,
+        "isExcluded": false,
+        "balance": -6750
+    },
+    {
+        "id": "e19bf68f-923b-49e6-9276-8ac74b2bd64c",
+        "firstName": "Check",
+        "lastName": "Check",
+        "birthDate": "2003-11-10",
+        "level": {
+            "id": "e1ec6640-d5df-44ea-a297-82bf2c715941",
+            "name": "Базовый",
+            "description": "Самый самый тестовый основной базовый уровень для масеньких",
+            "hoursRequired": 20
+        },
+        "fshrId": null,
+        "fideId": null,
+        "phone": "+77877877788",
+        "email": null,
+        "joinDate": "2025-07-13",
+        "notes": "",
+        "paidLessons": 0,
+        "isExcluded": false,
+        "balance": 0
+    },
+    {
+        "id": "b84fc021-7409-4d55-be01-5dd08ab3e300",
+        "firstName": "dasdsa",
+        "lastName": "ddd",
+        "birthDate": "2003-11-10",
+        "level": {
+            "id": "b7ce384f-014b-4ac1-a2b8-33f1029bc6d2",
+            "name": "1 год подготовки",
+            "description": "Категория учеников, которые занимаются уже год",
+            "hoursRequired": 100
+        },
+        "fshrId": 0,
+        "fideId": 0,
+        "phone": "1231231233",
+        "email": null,
+        "joinDate": "2026-02-17",
+        "notes": "null",
+        "paidLessons": 0,
+        "isExcluded": false,
+        "balance": 0
+    },
+    {
+        "id": "b68c6598-2131-420c-8a0e-033367b24d1f",
+        "firstName": "TRRehfdsjk",
+        "lastName": "hfdsjlhfk",
+        "birthDate": "2003-11-10",
+        "level": {
+            "id": "e1ec6640-d5df-44ea-a297-82bf2c715941",
+            "name": "Базовый",
+            "description": "Самый самый тестовый основной базовый уровень для масеньких",
+            "hoursRequired": 20
+        },
+        "fshrId": null,
+        "fideId": null,
+        "phone": "+77777777777",
+        "email": null,
+        "joinDate": "2025-04-16",
+        "notes": "jlkdsfjljksdhfkljhsdjkfhjklsdhfjklhsdkljfhksjldhfkjshdkfjhskdljhflksdhfkljhsdkljfhkljshdflkjhjkdsfhksjl",
+        "paidLessons": 1,
+        "isExcluded": false,
+        "balance": 0
+    },
+    {
+        "id": "d72bd34b-b693-47ca-9ce8-9161bba3ddc6",
+        "firstName": "Alex",
+        "lastName": "Porechny",
+        "birthDate": "2003-11-10",
+        "level": {
+            "id": "e1ec6640-d5df-44ea-a297-82bf2c715941",
+            "name": "Базовый",
+            "description": "Самый самый тестовый основной базовый уровень для масеньких",
+            "hoursRequired": 20
+        },
+        "fshrId": 10695,
+        "fideId": 10695,
+        "phone": "+79198843477",
+        "email": "null",
+        "joinDate": "1970-01-01",
+        "notes": null,
+        "paidLessons": 1,
+        "isExcluded": false,
+        "balance": 0
+    },
+    {
+        "id": "20813291-151a-4100-9b7c-ec62a7060c8d",
+        "firstName": "Test",
+        "lastName": "Test",
+        "birthDate": "2003-11-10",
+        "level": {
+            "id": "e1ec6640-d5df-44ea-a297-82bf2c715941",
+            "name": "Базовый",
+            "description": "Самый самый тестовый основной базовый уровень для масеньких",
+            "hoursRequired": 20
+        },
+        "fshrId": null,
+        "fideId": null,
+        "phone": "+79999999999",
+        "email": null,
+        "joinDate": "2025-04-16",
+        "notes": "020202020",
+        "paidLessons": 3,
+        "isExcluded": false,
+        "balance": 0
+    },
+    {
+        "id": "ebb9d2b1-4374-4155-9289-d96cabf1d2c6",
+        "firstName": "Test2",
+        "lastName": "Test2",
+        "birthDate": "2003-11-10",
+        "level": {
+            "id": "e1ec6640-d5df-44ea-a297-82bf2c715941",
+            "name": "Базовый",
+            "description": "Самый самый тестовый основной базовый уровень для масеньких",
+            "hoursRequired": 20
+        },
+        "fshrId": null,
+        "fideId": null,
+        "phone": "+78888888888",
+        "email": null,
+        "joinDate": "2025-04-16",
+        "notes": "01",
+        "paidLessons": 5,
+        "isExcluded": false,
+        "balance": 0
+    },
+    {
+        "id": "b74a43c9-ece4-4402-a7ca-1eb1ee4279f9",
+        "firstName": "Test3",
+        "lastName": "Test3",
+        "birthDate": "2003-11-10",
+        "level": {
+            "id": "e1ec6640-d5df-44ea-a297-82bf2c715941",
+            "name": "Базовый",
+            "description": "Самый самый тестовый основной базовый уровень для масеньких",
+            "hoursRequired": 20
+        },
+        "fshrId": null,
+        "fideId": null,
+        "phone": "+77777777777",
+        "email": null,
+        "joinDate": "2025-04-16",
+        "notes": "jlkdsfjfklsdjlfj",
+        "paidLessons": 10,
+        "isExcluded": false,
+        "balance": 0
+    },
+    {
+        "id": "bd40d71a-dbd2-4f43-873f-e6d767d722f3",
+        "firstName": "Студент",
+        "lastName": "Студент",
+        "birthDate": "2003-11-10",
+        "level": {
+            "id": "b7ce384f-014b-4ac1-a2b8-33f1029bc6d2",
+            "name": "1 год подготовки",
+            "description": "Категория учеников, которые занимаются уже год",
+            "hoursRequired": 100
+        },
+        "fshrId": 0,
+        "fideId": 0,
+        "phone": "89199199988",
+        "email": "test@test.r",
+        "joinDate": "2025-07-23",
+        "notes": null,
+        "paidLessons": 1,
+        "isExcluded": false,
+        "balance": -750
+    }
+]

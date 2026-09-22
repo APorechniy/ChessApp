@@ -1,0 +1,21 @@
+[
+    {
+        "endDate": "2026-04-30T10:00:00Z",
+        "endTimeLocal": "17:00",
+        "excludedDates": [
+            "2026-04-11",
+            "2026-04-14"
+        ],
+        "group": null,
+        "id": "ed841950-9744-44b9-a42d-a4f0f9344325",
+        "rrule": "DTSTART=20260401;FREQ=WEEKLY;BYDAY=TU,TH",
+        "startTimeLocal": "15:00",
+        "student": {
+            "firstName": "Check",
+            "id": "e19bf68f-923b-49e6-9276-8ac74b2bd64c",
+            "lastName": "Check"
+        },
+        "timezone": "Asia/Yekaterinburg",
+        "type": "REGULAR"
+    }
+]

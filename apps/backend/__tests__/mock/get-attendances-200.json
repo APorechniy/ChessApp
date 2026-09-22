@@ -1,0 +1,378 @@
+{
+    "attendancesList": [
+        {
+            "id": "0151e352-e777-49c4-ad44-b4c3a23b92b4",
+            "learningTopic": {
+                "id": "fc7529f5-16c0-45fd-bd39-33c1d8fdaa00",
+                "name": "Оппозиция",
+                "description": "изучаем понятие оппозиции",
+                "level": {
+                    "id": "e1ec6640-d5df-44ea-a297-82bf2c715941",
+                    "name": "Базовый",
+                    "hoursRequired": 20,
+                    "description": "Самый самый тестовый основной базовый уровень для масеньких"
+                }
+            },
+            "student": {
+                "id": "d72bd34b-b693-47ca-9ce8-9161bba3ddc6",
+                "firstName": "Alex",
+                "lastName": "Porechny"
+            },
+            "coach": {
+                "id": "9d1fa2c3-9a0f-4b7e-98d9-6addbdcf6b1c",
+                "username": "admin"
+            },
+            "quality": {
+                "darkColor": "#a2ff30",
+                "id": "daa7af83-c49a-4fa9-83a0-360ef0a9b888",
+                "label": "Хорошо",
+                "lightColor": "#a2ff30",
+                "name": "GOOD"
+            },
+            "startDate": "2025-04-28 13:00:00.000",
+            "endDate": "2025-04-28 14:00:00.000",
+            "attended": 1,
+            "homeworkDone": 0
+        },
+        {
+            "id": "0782f6c3-ef40-469d-8bfe-6cc67796f1c8",
+            "learningTopic": {
+                "id": "fc7529f5-16c0-45fd-bd39-33c1d8fdaa00",
+                "name": "Оппозиция",
+                "description": "изучаем понятие оппозиции",
+                "level": {
+                    "id": "e1ec6640-d5df-44ea-a297-82bf2c715941",
+                    "name": "Базовый",
+                    "hoursRequired": 20,
+                    "description": "Самый самый тестовый основной базовый уровень для масеньких"
+                }
+            },
+            "student": {
+                "id": "b74a43c9-ece4-4402-a7ca-1eb1ee4279f9",
+                "firstName": "Test3",
+                "lastName": "Test3"
+            },
+            "coach": {
+                "id": "9d1fa2c3-9a0f-4b7e-98d9-6addbdcf6b1c",
+                "username": "admin"
+            },
+            "quality": {
+                "darkColor": "#a2ff30",
+                "id": "daa7af83-c49a-4fa9-83a0-360ef0a9b888",
+                "label": "Хорошо",
+                "lightColor": "#a2ff30",
+                "name": "GOOD"
+            },
+            "startDate": "2025-04-28 13:00:00.000",
+            "endDate": "2025-04-28 14:00:00.000",
+            "attended": 1,
+            "homeworkDone": 1
+        },
+        {
+            "id": "219162c1-7b9b-4e61-9bce-d7130088a1ad",
+            "learningTopic": {
+                "id": "fc7529f5-16c0-45fd-bd39-33c1d8fdaa00",
+                "name": "Оппозиция",
+                "description": "изучаем понятие оппозиции",
+                "level": {
+                    "id": "e1ec6640-d5df-44ea-a297-82bf2c715941",
+                    "name": "Базовый",
+                    "hoursRequired": 20,
+                    "description": "Самый самый тестовый основной базовый уровень для масеньких"
+                }
+            },
+            "student": {
+                "id": "b74a43c9-ece4-4402-a7ca-1eb1ee4279f9",
+                "firstName": "Test3",
+                "lastName": "Test3"
+            },
+            "coach": {
+                "id": "9d1fa2c3-9a0f-4b7e-98d9-6addbdcf6b1c",
+                "username": "admin"
+            },
+            "quality": {
+                "darkColor": "#a2ff30",
+                "id": "daa7af83-c49a-4fa9-83a0-360ef0a9b888",
+                "label": "Хорошо",
+                "lightColor": "#a2ff30",
+                "name": "GOOD"
+            },
+            "startDate": "2025-04-28 13:00:00.000",
+            "endDate": "2025-04-28 14:00:00.000",
+            "attended": 1,
+            "homeworkDone": 1
+        },
+        {
+            "id": "3475e1e1-0a81-4ccb-be31-889711971781",
+            "learningTopic": {
+                "id": "fc7529f5-16c0-45fd-bd39-33c1d8fdaa00",
+                "name": "Оппозиция",
+                "description": "изучаем понятие оппозиции",
+                "level": {
+                    "id": "e1ec6640-d5df-44ea-a297-82bf2c715941",
+                    "name": "Базовый",
+                    "hoursRequired": 20,
+                    "description": "Самый самый тестовый основной базовый уровень для масеньких"
+                }
+            },
+            "student": {
+                "id": "3e2994c9-05da-416f-9884-12c419a9c9c1",
+                "firstName": "Al",
+                "lastName": "Al"
+            },
+            "coach": {
+                "id": "9d1fa2c3-9a0f-4b7e-98d9-6addbdcf6b1c",
+                "username": "admin"
+            },
+            "quality": {
+                "darkColor": "#a2ff30",
+                "id": "daa7af83-c49a-4fa9-83a0-360ef0a9b888",
+                "label": "Хорошо",
+                "lightColor": "#a2ff30",
+                "name": "GOOD"
+            },
+            "startDate": "2025-04-28 13:00:00.000",
+            "endDate": "2025-04-28 14:00:00.000",
+            "attended": 1,
+            "homeworkDone": 1
+        },
+        {
+            "id": "61a115c2-be29-4251-b5d8-046cf218dd3d",
+            "learningTopic": {
+                "id": "fc7529f5-16c0-45fd-bd39-33c1d8fdaa00",
+                "name": "Оппозиция",
+                "description": "изучаем понятие оппозиции",
+                "level": {
+                    "id": "e1ec6640-d5df-44ea-a297-82bf2c715941",
+                    "name": "Базовый",
+                    "hoursRequired": 20,
+                    "description": "Самый самый тестовый основной базовый уровень для масеньких"
+                }
+            },
+            "student": {
+                "id": "20813291-151a-4100-9b7c-ec62a7060c8d",
+                "firstName": "Test",
+                "lastName": "Test"
+            },
+            "coach": {
+                "id": "9d1fa2c3-9a0f-4b7e-98d9-6addbdcf6b1c",
+                "username": "admin"
+            },
+            "quality": {
+                "darkColor": "#a2ff30",
+                "id": "daa7af83-c49a-4fa9-83a0-360ef0a9b888",
+                "label": "Хорошо",
+                "lightColor": "#a2ff30",
+                "name": "GOOD"
+            },
+            "startDate": "2025-04-28 13:00:00.000",
+            "endDate": "2025-04-28 14:00:00.000",
+            "attended": 1,
+            "homeworkDone": 1
+        },
+        {
+            "id": "7025e100-ff49-400a-b2ed-545c1b49d30c",
+            "learningTopic": {
+                "id": "fc7529f5-16c0-45fd-bd39-33c1d8fdaa00",
+                "name": "Оппозиция",
+                "description": "изучаем понятие оппозиции",
+                "level": {
+                    "id": "e1ec6640-d5df-44ea-a297-82bf2c715941",
+                    "name": "Базовый",
+                    "hoursRequired": 20,
+                    "description": "Самый самый тестовый основной базовый уровень для масеньких"
+                }
+            },
+            "student": {
+                "id": "b68c6598-2131-420c-8a0e-033367b24d1f",
+                "firstName": "TRRehfdsjk",
+                "lastName": "hfdsjlhfk"
+            },
+            "coach": {
+                "id": "9d1fa2c3-9a0f-4b7e-98d9-6addbdcf6b1c",
+                "username": "admin"
+            },
+            "quality": {
+                "darkColor": "#a2ff30",
+                "id": "daa7af83-c49a-4fa9-83a0-360ef0a9b888",
+                "label": "Хорошо",
+                "lightColor": "#a2ff30",
+                "name": "GOOD"
+            },
+            "startDate": "2025-04-28 18:00:00.000",
+            "endDate": "2025-04-28 18:55:00.000",
+            "attended": 1,
+            "homeworkDone": 1
+        },
+        {
+            "id": "70e1ab05-08df-489b-903c-0097ed3199f9",
+            "learningTopic": {
+                "id": "fc7529f5-16c0-45fd-bd39-33c1d8fdaa00",
+                "name": "Оппозиция",
+                "description": "изучаем понятие оппозиции",
+                "level": {
+                    "id": "e1ec6640-d5df-44ea-a297-82bf2c715941",
+                    "name": "Базовый",
+                    "hoursRequired": 20,
+                    "description": "Самый самый тестовый основной базовый уровень для масеньких"
+                }
+            },
+            "student": {
+                "id": "ebb9d2b1-4374-4155-9289-d96cabf1d2c6",
+                "firstName": "Test2",
+                "lastName": "Test2"
+            },
+            "coach": {
+                "id": "9d1fa2c3-9a0f-4b7e-98d9-6addbdcf6b1c",
+                "username": "admin"
+            },
+            "quality": {
+                "darkColor": "#a2ff30",
+                "id": "daa7af83-c49a-4fa9-83a0-360ef0a9b888",
+                "label": "Хорошо",
+                "lightColor": "#a2ff30",
+                "name": "GOOD"
+            },
+            "startDate": "2025-04-28 13:00:00.000",
+            "endDate": "2025-04-28 14:00:00.000",
+            "attended": 1,
+            "homeworkDone": 1
+        },
+        {
+            "id": "7aa0f5b3-ffc4-4e2b-ab6e-ebc0777846b7",
+            "learningTopic": {
+                "id": "fc7529f5-16c0-45fd-bd39-33c1d8fdaa00",
+                "name": "Оппозиция",
+                "description": "изучаем понятие оппозиции",
+                "level": {
+                    "id": "e1ec6640-d5df-44ea-a297-82bf2c715941",
+                    "name": "Базовый",
+                    "hoursRequired": 20,
+                    "description": "Самый самый тестовый основной базовый уровень для масеньких"
+                }
+            },
+            "student": {
+                "id": "d72bd34b-b693-47ca-9ce8-9161bba3ddc6",
+                "firstName": "Alex",
+                "lastName": "Porechny"
+            },
+            "coach": {
+                "id": "9d1fa2c3-9a0f-4b7e-98d9-6addbdcf6b1c",
+                "username": "admin"
+            },
+            "quality": {
+                "darkColor": "#a2ff30",
+                "id": "daa7af83-c49a-4fa9-83a0-360ef0a9b888",
+                "label": "Хорошо",
+                "lightColor": "#a2ff30",
+                "name": "GOOD"
+            },
+            "startDate": "2025-04-28 13:30:00.000",
+            "endDate": "2025-04-28 14:30:00.000",
+            "attended": 0,
+            "homeworkDone": 0
+        },
+        {
+            "id": "7abca293-081f-45c3-9a33-c91c8fa1deb9",
+            "learningTopic": {
+                "id": "fc7529f5-16c0-45fd-bd39-33c1d8fdaa00",
+                "name": "Оппозиция",
+                "description": "изучаем понятие оппозиции",
+                "level": {
+                    "id": "e1ec6640-d5df-44ea-a297-82bf2c715941",
+                    "name": "Базовый",
+                    "hoursRequired": 20,
+                    "description": "Самый самый тестовый основной базовый уровень для масеньких"
+                }
+            },
+            "student": {
+                "id": "d72bd34b-b693-47ca-9ce8-9161bba3ddc6",
+                "firstName": "Alex",
+                "lastName": "Porechny"
+            },
+            "coach": {
+                "id": "9d1fa2c3-9a0f-4b7e-98d9-6addbdcf6b1c",
+                "username": "admin"
+            },
+            "quality": {
+                "darkColor": "#a2ff30",
+                "id": "daa7af83-c49a-4fa9-83a0-360ef0a9b888",
+                "label": "Хорошо",
+                "lightColor": "#a2ff30",
+                "name": "GOOD"
+            },
+            "startDate": "2025-04-28 13:00:00.000",
+            "endDate": "2025-04-28 14:00:00.000",
+            "attended": 1,
+            "homeworkDone": 1
+        },
+        {
+            "id": "7aca7189-9b9d-4ef7-b773-a5298df32bdc",
+            "learningTopic": {
+                "id": "fc7529f5-16c0-45fd-bd39-33c1d8fdaa00",
+                "name": "Оппозиция",
+                "description": "изучаем понятие оппозиции",
+                "level": {
+                    "id": "e1ec6640-d5df-44ea-a297-82bf2c715941",
+                    "name": "Базовый",
+                    "hoursRequired": 20,
+                    "description": "Самый самый тестовый основной базовый уровень для масеньких"
+                }
+            },
+            "student": {
+                "id": "3e2994c9-05da-416f-9884-12c419a9c9c1",
+                "firstName": "Al",
+                "lastName": "Al"
+            },
+            "coach": {
+                "id": "9d1fa2c3-9a0f-4b7e-98d9-6addbdcf6b1c",
+                "username": "admin"
+            },
+            "quality": {
+                "darkColor": "#a2ff30",
+                "id": "daa7af83-c49a-4fa9-83a0-360ef0a9b888",
+                "label": "Хорошо",
+                "lightColor": "#a2ff30",
+                "name": "GOOD"
+            },
+            "startDate": "2025-04-28 14:00:00.000",
+            "endDate": "2025-04-28 15:00:00.000",
+            "attended": 1,
+            "homeworkDone": 1
+        },
+        {
+            "id": "d0b7c745-2434-44e5-9add-941309bbe998",
+            "learningTopic": {
+                "id": "fc7529f5-16c0-45fd-bd39-33c1d8fdaa00",
+                "name": "Оппозиция",
+                "description": "изучаем понятие оппозиции",
+                "level": {
+                    "id": "e1ec6640-d5df-44ea-a297-82bf2c715941",
+                    "name": "Базовый",
+                    "hoursRequired": 20,
+                    "description": "Самый самый тестовый основной базовый уровень для масеньких"
+                }
+            },
+            "student": {
+                "id": "3e2994c9-05da-416f-9884-12c419a9c9c1",
+                "firstName": "Al",
+                "lastName": "Al"
+            },
+            "coach": {
+                "id": "9d1fa2c3-9a0f-4b7e-98d9-6addbdcf6b1c",
+                "username": "admin"
+            },
+            "quality": {
+                "darkColor": "#a2ff30",
+                "id": "daa7af83-c49a-4fa9-83a0-360ef0a9b888",
+                "label": "Хорошо",
+                "lightColor": "#a2ff30",
+                "name": "GOOD"
+            },
+            "startDate": "2025-04-28 12:20:00.000",
+            "endDate": "2025-04-28 13:20:00.000",
+            "attended": 1,
+            "homeworkDone": 1
+        }
+    ]
+}

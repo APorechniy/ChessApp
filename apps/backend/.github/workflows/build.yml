@@ -1,0 +1,45 @@
+name: Build and Push Docker Backend
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Login to GHCR
+      uses: docker/login-action@v3
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GHCR_TOKEN }}
+
+    - name: Extract version from package.json
+      id: version
+      run: echo "current-version=$(jq -r '.version' package.json)" >> $GITHUB_OUTPUT
+    
+    # - name: Extract metadata
+    #   id: meta
+    #   uses: docker/metadata-action@v5
+    #   with:
+    #     images: ghcr.io/aporechniy/chessappbackend
+    #     tags: |
+    #       type=ref,event=branch
+    #       type=ref,event=pr
+    #       type=semver,pattern={{version}}
+    #       type=semver,pattern={{major}}.{{minor}}
+    #       type=sha,prefix={{branch}}-
+    
+    - name: Build and push
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        push: true
+        tags: |
+          ghcr.io/aporechniy/chessappbackend:${{ steps.version.outputs.current-version }}
+          ghcr.io/aporechniy/chessappbackend:latest

@@ -1,0 +1,170 @@
+[
+    {
+        "id": "fefec248-4624-4b40-927d-22bd6883fca2",
+        "name": "gfdsgds",
+        "learningTopic": {
+            "id": "ec521191-85bd-4bcc-9b40-623461ff2b26",
+            "name": "Оттеснение короля",
+            "level": {
+                "id": "e1ec6640-d5df-44ea-a297-82bf2c715941",
+                "name": "Базовый",
+                "description": "Самый самый тестовый основной базовый уровень для масеньких",
+                "hoursRequired": 20
+            },
+            "description": "изучаем прием оттеснения короля от пешки"
+        },
+        "quality": {
+            "id": "a7923f71-547b-45aa-b128-19924050e01d",
+            "name": "MEDIUM",
+            "label": "Средне",
+            "labelFor": "tasks",
+            "darkColor": "#ffea03",
+            "lightColor": "#ffea03"
+        },
+        "position": null
+    },
+    {
+        "id": "7ec835a4-f969-43e8-997c-04d35d66174f",
+        "name": "Задача №1: Оппозиция",
+        "learningTopic": {
+            "id": "fc7529f5-16c0-45fd-bd39-33c1d8fdaa00",
+            "name": "Оппозиция",
+            "level": {
+                "id": "e1ec6640-d5df-44ea-a297-82bf2c715941",
+                "name": "Базовый",
+                "description": "Самый самый тестовый основной базовый уровень для масеньких",
+                "hoursRequired": 20
+            },
+            "description": "изучаем понятие оппозиции"
+        },
+        "quality": {
+            "id": "5b0f9065-ad4f-4480-9e80-a6f3fa83fbc3",
+            "name": "EASY",
+            "label": "Легко",
+            "labelFor": "tasks",
+            "darkColor": "#a2ff30",
+            "lightColor": "#a2ff30"
+        },
+        "position": null
+    },
+    {
+        "id": "427e097e-2f77-41c6-a882-b54633c87914",
+        "name": "Задача №2: Оппозиция",
+        "learningTopic": {
+            "id": "fc7529f5-16c0-45fd-bd39-33c1d8fdaa00",
+            "name": "Оппозиция",
+            "level": {
+                "id": "e1ec6640-d5df-44ea-a297-82bf2c715941",
+                "name": "Базовый",
+                "description": "Самый самый тестовый основной базовый уровень для масеньких",
+                "hoursRequired": 20
+            },
+            "description": "изучаем понятие оппозиции"
+        },
+        "quality": {
+            "id": "5b0f9065-ad4f-4480-9e80-a6f3fa83fbc3",
+            "name": "EASY",
+            "label": "Легко",
+            "labelFor": "tasks",
+            "darkColor": "#a2ff30",
+            "lightColor": "#a2ff30"
+        },
+        "position": "8/8/3kpK2/8/8/8/8/8 b - - 0 1"
+    },
+    {
+        "id": "77399dfd-caf3-40a1-ba88-5121b4f86857",
+        "name": "Задача на оттеснение",
+        "learningTopic": {
+            "id": "ec521191-85bd-4bcc-9b40-623461ff2b26",
+            "name": "Оттеснение короля",
+            "level": {
+                "id": "e1ec6640-d5df-44ea-a297-82bf2c715941",
+                "name": "Базовый",
+                "description": "Самый самый тестовый основной базовый уровень для масеньких",
+                "hoursRequired": 20
+            },
+            "description": "изучаем прием оттеснения короля от пешки"
+        },
+        "quality": {
+            "id": "5b0f9065-ad4f-4480-9e80-a6f3fa83fbc3",
+            "name": "EASY",
+            "label": "Легко",
+            "labelFor": "tasks",
+            "darkColor": "#a2ff30",
+            "lightColor": "#a2ff30"
+        },
+        "position": null
+    },
+    {
+        "id": "31526a56-ad43-4b71-8ea4-11b29b04620a",
+        "name": "Задача на оттеснение №3",
+        "learningTopic": {
+            "id": "ec521191-85bd-4bcc-9b40-623461ff2b26",
+            "name": "Оттеснение короля",
+            "level": {
+                "id": "e1ec6640-d5df-44ea-a297-82bf2c715941",
+                "name": "Базовый",
+                "description": "Самый самый тестовый основной базовый уровень для масеньких",
+                "hoursRequired": 20
+            },
+            "description": "изучаем прием оттеснения короля от пешки"
+        },
+        "quality": {
+            "id": "5b0f9065-ad4f-4480-9e80-a6f3fa83fbc3",
+            "name": "EASY",
+            "label": "Легко",
+            "labelFor": "tasks",
+            "darkColor": "#a2ff30",
+            "lightColor": "#a2ff30"
+        },
+        "position": null
+    },
+    {
+        "id": "24e78b4b-e16f-4345-ba53-060d58ccabef",
+        "name": "Задача на оттеснение №4",
+        "learningTopic": {
+            "id": "ec521191-85bd-4bcc-9b40-623461ff2b26",
+            "name": "Оттеснение короля",
+            "level": {
+                "id": "e1ec6640-d5df-44ea-a297-82bf2c715941",
+                "name": "Базовый",
+                "description": "Самый самый тестовый основной базовый уровень для масеньких",
+                "hoursRequired": 20
+            },
+            "description": "изучаем прием оттеснения короля от пешки"
+        },
+        "quality": {
+            "id": "5b0f9065-ad4f-4480-9e80-a6f3fa83fbc3",
+            "name": "EASY",
+            "label": "Легко",
+            "labelFor": "tasks",
+            "darkColor": "#a2ff30",
+            "lightColor": "#a2ff30"
+        },
+        "position": null
+    },
+    {
+        "id": "50f42cbb-1742-4c8e-9a0e-6fdff0a9d751",
+        "name": "Очень очень длинное название задачи №34274627",
+        "learningTopic": {
+            "id": "f7baf91a-a1ca-4c7a-be44-84f09c464a27",
+            "name": "Ладейные окончания",
+            "level": {
+                "id": "b7ce384f-014b-4ac1-a2b8-33f1029bc6d2",
+                "name": "1 год подготовки",
+                "description": "Категория учеников, которые занимаются уже год",
+                "hoursRequired": 100
+            },
+            "description": "изучаем эндшпили ладья на ладью"
+        },
+        "quality": {
+            "id": "5b0f9065-ad4f-4480-9e80-a6f3fa83fbc3",
+            "name": "EASY",
+            "label": "Легко",
+            "labelFor": "tasks",
+            "darkColor": "#a2ff30",
+            "lightColor": "#a2ff30"
+        },
+        "position": null
+    }
+]

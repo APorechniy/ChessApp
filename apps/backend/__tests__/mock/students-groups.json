@@ -1,0 +1,71 @@
+[
+    {
+        "color": null,
+        "description": "РЕДАКТИРУЮ ГРУППУe",
+        "id": "8579e201-8977-4cb0-9e31-01e77447c843",
+        "name": "Тестовая группа 234",
+        "students": [
+            {
+                "firstName": "1",
+                "id": "08d48887-34dd-4515-8135-7f506c1c8660",
+                "lastName": "1"
+            },
+            {
+                "firstName": "22",
+                "id": "08f5a121-0310-4e6b-87e2-5fcbb071d4a9",
+                "lastName": "22"
+            }
+        ]
+    },
+    {
+        "color": null,
+        "description": "1234",
+        "id": "e413f90e-d84e-4df8-a07c-a7aa6705e2ce",
+        "name": "Тестовое длинное название группы для",
+        "students": [
+            {
+                "firstName": "22",
+                "id": "08f5a121-0310-4e6b-87e2-5fcbb071d4a9",
+                "lastName": "22"
+            },
+            {
+                "firstName": "Test",
+                "id": "20813291-151a-4100-9b7c-ec62a7060c8d",
+                "lastName": "Test"
+            },
+            {
+                "firstName": "Test3",
+                "id": "b74a43c9-ece4-4402-a7ca-1eb1ee4279f9",
+                "lastName": "Test3"
+            }
+        ]
+    },
+    {
+        "color": "7703fc",
+        "description": "Тестовая группа",
+        "id": "f228a21e-2dfe-4562-a331-1783a5e63631",
+        "name": "TestGroupTestGroupTestGroupTestGroupTestGroup",
+        "students": [
+            {
+                "firstName": "1",
+                "id": "08d48887-34dd-4515-8135-7f506c1c8660",
+                "lastName": "1"
+            },
+            {
+                "firstName": "22",
+                "id": "08f5a121-0310-4e6b-87e2-5fcbb071d4a9",
+                "lastName": "22"
+            },
+            {
+                "firstName": "1",
+                "id": "3e2994c9-05da-416f-9884-12c419a9c9c1",
+                "lastName": "1"
+            },
+            {
+                "firstName": "Check",
+                "id": "e19bf68f-923b-49e6-9276-8ac74b2bd64c",
+                "lastName": "Check"
+            }
+        ]
+    }
+]

@@ -1,0 +1,17 @@
+node_modules/
+.pnp
+.pnp.js
+.yarn/install-state.gz
+.yarn/unplugged/
+
+# Next.js
+apps/frontend/.next/
+apps/frontend/out/
+
+# Logs, OS files
+*.log
+.DS_Store
+dist/
+build/
+.env*.local
+.env

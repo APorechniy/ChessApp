@@ -1,0 +1,25 @@
+{
+    "id": "bd40d71a-dbd2-4f43-873f-e6d767d722f3",
+    "role": "student",
+    "username": "Student_Studentov",
+    "userData": {
+        "birthDate": "2003-11-10",
+        "email": "test@test.r",
+        "fideId": 0,
+        "firstName": "Студент",
+        "fshrId": 0,
+        "id": "bd40d71a-dbd2-4f43-873f-e6d767d722f3",
+        "isExcluded": false,
+        "joinDate": "2025-07-23",
+        "lastName": "Студент",
+        "level": {
+            "description": "Категория учеников, которые занимаются уже год",
+            "hoursRequired": 100,
+            "id": "b7ce384f-014b-4ac1-a2b8-33f1029bc6d2",
+            "name": "1 год подготовки"
+        },
+        "notes": null,
+        "paidLessons": 1,
+        "phone": "89199199988"
+    }
+}

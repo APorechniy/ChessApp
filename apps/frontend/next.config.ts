@@ -1,0 +1,26 @@
+import type { NextConfig } from 'next'
+
+const BACKEND_URL =
+  process.env.NODE_ENV === 'production'
+    ? 'http://backend:8080'
+    : 'http://127.0.0.1:3000';
+
+const nextConfig: NextConfig = {
+  reactStrictMode: true,
+  output: 'standalone',
+  eslint: {
+    dirs: ['pages', 'utils', 'components', 'store', 'hooks'],
+  },
+  async rewrites() {
+    return [
+      {
+        // Когда приходит запрос на /api/что-угодно
+        source: '/api/:path*',
+        // Перенаправляем его на контейнер бэкенда БЕЗ префикса /api
+        destination: `${BACKEND_URL}/:path*`,
+      },
+    ];
+  },
+};
+
+export default nextConfig;

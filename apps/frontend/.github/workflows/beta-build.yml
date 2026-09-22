@@ -1,0 +1,61 @@
+name: Beta build and Push Docker image
+
+on:
+  pull_request:
+    branches:
+      - master
+    types: [opened, synchronize, reopened]
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Login to GHCR
+      uses: docker/login-action@v3
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GHCR_TOKEN }}
+
+    - name: Extract version from package.json
+      id: version
+      run: echo "current-version=$(jq -r '.version' package.json)" >> $GITHUB_OUTPUT
+    
+    - name: Get commit ID
+      id: get_commit_id
+      run: |
+        echo "commit-id=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+    
+    - name: Build and push
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        push: true
+        tags: |
+          ghcr.io/aporechniy/chessappfrontend:${{ steps.version.outputs.current-version }}-beta-${{ steps.get_commit_id.outputs.commit-id}}
+
+    - name: Add comment to PR
+      id: add_comment
+      run: |
+        COMMENT=$(cat <<EOF
+        ## 🔍 Результаты проверки
+        
+        **Статус:** ✅ Успешно
+        **Время выполнения:** ${{ github.run_number }}
+
+        **Выпущена демо-версия:** ${{ steps.version.outputs.current-version }}-beta-${{ steps.get_commit_id.outputs.commit-id}}
+        
+        ---
+        *Автоматическое сообщение от GitHub Actions*
+        EOF
+        )
+        
+        gh pr comment ${{ github.event.pull_request.number }} \
+          --body "$COMMENT" \
+          --repo ${{ github.repository }}
+      env: 
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN  }}

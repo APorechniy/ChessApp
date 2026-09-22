@@ -1,0 +1,8 @@
+import React from 'react'
+
+export const ClearIcon = ({ onClick }) => (
+    <svg width="29" height="29" viewBox="0 0 29 29" fill="none" xmlns="http://www.w3.org/2000/svg" onClick={onClick}>
+        <rect x="21.5854" y="7.44324" width="20" height="1.05263" transform="rotate(135 21.5854 7.44324)" fill="#232323" />
+        <rect x="20.5059" y="21.9203" width="20" height="0.999999" transform="rotate(-135 20.5059 21.9203)" fill="#232323" />
+    </svg>
+)

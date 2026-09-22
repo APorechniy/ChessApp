@@ -1,0 +1,18 @@
+[
+    {
+        "darkColor": "#a2ff30",
+        "id": "5b0f9065-ad4f-4480-9e80-a6f3fa83fbc3",
+        "label": "Легко",
+        "labelFor": "tasks",
+        "lightColor": "#a2ff30",
+        "name": "EASY"
+    },
+    {
+        "darkColor": "#ffea03",
+        "id": "a7923f71-547b-45aa-b128-19924050e01d",
+        "label": "Средне",
+        "labelFor": "tasks",
+        "lightColor": "#ffea03",
+        "name": "MEDIUM"
+    }
+]

@@ -1,0 +1,24 @@
+{
+  "name": "chess-app",
+  "version": "0.0.1",
+  "private": true,
+  "packageManager": "yarn@4.18.0",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "concurrently \"yarn dev:backend\" \"yarn dev:frontend\"",
+    "dev:backend": "yarn workspace @app/backend dev",
+    "dev:frontend": "yarn workspace @app/frontend dev",
+    "build": "yarn workspaces -A foreach run build",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "release": "changeset publish"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^3.0.3",
+    "@rolldown/pluginutils": "^1.0.1",
+    "concurrently": "^8.2.2"
+  }
+}
