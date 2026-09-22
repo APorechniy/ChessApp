@@ -1,56 +1,61 @@
-# Базовый образ
 FROM node:22-alpine AS base
 
 # --- Этап 1: Установка зависимостей ---
 FROM base AS deps
-# libc6-compat нужен для работы некоторых пакетов в Alpine (например, sharp для картинок)
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
-COPY package.json yarn.lock* ./
-RUN yarn install --frozen-lockfile
+RUN corepack enable
 
-# --- Этап 2: Сборка приложения ---
+COPY .yarnrc.yml ./
+COPY .yarn ./.yarn
+COPY package.json yarn.lock ./
+COPY apps/frontend/package.json ./apps/frontend/
+
+RUN yarn install --immutable
+
+# --- Этап 2: Сборка Next.js ---
 FROM base AS builder
 WORKDIR /app
-COPY --from=deps /app/node_modules ./node_modules
-COPY . .
 
-# Отключаем телеметрию Next.js во время сборки
+RUN corepack enable
+
+COPY --from=deps /app/.yarn ./.yarn
+COPY --from=deps /app/node_modules ./node_modules
+COPY .yarnrc.yml package.json yarn.lock ./
+COPY apps/frontend ./apps/frontend
+
+WORKDIR /app/apps/frontend
+
 ENV NEXT_TELEMETRY_DISABLED 1
+ENV NODE_ENV production
 
 RUN yarn build
 
-# --- Этап 3: Финальный образ для продакшена (Runner) ---
+# --- Этап 3: Финальный Runner ---
 FROM base AS runner
 WORKDIR /app
 
 ENV NODE_ENV production
 ENV NEXT_TELEMETRY_DISABLED 1
-
-# Важно: указываем HOSTNAME="0.0.0.0", чтобы контейнер был доступен извне
 ENV PORT 3000
 ENV HOSTNAME "0.0.0.0"
 
-# Безопасность: создаем непривилегированного пользователя
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nextjs
+RUN addgroup --system --gid 1001 nodejs && \
+    adduser --system --uid 1001 nextjs
 
-# Копируем статические файлы
-COPY --from=builder /app/public ./public
+# Копируем публичные файлы
+COPY --from=builder /app/apps/frontend/public ./apps/frontend/public
 
-# Настраиваем права для кэша Next.js
-RUN mkdir .next
-RUN chown nextjs:nodejs .next
+RUN mkdir -p apps/frontend/.next && chown nextjs:nodejs apps/frontend/.next
 
-# Копируем результаты standalone-сборки
-COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
-COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+# Next.js Standalone в монорепозитории сохраняет структуру apps/frontend:
+COPY --from=builder --chown=nextjs:nodejs /app/apps/frontend/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/apps/frontend/.next/static ./apps/frontend/.next/static
 
-# Переключаемся на безопасного пользователя
 USER nextjs
 
 EXPOSE 3000
 
-# Запускаем созданный Next.js автономный сервер
-CMD ["node", "server.js"]
+# Запуск автономного сервера
+CMD ["node", "apps/frontend/server.js"]

@@ -30,7 +30,9 @@ jobs:
           node-version: 24
 
       - name: Install Dependencies
-        run: yarn install --frozen-lockfile
+        run: |
+          corepack enable
+          yarn install --immutable
 
       - name: Create Release PR or Publish
         id: changesets
@@ -64,7 +66,8 @@ jobs:
       - name: Build and push Frontend
         uses: docker/build-push-action@v5
         with:
-          context: ./apps/frontend
+          context: .
+          file: ./apps/frontend/Dockerfile
           push: true
           tags: |
             ghcr.io/aporechniy/chessappfrontend:${{ steps.version.outputs.current-version }}
@@ -92,7 +95,8 @@ jobs:
       - name: Build and push Backend
         uses: docker/build-push-action@v5
         with:
-          context: ./apps/backend
+          context: .
+          file: ./apps/backend/Dockerfile
           push: true
           tags: |
             ghcr.io/aporechniy/chessappbackend:${{ steps.version.outputs.current-version }}

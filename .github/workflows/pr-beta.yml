@@ -56,7 +56,8 @@ jobs:
       - name: Build and push Frontend Beta
         uses: docker/build-push-action@v5
         with:
-          context: ./apps/frontend
+          context: .
+          file: ./apps/frontend/Dockerfile
           push: true
           tags: |
             ghcr.io/aporechniy/chessappfrontend:${{ steps.version.outputs.current-version }}-beta-${{ steps.get_commit_id.outputs.commit-id }}
@@ -103,7 +104,8 @@ jobs:
       - name: Build and push Backend Beta
         uses: docker/build-push-action@v5
         with:
-          context: ./apps/backend
+          context: .
+          file: ./apps/backend/Dockerfile
           push: true
           tags: |
             ghcr.io/aporechniy/chessappbackend:${{ steps.version.outputs.current-version }}-beta-${{ steps.get_commit_id.outputs.commit-id }}
