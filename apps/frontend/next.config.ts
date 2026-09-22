@@ -8,15 +8,7 @@ const BACKEND_URL =
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
-  output: 'standalone',
   outputFileTracingRoot: path.join(__dirname, '../../'),
-
-  outputFileTracingIncludes: {
-    '/**': [
-      '../../node_modules/async-function/**/*',
-      './node_modules/async-function/**/*',
-    ],
-  },
 
   eslint: {
     dirs: ['pages', 'utils', 'components', 'store', 'hooks'],
