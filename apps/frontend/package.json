@@ -1,6 +1,6 @@
 {
   "name": "@app/frontend",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Frontend service for ChessManagerApp",
   "author": "APorechniy",
   "packageManager": "yarn@4.18.0",
