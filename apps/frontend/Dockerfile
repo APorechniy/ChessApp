@@ -35,7 +35,6 @@ RUN addgroup --system --gid 1001 nodejs && \
 
 # Копируем всё чистое окружение (без исходников и без dev-мусора)
 COPY --from=builder --chown=nextjs:nodejs /app/node_modules ./node_modules
-COPY --from=builder --chown=nextjs:nodejs /app/apps/frontend/node_modules ./apps/frontend/node_modules
 COPY --from=builder --chown=nextjs:nodejs /app/apps/frontend/.next ./apps/frontend/.next
 COPY --from=builder --chown=nextjs:nodejs /app/apps/frontend/public ./apps/frontend/public
 COPY --from=builder --chown=nextjs:nodejs /app/apps/frontend/package.json ./apps/frontend/package.json
