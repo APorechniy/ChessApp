@@ -3,9 +3,8 @@ RUN apk add --no-cache libc6-compat
 WORKDIR /app
 RUN corepack enable
 
-# --- Этап 1: Установка зависимостей ---
+# --- 1. Зависимости ---
 FROM base AS deps
-
 COPY .yarnrc.yml ./
 COPY .yarn ./.yarn
 COPY package.json yarn.lock ./
@@ -14,10 +13,8 @@ COPY apps/backend/package.json ./apps/backend/
 
 RUN yarn install --immutable
 
-# --- Этап 2: Сборка Next.js ---
+# --- 2. Сборка ---
 FROM base AS builder
-
-# Копируем всё окружение зависимостей целиком
 COPY --from=deps /app ./
 COPY apps/frontend ./apps/frontend
 
@@ -28,7 +25,7 @@ ENV NODE_ENV production
 
 RUN yarn build
 
-# --- Этап 3: Финальный продакшн образ ---
+# --- 3. Чистый Runner (легковесный) ---
 FROM base AS runner
 WORKDIR /app
 
@@ -40,16 +37,11 @@ ENV HOSTNAME "0.0.0.0"
 RUN addgroup --system --gid 1001 nodejs && \
     adduser --system --uid 1001 nextjs
 
-# Копируем статику
+# Копируем только статику и сгенерированный standalone-сервер
 COPY --from=builder /app/apps/frontend/public ./apps/frontend/public
-
-# Создаем папку под кэш с правильными правами
 RUN mkdir -p apps/frontend/.next && chown nextjs:nodejs apps/frontend/.next
 
-# ВАЖНО: Копируем корневые node_modules, чтобы оживить любые битые симлинки и недостающие хуки Next.js (async-function)
-COPY --from=builder --chown=nextjs:nodejs /app/node_modules ./node_modules
-
-# Копируем standalone сборку (она ляжет поверх)
+# Next.js standalone УЖЕ содержит нужный мини-node_modules внутри себя
 COPY --from=builder --chown=nextjs:nodejs /app/apps/frontend/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/apps/frontend/.next/static ./apps/frontend/.next/static
 
