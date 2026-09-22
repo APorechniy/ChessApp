@@ -6,7 +6,7 @@
   "changelog": [
     "@changesets/changelog-github",
     {
-      "repo": "repo"
+      "repo": "APorechniy/ChessApp"
     }
   ],
   "commit": false,
