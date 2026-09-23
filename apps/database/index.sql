@@ -233,6 +233,54 @@ CREATE TABLE attendance_additional_tasks (
     FOREIGN KEY (task_id) REFERENCES tasks(id)
 );
 
+CREATE TABLE homeworks (
+    id VARCHAR(36) PRIMARY KEY,
+    attendance_id VARCHAR(36) NOT NULL,
+    name TEXT NOT NULL,
+    expired_at TIMESTAMP NOT NULL,
+    FOREIGN KEY (attendance_id) REFERENCES attendance(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE homework_solutions (
+    id VARCHAR(36) PRIMARY KEY,
+    student_id VARCHAR(36) NOT NULL,
+    homework_id VARCHAR(36) NOT NULL,
+    status ENUM('new','in_progress','solved','checked') NOT NULL DEFAULT 'new',
+    started_at TIMESTAMP,
+    finished_at TIMESTAMP,
+    UNIQUE (id, homework_id),
+    CONSTRAINT uq_solution_homework_student UNIQUE (homework_id, student_id),
+    FOREIGN KEY (student_id) REFERENCES students(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (homework_id) REFERENCES homeworks(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE homework_tasks (
+    id VARCHAR(36) PRIMARY KEY,
+    order_index INTEGER NOT NULL,
+    homework_id VARCHAR(36) NOT NULL,
+    task_id VARCHAR(36) NOT NULL,
+    UNIQUE (id, homework_id),
+    CONSTRAINT uq_homework_task UNIQUE (homework_id, task_id),
+    FOREIGN KEY (homework_id) REFERENCES homeworks(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (task_id) REFERENCES tasks(id) ON DELETE RESTRICT ON UPDATE CASCADE
+);
+
+CREATE TABLE solution_answers (
+    id VARCHAR(36) PRIMARY KEY,
+    homework_id VARCHAR(36) NOT NULL,
+    homework_solution_id VARCHAR(36) NOT NULL,
+    homework_task_id VARCHAR(36) NOT NULL,
+    answer_text TEXT,
+    started_at TIMESTAMP,
+    submitted_at TIMESTAMP,
+    checked_at TIMESTAMP,
+    status ENUM('not_solved','check','error','almost','success') NOT NULL DEFAULT 'not_solved',
+    coach_comment TEXT,
+    CONSTRAINT uq_answer_solution_task UNIQUE (homework_solution_id, homework_task_id),
+    FOREIGN KEY (homework_solution_id, homework_id) REFERENCES homework_solutions(id, homework_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (homework_task_id, homework_id) REFERENCES homework_tasks(id, homework_id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
 -- VIEWS
 CREATE VIEW quality_view (id, name, label, labelFor, lightColor, darkColor) AS SELECT id, name, label, label_for, light_color, dark_color
 FROM quality;
