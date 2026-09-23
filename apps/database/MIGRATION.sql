@@ -36,3 +36,7 @@ LEFT JOIN learning_topic_view ltv ON ltv.id = a.learning_topic_id
 LEFT JOIN quality_view q ON q.id = a.quality_id
 
 WHERE a.is_deleted=0;
+
+----
+
+ALTER TABLE attendance DROP COLUMN homework_done;

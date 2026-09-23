@@ -7,7 +7,6 @@ CREATE TABLE attendance (
     learning_topic_id VARCHAR(36),
     coach_id VARCHAR(36) NOT NULL,
     preset_id VARCHAR(36),
-    homework_done BOOLEAN DEFAULT 0,
     is_online BOOLEAN DEFAULT 0,
     meet_link VARCHAR(200) DEFAULT NULL,
     is_freeze BOOLEAN DEFAULT 0,

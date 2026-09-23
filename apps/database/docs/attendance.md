@@ -28,7 +28,6 @@ erDiagram
         VARCHAR learning_topic_id FK
         VARCHAR coach_id FK
         VARCHAR preset_id FK
-        BOOLEAN homework_done
         BOOLEAN is_online
         VARCHAR meet_link
         BOOLEAN is_freeze
@@ -63,7 +62,6 @@ erDiagram
 | `learning_topic_id`| `VARCHAR(36)` | Изучаемая тема занятия | `NULL`, `FOREIGN KEY` -> `learning_topics(id)` |
 | `coach_id` | `VARCHAR(36)` | Идентификатор тренера (преподавателя) | `NOT NULL`, `FOREIGN KEY` -> `users(id)` |
 | `preset_id` | `VARCHAR(36)` | Ссылка на шаблон расписания, по которому создан урок | `NULL`, `FOREIGN KEY` -> `attendance_preset(id)` |
-| `homework_done` | `BOOLEAN` | Флаг выполнения домашнего задания | `DEFAULT 0` (не выполнено) |
 | `is_online` | `BOOLEAN` | Формат проведения (онлайн/офлайн) | `DEFAULT 0` (офлайн) |
 | `meet_link` | `VARCHAR(200)`| Ссылка на онлайн-встречу (Zoom, Meet и т.д.) | `DEFAULT NULL` |
 | `is_freeze` | `BOOLEAN` | Флаг заморозки занятия | `DEFAULT 0` |

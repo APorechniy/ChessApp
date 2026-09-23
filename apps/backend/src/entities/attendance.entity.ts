@@ -17,9 +17,6 @@ export class Attendance {
     @Column({ name: 'coach_id', type: 'varchar', length: 36 })
     coachId!: string;
 
-    @Column({ name: "homework_done", type: "boolean", default: false })
-    homeworkDone?: boolean;
-
     @Column({ name: 'quality_id', type: 'varchar', length: 36 })
     qualityId?: string;
 

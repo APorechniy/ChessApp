@@ -157,7 +157,6 @@ CREATE TABLE attendance (
     learning_topic_id VARCHAR(36),
     coach_id VARCHAR(36) NOT NULL,
     preset_id VARCHAR(36),
-    homework_done BOOLEAN DEFAULT 0,
     is_online BOOLEAN DEFAULT 0,
     meet_link VARCHAR(200) DEFAULT NULL,
     is_freeze BOOLEAN DEFAULT 0,
@@ -367,7 +366,7 @@ GROUP BY aat.attendance_id;
 
 --
 CREATE VIEW attendance_base_view AS 
-SELECT a.id, a.homework_done AS homeworkDone, a.start_date AS startDate, a.end_date AS endDate, 
+SELECT a.id, a.start_date AS startDate, a.end_date AS endDate, 
     a.is_online AS isOnline, a.meet_link as meetLink, a.is_freeze as isFreeze, 
     a.type, a.is_deleted as isDeleted, a.preset_id AS presetId,
     JSON_OBJECT("id", ltv.id, "name", ltv.name, "description", ltv.description, "level", ltv.level) as learningTopic,  
