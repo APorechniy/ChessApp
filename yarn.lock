@@ -61,6 +61,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@app/database@workspace:apps/database":
+  version: 0.0.0-use.local
+  resolution: "@app/database@workspace:apps/database"
+  languageName: unknown
+  linkType: soft
+
 "@app/frontend@workspace:apps/frontend":
   version: 0.0.0-use.local
   resolution: "@app/frontend@workspace:apps/frontend"
@@ -70,6 +76,7 @@ __metadata:
     "@google/genai": "npm:^2.10.0"
     "@modelcontextprotocol/sdk": "npm:^1.29.0"
     "@reduxjs/toolkit": "npm:^2.6.1"
+    "@tanstack/react-table": "npm:^9.2.4"
     "@testing-library/cypress": "npm:^10.1.0"
     "@types/luxon": "npm:^3.7.1"
     "@types/node": "npm:22.15.2"
@@ -82,13 +89,13 @@ __metadata:
     dotenv: "npm:^17.4.2"
     framer-motion: "npm:^12.42.2"
     globals: "npm:^15.15.0"
+    lucide-react: "npm:^1.48.0"
     luxon: "npm:^3.7.2"
     next: "npm:15.0.0"
     openai: "npm:^6.45.0"
     react: "npm:^19.0.0"
     react-calendar: "npm:^6.0.0"
     react-chessboard: "npm:^5.10.0"
-    react-data-table-component: "npm:^7.7.0"
     react-dom: "npm:^19.0.0"
     react-redux: "npm:^9.2.0"
     react-router: "npm:^7.5.0"
@@ -3490,6 +3497,47 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tanstack/react-store@npm:^0.11.1":
+  version: 0.11.1
+  resolution: "@tanstack/react-store@npm:0.11.1"
+  dependencies:
+    "@tanstack/store": "npm:0.11.1"
+    use-sync-external-store: "npm:^1.6.0"
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+    react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+  checksum: 10c0/9b43ea1b07cfed9100b9d037a339e6dbef17ff8e7fd4b8968ef76b75c97a20ec3627345adca94135664d6fccd88f48622e1e871c64738ff2f0b0ce24ce365dfd
+  languageName: node
+  linkType: hard
+
+"@tanstack/react-table@npm:^9.2.4":
+  version: 9.2.4
+  resolution: "@tanstack/react-table@npm:9.2.4"
+  dependencies:
+    "@tanstack/react-store": "npm:^0.11.1"
+    "@tanstack/table-core": "npm:9.2.4"
+  peerDependencies:
+    react: ">=18"
+  checksum: 10c0/f68d6da9850e7783773a035186e11744dacaf5ca61075766ecc7d4b5266af2e4afec005f19ac664c1deba6bf5b7586fed90a67372c82127afd8fdaf0473e73b4
+  languageName: node
+  linkType: hard
+
+"@tanstack/store@npm:0.11.1, @tanstack/store@npm:^0.11.1":
+  version: 0.11.1
+  resolution: "@tanstack/store@npm:0.11.1"
+  checksum: 10c0/36e308f3a5037a4d79e2b2ea9f6f4015a617fcd7cb8ff541fe50869b015fb8753b267a8c24709ad197c4c3b5fd85207edc4f71eccaf9b0d311f62336a9cf7764
+  languageName: node
+  linkType: hard
+
+"@tanstack/table-core@npm:9.2.4":
+  version: 9.2.4
+  resolution: "@tanstack/table-core@npm:9.2.4"
+  dependencies:
+    "@tanstack/store": "npm:^0.11.1"
+  checksum: 10c0/fae9e7f3028f45eb2cd3e831365e398a92030d685acdd0458c3c2245eb8456176abd0d5ca208ea58eb9e7a4ccc666c26986269c93bc4ce25603866805bb837b9
+  languageName: node
+  linkType: hard
+
 "@testing-library/cypress@npm:^10.1.0":
   version: 10.1.3
   resolution: "@testing-library/cypress@npm:10.1.3"
@@ -5665,7 +5713,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"deepmerge@npm:^4.2.2, deepmerge@npm:^4.3.1":
+"deepmerge@npm:^4.2.2":
   version: 4.3.1
   resolution: "deepmerge@npm:4.3.1"
   checksum: 10c0/e53481aaf1aa2c4082b5342be6b6d8ad9dfe387bc92ce197a66dea08bd4265904a087e75e464f14d1347cf2ac8afe1e4c16b266e0561cc5df29382d3c5f80044
@@ -8701,6 +8749,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lucide-react@npm:^1.48.0":
+  version: 1.48.0
+  resolution: "lucide-react@npm:1.48.0"
+  peerDependencies:
+    react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
+  checksum: 10c0/62c6703cdd6ff0a85f02414242f480d93a2ebf55ef10e42fc46eb9ef0dcb3c13925a199847e31245dd90d837a791b8670f16a817d0fe0d04c725aeae64d70574
+  languageName: node
+  linkType: hard
+
 "luxon@npm:^3.7.2":
   version: 3.7.2
   resolution: "luxon@npm:3.7.2"
@@ -9837,21 +9894,6 @@ __metadata:
     react: ^19.0.0
     react-dom: ^19.0.0
   checksum: 10c0/9f1106f8aeb21c14d3f0147e447d539d92df5222e4a16fe0d9f6bb86317322a69257a3fa8d42447bf894034a1b5158b900626163ee095be9f74b3ca34b39d03a
-  languageName: node
-  linkType: hard
-
-"react-data-table-component@npm:^7.7.0":
-  version: 7.7.1
-  resolution: "react-data-table-component@npm:7.7.1"
-  dependencies:
-    deepmerge: "npm:^4.3.1"
-  peerDependencies:
-    react: ">= 17.0.0"
-    styled-components: ">= 5.0.0"
-  peerDependenciesMeta:
-    styled-components:
-      optional: false
-  checksum: 10c0/d27a322388b25ccdc69701a245bb4257d3a2f7e9b6de6d36ddf1e1e5397b46d4d21709d43683929abac8cce0314e087ff2b5e4b0ff7a07740a9dca6c3b39155b
   languageName: node
   linkType: hard
 
@@ -11655,7 +11697,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"use-sync-external-store@npm:^1.4.0":
+"use-sync-external-store@npm:^1.4.0, use-sync-external-store@npm:^1.6.0":
   version: 1.7.0
   resolution: "use-sync-external-store@npm:1.7.0"
   peerDependencies:

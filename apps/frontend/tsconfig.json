@@ -21,9 +21,6 @@
       "@/*": [
         "src/*"
       ],
-      "@buffvpn/shared": [
-        "../../apps/shared/src/index.ts"
-      ]
     },
     "allowJs": true,
     "incremental": true,
@@ -31,7 +28,6 @@
   },
   "include": [
     "src",
-    "../../apps/shared/src/**/*"
   ],
   "exclude": [
     "node_modules"

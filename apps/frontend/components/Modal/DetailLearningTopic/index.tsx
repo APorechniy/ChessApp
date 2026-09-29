@@ -69,7 +69,9 @@ export const DetailLearningTopic = () => {
     }, [isRemoveLearningTopic, isUpdateLearningTopic, dispatch])
 
     const closeModal = () => {
-        dispatch(getLearningTopics())
+        if (isUpdateLearningTopic === "SUCCESS" || isRemoveLearningTopic === "SUCCESS") {
+            dispatch(getLearningTopics())
+        }
         dispatch(handleClearUpdateLearningTopic())
         dispatch(handleClearRemoveLearningTopic())
         dispatch(handleCloseModal())
