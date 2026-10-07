@@ -8,6 +8,7 @@ import { handleChangeIsUpdatedAttendance, handleChangeIsRemovedAttendance, handl
 import { type PartialAttendance, type Attendance } from '../../../store/attendance/types'
 import { handleOpenModal } from '../../../store/system'
 import { Calendar, TimeWrapper, AttendanceCard, CoachName, Row, StudentName, Time } from './styled'
+import { getAttendanceTime } from '../../../utils/get-attendance-time'
 
 export const CalendarBoard = () => {
     const [isLoading, setIsLoading] = useState(false)
@@ -90,7 +91,8 @@ export const CalendarBoard = () => {
                         return attendanceColumn.map((attendance) => {
                             const { top, height } = getCoords(attendance.startDate, attendance.endDate)
                             const { cardColor, borderColor } = getCardColors(attendance)
-                            const coachName = attendance.coach ? `${attendance?.coach?.firstName} ${attendance.coach.lastName}` : "Тренер не выбран"
+                            // TODO - переименовать компонент рендера
+                            const attendanceTime = getAttendanceTime(attendance.startDate, attendance.endDate);
 
                             return (
                                 <AttendanceCard
@@ -113,7 +115,7 @@ export const CalendarBoard = () => {
                                                 `${attendance.student.lastName} ${attendance.student.firstName[0]}.`
                                         }
                                     </StudentName>
-                                    <CoachName>{coachName}</CoachName>
+                                    <CoachName>{attendanceTime}</CoachName>
                                 </AttendanceCard>
                             )
                         }
