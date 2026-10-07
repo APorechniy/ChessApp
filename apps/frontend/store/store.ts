@@ -4,6 +4,7 @@ import attendancePresetsReducer from './attendance-presets'
 import authReducer from './auth'
 import chessGamesReducer from './chess-games'
 import chessOpeningsReducer from './chess-openings'
+import homeworksReducer from './homeworks'
 import learningTopicsReducer from './learning-topics'
 import levelsReducer from './levels'
 import paymentsReducer from './payments'
@@ -28,6 +29,7 @@ const reducers = combineReducers({
     auth: authReducer,
     chessGames: chessGamesReducer,
     chessOpenings: chessOpeningsReducer,
+    homeworks: homeworksReducer,
     levels: levelsReducer,
     learningTopics: learningTopicsReducer,
     payments: paymentsReducer,

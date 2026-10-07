@@ -14,7 +14,7 @@ export class Homework {
     name!: string;
 
     @Column({
-        name: "expired_at",
+        name: "expires_at",
         type: "timestamp",
         nullable: false,
         transformer: {
@@ -22,5 +22,5 @@ export class Homework {
             from: (value: string): string | null => sqlToUtc(value)
         }
     })
-    expiredAt!: string;
+    expiresAt!: string;
 }

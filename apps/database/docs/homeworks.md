@@ -11,7 +11,7 @@
         VARCHAR id PK
         VARCHAR attendance_id FK
         TEXT name
-        TIMESTAMP expired_at
+        TIMESTAMP expires_at
     }
 
     HOMEWORK_SOLUTIONS {
@@ -62,7 +62,7 @@
 | \`id\` | \`VARCHAR(36)\` | Уникальный идентификатор домашнего задания (UUID) | \`PRIMARY KEY\`, \`NOT NULL\` |
 | \`attendance_id\` | \`VARCHAR(36)\` | Идентификатор занятия, к которому привязано ДЗ | \`NOT NULL\`, \`FOREIGN KEY\` -> \`attendance(id)\` |
 | \`name\` | \`TEXT\` | Название домашнего задания | \`DEFAULT 'Домашнее задание'\` |
-| \`expired_at\` | \`TIMESTAMP\` | Дата и время, до которого ДЗ должно быть сдано | \`NOT NULL\` |
+| \`expires_at\` | \`TIMESTAMP\` | Дата и время, до которого ДЗ должно быть сдано | \`NOT NULL\` |
 
 ### Каскадные правила
 

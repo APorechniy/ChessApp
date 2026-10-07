@@ -12,6 +12,7 @@ export { ChessOpening } from '@/entities/chess-opening.entity';
 export { CoachView } from '@/entities/coach-view.entity';
 export { Coach } from '@/entities/coach.entity';
 export { Homework } from '@/entities/homework.entity';
+export { HomeworkView } from '@/entities/homework-view.entity';
 export { HomeworkTask } from '@/entities/homework-task.entity';
 export { HomeworkSolution } from '@/entities/homework-solution.entity';
 export { LearningTopicView } from '@/entities/learning-topic-view.entity';

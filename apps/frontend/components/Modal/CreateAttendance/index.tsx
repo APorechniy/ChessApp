@@ -70,7 +70,6 @@ export const CreateAttendance = () => {
     const [group, setGroup] = useState<StudentsGroup>()
     const [tasks, setTasks] = useState<Task[]>([])
     const [additionalTasks, setAdditionalTasks] = useState<Task[]>([])
-    const [homeworkDone, setHomeworkDone] = useState(false)
     const [isOnline, setIsOnline] = useState(false)
     const [meetLink, setMeetLink] = useState<string>("")
     const [startDate, setStartDate, { utcValue: startDateUtc }] = useDateInput();
@@ -160,7 +159,6 @@ export const CreateAttendance = () => {
                 firstName: coach.userData.firstName,
                 lastName: coach.userData.lastName,
             },
-            homeworkDone: homeworkDone,
             isOnline: isOnline,
             meetLink: meetLink,
             isFreeze: false,
@@ -391,11 +389,6 @@ export const CreateAttendance = () => {
                             checked={isOnline}
                             handleChange={() => setIsOnline(!isOnline)}
                             label="Онлайн занятие"
-                        />
-                        <BaseSwitch
-                            checked={homeworkDone}
-                            handleChange={() => setHomeworkDone(!homeworkDone)}
-                            label="ДЗ сделано"
                         />
                     </SwitchesBlock>
                     {

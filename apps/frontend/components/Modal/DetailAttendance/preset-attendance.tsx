@@ -60,7 +60,6 @@ export const PresetAttendance: React.FC<{ selectedAttendance: PartialAttendance 
     const [learningTopic, setLearningTopic] = useState<LearningTopics>()
     const [student, setStudent] = useState<Student>(selectedAttendance.student)
     const [group, setGroup] = useState<StudentsGroup>(selectedAttendance.group)
-    const [homeworkDone, setHomeworkDone] = useState(false)
     const [startDate, setStartDate, { utcValue: startDateUtc }] = useDateInput({ initialValue: selectedAttendance.startDate });
     const [endDate, setEndDate, { utcValue: endDateUtc }] = useDateInput({ initialValue: selectedAttendance.endDate });
     const [tasks, setTasks] = useState([])
@@ -164,7 +163,6 @@ export const PresetAttendance: React.FC<{ selectedAttendance: PartialAttendance 
                 firstName: coach.firstName,
                 lastName: coach.lastName,
             },
-            homeworkDone: homeworkDone,
             isOnline: isOnline,
             meetLink: meetLink,
             isFreeze: false,
@@ -372,20 +370,6 @@ export const PresetAttendance: React.FC<{ selectedAttendance: PartialAttendance 
                             placeholder="Выберите задачи"
                             isDisabled={!Boolean(learningTopic && isLoadingTasks === "SUCCESS") || selectedAttendance.isFreeze}
                         />
-                        {/* <BaseSelect
-                            value={quality?.id || ""}
-                            options={qualitiesList.map((q) => {
-                                return {
-                                    text: `${q.label}`,
-                                    value: q.id
-                                }
-                            })}
-                            placeholder="Прилежность ученика"
-                            handleSelect={handleChangeQuality}
-                            label="Прилежность"
-                            required
-                            isDisabled={selectedAttendance.isFreeze}
-                        /> */}
                         <BaseInput
                             value={startDate}
                             handleInput={(event) => setStartDate(event.target.value)}
@@ -408,12 +392,6 @@ export const PresetAttendance: React.FC<{ selectedAttendance: PartialAttendance 
                             checked={isOnline}
                             handleChange={() => setIsOnline(!isOnline)}
                             label="Онлайн занятие"
-                            isDisabled={selectedAttendance.isFreeze}
-                        />
-                        <BaseSwitch
-                            checked={homeworkDone}
-                            handleChange={() => setHomeworkDone(!homeworkDone)}
-                            label="ДЗ сделано"
                             isDisabled={selectedAttendance.isFreeze}
                         />
                     </SelectsBlock>
