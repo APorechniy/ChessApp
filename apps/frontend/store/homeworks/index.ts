@@ -6,20 +6,55 @@ import { getCurrentHomework } from './thunk/get-current-homework'
 import { freezeHomework } from './thunk/freeze-homework'
 import { deleteHomework } from './thunk/delete-homework'
 import { updateHomework } from './thunk/update-homework'
+import { getHomeworksList } from './thunk/get-homeworks-list'
+import { getHomeworkSolutions } from './thunk/get-homework-solutions'
+import { getHomeworksByStudentId } from './thunk/get-homeworks-by-student-id'
+import { getCurrentSolution } from './thunk/get-current-solution'
+import { getHomeworkTasks } from './thunk/get-homework-tasks'
+import { updateHomeworkSolution } from './thunk/update-homework-solution'
 
 const initialState: HomeworksState = {
+    homeworksList: [],
+    homeworkSolutionsList: [],
     currentHomework: null,
+    currentSolution: null,
+    currentHomeworkTasks: [],
 
+    isLoadingHomeworkTasks: "IDLE",
+    isLoadingHomeworkSolutions: "IDLE",
+    isLoadingHomeworksList: "IDLE",
+    isLoadingCurrentSolution: "IDLE",
     isLoadingHomework: "IDLE",
+    isCreatedSolutionAnswer: "IDLE",
     isCreatedHomework: "IDLE",
     isFreezedHomework: "IDLE",
     isUpdatedHomework: "IDLE",
+    isUpdatedHomeworkSolution: "IDLE",
+    isDeletedHomework: "IDLE",
 }
 
 export const homeworksSlice = createSlice({
     name: 'homeworks',
     initialState,
     reducers: {
+        handleClearIsCreatedSolutionAnswer(state) {
+            state.isCreatedSolutionAnswer = "IDLE"
+        },
+        handleClearIsUpdateHomeworkSolution(state) {
+            state.isUpdatedHomeworkSolution = "IDLE"
+        },
+        handleClearSolutionsList(state) {
+            state.isLoadingHomeworkSolutions = "IDLE"
+            state.homeworkSolutionsList = []
+        },
+        handleClearHomeworkTasks(state) {
+            state.currentHomeworkTasks = []
+            state.isLoadingHomeworkTasks = "IDLE"
+        },
+        handleClearCurrentSolution(state) {
+            state.isLoadingCurrentSolution = "IDLE"
+            state.currentSolution = null
+        },
         handleClearCurrentHomework(state) {
             state.isLoadingHomework = "IDLE"
             state.currentHomework = null
@@ -34,6 +69,19 @@ export const homeworksSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(CLEAR_STORE, () => initialState);
 
+        // get-homeworks-list
+        builder.addCase(getHomeworksList.fulfilled, (state, action) => {
+            state.homeworksList = action.payload.homeworksList;
+            state.isLoadingHomeworksList = action.payload.homeworksList ? "SUCCESS" : "ERROR";
+        });
+        builder.addCase(getHomeworksList.pending, (state) => {
+            state.isLoadingHomeworksList = "PENDING";
+        });
+        builder.addCase(getHomeworksList.rejected, (state) => {
+            state.homeworksList = [];
+            state.isLoadingHomeworksList = "ERROR";
+        });
+
         // get-homework
         builder.addCase(getCurrentHomework.fulfilled, (state, action) => {
             state.currentHomework = action.payload.homework;
@@ -45,6 +93,58 @@ export const homeworksSlice = createSlice({
         builder.addCase(getCurrentHomework.rejected, (state) => {
             state.currentHomework = null;
             state.isLoadingHomework = "ERROR";
+        });
+
+        // get-current-solution
+        builder.addCase(getCurrentSolution.fulfilled, (state, action) => {
+            state.currentSolution = action.payload.solution;
+            state.isLoadingCurrentSolution = action.payload.solution ? "SUCCESS" : "ERROR";
+        });
+        builder.addCase(getCurrentSolution.pending, (state) => {
+            state.isLoadingCurrentSolution = "PENDING";
+        });
+        builder.addCase(getCurrentSolution.rejected, (state) => {
+            state.currentSolution = null;
+            state.isLoadingCurrentSolution = "ERROR";
+        });
+
+        // get-homework-solutions
+        builder.addCase(getHomeworkSolutions.fulfilled, (state, action) => {
+            state.homeworkSolutionsList = action.payload.homeworkSolutionsList || [];
+            state.isLoadingHomeworkSolutions = action.payload.homeworkSolutionsList ? "SUCCESS" : "ERROR";
+        });
+        builder.addCase(getHomeworkSolutions.pending, (state) => {
+            state.isLoadingHomeworkSolutions = "PENDING";
+        });
+        builder.addCase(getHomeworkSolutions.rejected, (state) => {
+            state.homeworkSolutionsList = [];
+            state.isLoadingHomeworkSolutions = "ERROR";
+        });
+
+        // get-homework-tasks
+        builder.addCase(getHomeworkTasks.fulfilled, (state, action) => {
+            state.currentHomeworkTasks = action.payload.homeworkTasks || [];
+            state.isLoadingHomeworkTasks = action.payload.homeworkTasks ? "SUCCESS" : "ERROR";
+        });
+        builder.addCase(getHomeworkTasks.pending, (state) => {
+            state.isLoadingHomeworkTasks = "PENDING";
+        });
+        builder.addCase(getHomeworkTasks.rejected, (state) => {
+            state.currentHomeworkTasks = [];
+            state.isLoadingHomeworkTasks = "ERROR";
+        });
+
+        // get-homeworks-by-student-id
+        builder.addCase(getHomeworksByStudentId.fulfilled, (state, action) => {
+            state.homeworksList = action.payload.homeworksList || [];
+            state.isLoadingHomeworksList = action.payload.homeworksList ? "SUCCESS" : "ERROR";
+        });
+        builder.addCase(getHomeworksByStudentId.pending, (state) => {
+            state.isLoadingHomeworksList = "PENDING";
+        });
+        builder.addCase(getHomeworksByStudentId.rejected, (state) => {
+            state.homeworksList = [];
+            state.isLoadingHomeworksList = "ERROR";
         });
 
         // create-homework
@@ -67,6 +167,17 @@ export const homeworksSlice = createSlice({
         });
         builder.addCase(updateHomework.rejected, (state) => {
             state.isUpdatedHomework = "ERROR";
+        });
+
+        // update-homework-solution
+        builder.addCase(updateHomeworkSolution.fulfilled, (state, action) => {
+            state.isUpdatedHomeworkSolution = action.payload.isUpdatedHomeworkSolution ? "SUCCESS" : "ERROR";
+        });
+        builder.addCase(updateHomeworkSolution.pending, (state) => {
+            state.isUpdatedHomeworkSolution = "PENDING";
+        });
+        builder.addCase(updateHomeworkSolution.rejected, (state) => {
+            state.isUpdatedHomeworkSolution = "ERROR";
         });
 
         // freeze-homework
@@ -94,9 +205,13 @@ export const homeworksSlice = createSlice({
 })
 
 export const {
+    handleClearSolutionsList,
     handleClearCurrentHomework,
     handleClearIsCreatedHomework,
-    handleClearIsDeletedHomework
+    handleClearIsDeletedHomework,
+    handleClearCurrentSolution,
+    handleClearHomeworkTasks,
+    handleClearIsCreatedSolutionAnswer
 } = homeworksSlice.actions
 
 export default homeworksSlice.reducer

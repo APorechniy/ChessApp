@@ -557,7 +557,6 @@ SELECT
     COALESCE(st.tasks_solved_count, 0) AS tasksSolvedCount
 
 FROM students s
--- Привязываем темы напрямую по уровням (students.level_id = learning_topics.level_id)
 LEFT JOIN level_topics_total ltt ON s.level_id = ltt.level_id
 LEFT JOIN student_lessons sl ON s.id = sl.student_id
 LEFT JOIN active_days_array ada ON s.id = ada.student_id
@@ -568,6 +567,45 @@ GROUP BY
     ltt.total_level_topics,
     ada.active_days_json, 
     st.tasks_solved_count;
+
+---
+CREATE OR REPLACE VIEW homework_view AS
+SELECT
+    h.id                                        AS id,
+    h.name                                      AS name,
+    h.expires_at                                AS expiresAt,
+    h.attendance_id                             AS attendanceId,
+    COALESCE(
+        JSON_ARRAYAGG(
+            JSON_OBJECT(
+                'id',         t.id,
+                'name',      t.name,
+                'position',   t.position,
+                'orderIndex', ht.order_index
+            )
+        ),
+        JSON_ARRAY()
+    )                                           AS tasks
+FROM homeworks h
+LEFT JOIN homework_tasks ht ON ht.homework_id = h.id
+LEFT JOIN task_view     t  ON t.id = ht.task_id
+GROUP BY h.id, h.name, h.expires_at, h.attendance_id;
+
+---
+CREATE OR REPLACE VIEW homework_tasks_view AS
+SELECT
+    ht.id                                        AS id,
+    ht.order_index                               AS orderIndex,
+    ht.homework_id                               AS homeworkId,
+    JSON_OBJECT(
+        'id',         tv.id,
+        'name',      tv.name,
+        'position',   tv.position,
+        'learningTopic', tv.learningTopic
+    ) as task
+FROM homework_tasks ht
+LEFT JOIN task_view tv ON tv.id = ht.task_id 
+ORDER BY ht.order_index;
 
 -- FUNCTIONS 
 

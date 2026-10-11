@@ -113,3 +113,69 @@ FROM homeworks h
 LEFT JOIN homework_tasks ht ON ht.homework_id = h.id
 LEFT JOIN tasks_view     t  ON t.id = ht.task_id
 GROUP BY h.id, h.name, h.expires_at, h.attendance_id;
+
+---
+CREATE OR REPLACE VIEW homework_solution_view (
+    id, 
+    student, 
+    homework, 
+    status, 
+    startedAt, 
+    finishedAt
+) AS
+SELECT 
+    hs.id,
+    CASE 
+        WHEN sv.id IS NULL THEN NULL
+        ELSE JSON_OBJECT(
+            'id', sv.id,
+            'firstName', sv.firstName,
+            'lastName', sv.lastName,
+            'birthDate', sv.birthDate,
+            'level', sv.level,
+            'fshrId', sv.fshrId,
+            'fideId', sv.fideId,
+            'phone', sv.phone,
+            'email', sv.email,
+            'joinDate', sv.joinDate,
+            'notes', sv.notes,
+            'paidLessons', sv.paidLessons,
+            'isExcluded', sv.isExcluded,
+            'balance', sv.balance
+        )
+    END AS student,
+
+    CASE 
+        WHEN hw.id IS NULL THEN NULL
+        ELSE JSON_OBJECT(
+            'id', hw.id,
+            'name', hw.name,
+            'expiresAt', hw.expiresAt,
+            'attendanceId', hw.attendanceId,
+            'tasks', CAST(hw.tasks AS JSON)
+        )
+    END AS homework,
+
+    hs.status,
+    hs.started_at AS startedAt,
+    hs.finished_at AS finishedAt
+
+FROM homework_solutions hs
+LEFT JOIN student_view sv ON hs.student_id = sv.id
+LEFT JOIN homework_view hw ON hs.homework_id = hw.id;
+
+---
+CREATE OR REPLACE VIEW homework_tasks_view AS
+SELECT
+    ht.id                                        AS id,
+    ht.order_index                               AS orderIndex,
+    ht.homework_id                               AS homeworkId,
+    JSON_OBJECT(
+        'id',         tv.id,
+        'name',      tv.name,
+        'position',   tv.position,
+        'learningTopic', tv.learningTopic
+    ) as task
+FROM homework_tasks ht
+LEFT JOIN task_view tv ON tv.id = ht.task_id 
+ORDER BY ht.order_index;

@@ -1,13 +1,33 @@
 import { type HomeworkRepository } from "@/repositories/HomeworkRepository";
 import { v4 as uuidv4 } from "uuid";
-import { HomeworkSolution, type HomeworkTask, type StudentsAttendedView, type Homework, HomeworkView } from "@/entities";
+import { HomeworkSolution, type HomeworkTask, type StudentsAttendedView, type Homework, HomeworkView, HomeworkSolutionView, HomeworkTasksView, SolutionAnswer } from "@/entities";
 import { HomeworkSolutionStatus } from "@/entities/homework-solution.entity";
 
 export class HomeworksService {
     constructor(private homeworksRepository: HomeworkRepository) { }
 
+    async getHomeworksList(): Promise<Homework[] | null> {
+        return (await this.homeworksRepository.getHomeworks())
+    }
+
     async getHomeworkByAttendanceId(attendanceId: string): Promise<Homework | null> {
         return (await this.homeworksRepository.getHomeworksByAttendanceId(attendanceId))
+    }
+
+    async getHomeworkByStudentId(studentId: string): Promise<Homework[] | null> {
+        return (await this.homeworksRepository.getHomeworksByStudentId(studentId))
+    }
+
+    async getSolutionsListByHomeworkId(homeworkId: string): Promise<HomeworkSolutionView[]> {
+        return (await this.homeworksRepository.getSolutionsListByHomeworkId(homeworkId))
+    }
+
+    async getHomeworkTasks(homeworkId: string): Promise<HomeworkTasksView[]> {
+        return (await this.homeworksRepository.getTasksByHomeworkId(homeworkId))
+    }
+
+    async getSolutionByStudentkId(homeworkId: string, studentId: string): Promise<HomeworkSolutionView | null> {
+        return (await this.homeworksRepository.getSolutionByStudentId(homeworkId, studentId))
     }
 
     async createHomework(
@@ -56,9 +76,9 @@ export class HomeworksService {
         const isUpdatedHomework = await this.homeworksRepository.updateHomework(homework)
 
         if (isUpdatedHomework) {
-            const currentTasks: HomeworkTask[] = await this.homeworksRepository.getTasksByHomeworkId(homework.id)
-            const excludedTasks = currentTasks.filter((ct) => !(homework.tasks.some(ht => ht.id === ct.taskId))).map(t => t.id)
-            const newTasks = homework.tasks.filter((ht) => !(currentTasks.some(ct => ct.taskId === ht.id))).map((ht, idx) => ({
+            const currentTasks: HomeworkTasksView[] = await this.homeworksRepository.getTasksByHomeworkId(homework.id)
+            const excludedTasks = currentTasks.filter((ct) => !(homework.tasks.some(ht => ht.id === ct.task?.id))).map(t => t.id)
+            const newTasks = homework.tasks.filter((ht) => !(currentTasks.some(ct => ct.task?.id === ht.id))).map((ht, idx) => ({
                 id: uuidv4(),
                 orderIndex: idx,
                 homeworkId: homework.id,
@@ -74,5 +94,30 @@ export class HomeworksService {
 
     async deleteHomework(homeworkId: string): Promise<boolean> {
         return await this.homeworksRepository.deleteHomework(homeworkId)
+    }
+
+    // Решения студентов
+    async updateHomeworkSolution(homeworkSolution: HomeworkSolutionView): Promise<boolean> {
+        const homeworkSolutionUpdated: HomeworkSolution = {
+            id: homeworkSolution.id,
+            status: homeworkSolution.status,
+            startedAt: homeworkSolution.startedAt,
+            finishedAt: homeworkSolution.finishedAt,
+            studentId: homeworkSolution.student?.id as string,
+            homeworkId: homeworkSolution.homework?.id as string
+        }
+
+        return await this.homeworksRepository.updateHomeworkSolution(homeworkSolutionUpdated)
+    }
+
+    // Ответы студентов
+    async addSolutionAnswer(solutionAnswer: Omit<SolutionAnswer, "id">): Promise<boolean> {
+        const fullAnswer = {
+            id: uuidv4(),
+            ...solutionAnswer
+        }
+        const created = Boolean(await this.homeworksRepository.addSolutionAnswer(fullAnswer))
+
+        return created
     }
 }

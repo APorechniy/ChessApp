@@ -22,6 +22,8 @@ export const ContentBlock = styled.div.attrs((props) => ({
     width: 100%;
     flex: 1;
 
+    position: relative;
+
     background: var(--primary-block-background-light);
 
     border-radius: 2rem;
@@ -32,4 +34,12 @@ export const ContentBlock = styled.div.attrs((props) => ({
 
     overflow-y: scroll;
     overflow-x: hidden;
+`
+
+
+export const BackButton = styled.div`
+    position: absolute;
+
+    top: 1.6rem;
+    left: 3.2rem;
 `

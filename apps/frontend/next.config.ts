@@ -8,7 +8,7 @@ const BACKEND_URL =
 
 const nextConfig: NextConfig = {
   output: 'standalone',
-  reactStrictMode: true,
+  reactStrictMode: false,
   outputFileTracingRoot: path.join(__dirname, '../../'),
 
   eslint: {

@@ -15,6 +15,9 @@ export class SolutionAnswer {
     @PrimaryGeneratedColumn('uuid')
     id!: string;
 
+    @Column({ name: "homework_id", type: "varchar", length: 36 })
+    homeworkId!: string;
+
     @Column({ name: "homework_solution_id", type: "varchar", length: 36 })
     homeworkSolutionId!: string;
 
