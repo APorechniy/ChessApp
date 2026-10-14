@@ -10,7 +10,12 @@ const nextConfig: NextConfig = {
   output: 'standalone',
   reactStrictMode: false,
   outputFileTracingRoot: path.join(__dirname, '../../'),
-
+  outputFileTracingIncludes: {
+    '/**/*': [
+      './**/node_modules/async-function/**/*',
+      './**/node_modules/async-generator-function/**/*',
+    ],
+  },
   eslint: {
     dirs: ['pages', 'utils', 'components', 'store', 'hooks'],
   },
