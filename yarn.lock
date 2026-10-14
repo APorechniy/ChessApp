@@ -61,12 +61,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@app/database@workspace:apps/database":
-  version: 0.0.0-use.local
-  resolution: "@app/database@workspace:apps/database"
-  languageName: unknown
-  linkType: soft
-
 "@app/frontend@workspace:apps/frontend":
   version: 0.0.0-use.local
   resolution: "@app/frontend@workspace:apps/frontend"

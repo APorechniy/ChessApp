@@ -101,9 +101,8 @@ SELECT
         JSON_ARRAYAGG(
             JSON_OBJECT(
                 'id',         t.id,
-                'title',      t.title,
-                'fen',        t.fen,
-                'difficulty', t.difficulty,
+                'name',      t.name,
+                'position',   t.position,
                 'orderIndex', ht.order_index
             )
         ),
@@ -111,8 +110,9 @@ SELECT
     )                                           AS tasks
 FROM homeworks h
 LEFT JOIN homework_tasks ht ON ht.homework_id = h.id
-LEFT JOIN tasks_view     t  ON t.id = ht.task_id
+LEFT JOIN task_view     t  ON t.id = ht.task_id
 GROUP BY h.id, h.name, h.expires_at, h.attendance_id;
+
 
 ---
 CREATE OR REPLACE VIEW homework_solution_view (
