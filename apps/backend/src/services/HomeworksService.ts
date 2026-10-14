@@ -1,6 +1,6 @@
 import { type HomeworkRepository } from "@/repositories/HomeworkRepository";
 import { v4 as uuidv4 } from "uuid";
-import { HomeworkSolution, type HomeworkTask, type StudentsAttendedView, type Homework, HomeworkView, HomeworkSolutionView, HomeworkTasksView, SolutionAnswer } from "@/entities";
+import { HomeworkSolution, type HomeworkTask, type StudentsAttendedView, type Homework, HomeworkView, HomeworkSolutionView, HomeworkTasksView, SolutionAnswer, SolutionAnswerView } from "@/entities";
 import { HomeworkSolutionStatus } from "@/entities/homework-solution.entity";
 
 export class HomeworksService {
@@ -111,6 +111,10 @@ export class HomeworksService {
     }
 
     // Ответы студентов
+    async getSolutionAnswers(homeworkId: string, solutionId: string): Promise<SolutionAnswerView[]> {
+        return await this.homeworksRepository.getSolutionAnswers(homeworkId, solutionId);
+    }
+
     async addSolutionAnswer(solutionAnswer: Omit<SolutionAnswer, "id">): Promise<boolean> {
         const fullAnswer = {
             id: uuidv4(),
@@ -119,5 +123,23 @@ export class HomeworksService {
         const created = Boolean(await this.homeworksRepository.addSolutionAnswer(fullAnswer))
 
         return created
+    }
+
+    async updateSolutionAnswer(solutionAnswer: SolutionAnswerView): Promise<boolean> {
+        const solutionAnswerDto: SolutionAnswer = {
+            id: solutionAnswer.id,
+            homeworkId: solutionAnswer.homeworkId,
+            homeworkSolutionId: solutionAnswer.homeworkSolutionId,
+            homeworkTaskId: solutionAnswer.homeworkTask.id,
+            answerText: solutionAnswer.answerText,
+            startedAt: solutionAnswer.startedAt,
+            submittedAt: solutionAnswer.submittedAt,
+            checkedAt: solutionAnswer.checkedAt,
+            status: solutionAnswer.status,
+            coachComment: solutionAnswer.coachComment,
+        }
+        const updated = Boolean(await this.homeworksRepository.updateSolutionAnswer(solutionAnswerDto))
+
+        return updated
     }
 }

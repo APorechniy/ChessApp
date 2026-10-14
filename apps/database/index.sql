@@ -468,6 +468,26 @@ FROM attendance_preset ap
 LEFT JOIN student_view s ON s.id = ap.student_id 
 LEFT JOIN students_group_view sgv ON sgv.id = ap.students_group_id;
 
+---
+CREATE OR REPLACE VIEW solution_answer_view AS
+SELECT
+    sa.id                                        AS id,
+    sa.homework_id                               AS homeworkId,
+    sa.homework_solution_id                      AS homeworkSolutionId,
+    JSON_OBJECT(
+        'id',         htv.id,
+        'orderIndex', htv.orderIndex,
+        'task',       htv.task
+    )                                           AS homeworkTask,
+    sa.answer_text                              AS answerText,
+    sa.started_at                               AS startedAt,
+    sa.submitted_at                             AS submittedAt,
+    sa.checked_at                               AS checkedAt,
+    sa.status,
+    sa.coach_comment                            AS coachComment
+FROM solution_answers sa
+LEFT JOIN homework_tasks_view htv ON htv.id = sa.homework_task_id;
+
 --
 CREATE OR REPLACE VIEW student_statistic AS
 WITH 

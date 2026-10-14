@@ -27,6 +27,7 @@ export { Quality } from '@/entities/quality.entity';
 export { SettingsView } from '@/entities/settings-view.entity';
 export { Settings } from '@/entities/settings.entity';
 export { SolutionAnswer } from '@/entities/solution-answer.entity';
+export { SolutionAnswerView } from '@/entities/solution-answer-view.entity';
 export { StudentView } from '@/entities/student-view.entity';
 export { Student } from '@/entities/student.entity';
 export { StudentStatistic } from '@/entities/student-statistic-view.entity';

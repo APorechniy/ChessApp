@@ -1,8 +1,8 @@
 import { useMemo } from "react";
 import { type Homework } from "../store/homeworks/types";
 
-const getSectionKey = (expiresAt: string): string => {
-    const date = new Date(expiresAt);
+const getSectionKey = (item: Homework): string => {
+    const date = new Date(item.expiresAt);
     const now = new Date();
 
     if (date.getTime() < now.getTime()) {
@@ -39,7 +39,7 @@ export const useGroupedHomeworks = (homeworksList?: Homework[]) => {
         );
 
         return sorted.reduce<Record<string, Homework[]>>((acc, item) => {
-            const groupKey = getSectionKey(item.expiresAt);
+            const groupKey = getSectionKey(item);
             if (!acc[groupKey]) {
                 acc[groupKey] = [];
             }

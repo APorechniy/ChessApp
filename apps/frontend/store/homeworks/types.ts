@@ -54,6 +54,20 @@ export type SolutionAnswer = {
     coachComment?: string,
 }
 
+// TODO - привести к одному виду 
+export type SolutionAnswerView = {
+    id: string,
+    homeworkId: string,
+    homeworkSolutionId: string,
+    homeworkTask: HomeworkTask,
+    answerText?: string,
+    startedAt?: string,
+    submittedAt?: string,
+    checkedAt?: string,
+    status: SolutionAnswerStatus,
+    coachComment?: string,
+}
+
 export type SolutionAnswerWithoutId = Omit<SolutionAnswer, "id">
 
 export type HomeworkWithoutId = Omit<Homework, "id">
@@ -64,16 +78,19 @@ export type HomeworksState = {
     currentHomework: Homework | null,
     currentSolution: HomeworkSolution | null,
     currentHomeworkTasks: HomeworkTask[],
+    studentAnswers: SolutionAnswerView[],
 
     isLoadingHomeworkSolutions: RequestStatus,
     isLoadingHomeworksList: RequestStatus,
     isLoadingCurrentSolution: RequestStatus,
     isLoadingHomeworkTasks: RequestStatus,
+    isLoadingStudentAnswers: RequestStatus,
     isLoadingHomework: RequestStatus,
     isCreatedSolutionAnswer: RequestStatus,
     isCreatedHomework: RequestStatus,
     isFreezedHomework: RequestStatus,
     isUpdatedHomework: RequestStatus,
     isUpdatedHomeworkSolution: RequestStatus,
+    isUpdatedSolutionAnswer: RequestStatus,
     isDeletedHomework: RequestStatus,
 }

@@ -12,6 +12,8 @@ export const CardWrapper = styled.article`
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
   transition: all 0.2s ease-in-out;
 
+  cursor: pointer;
+
   &:hover {
     box-shadow: 0 8px 24px rgba(83, 114, 231, 0.08);
     border-color: var(--secondary-border-color);
@@ -34,33 +36,33 @@ export const StudentName = styled.h3`
 `;
 
 const getStatusColor = (status: HomeworkSolutionStatus) => {
-    switch (status) {
-        case HomeworkSolutionStatus.New:
-            return {
-                bg: "var(--secondary-background-light)",
-                color: "var(--primary-placeholder-color)",
-            };
-        case HomeworkSolutionStatus.InProgress:
-            return {
-                bg: "rgba(255, 159, 36, 0.15)",
-                color: "var(--primary-orange)",
-            };
-        case HomeworkSolutionStatus.Solved:
-            return {
-                bg: "var(--light-selected-background)",
-                color: "var(--secondary-text)",
-            };
-        case HomeworkSolutionStatus.Checked:
-            return {
-                bg: "rgba(46, 204, 113, 0.15)",
-                color: "#27ae60",
-            };
-        default:
-            return {
-                bg: "var(--secondary-background-light)",
-                color: "var(--primary-text)",
-            };
-    }
+  switch (status) {
+    case HomeworkSolutionStatus.New:
+      return {
+        bg: "var(--secondary-background-light)",
+        color: "var(--primary-placeholder-color)",
+      };
+    case HomeworkSolutionStatus.InProgress:
+      return {
+        bg: "rgba(255, 159, 36, 0.15)",
+        color: "var(--primary-orange)",
+      };
+    case HomeworkSolutionStatus.Solved:
+      return {
+        bg: "var(--light-selected-background)",
+        color: "var(--secondary-text)",
+      };
+    case HomeworkSolutionStatus.Checked:
+      return {
+        bg: "rgba(46, 204, 113, 0.15)",
+        color: "#27ae60",
+      };
+    default:
+      return {
+        bg: "var(--secondary-background-light)",
+        color: "var(--primary-text)",
+      };
+  }
 };
 
 export const StatusBadge = styled.span<{ $status: HomeworkSolutionStatus }>`

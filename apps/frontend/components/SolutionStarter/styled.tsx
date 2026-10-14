@@ -46,33 +46,33 @@ export const Title = styled.h1`
 `;
 
 const getStatusBadgeStyle = (status: HomeworkSolutionStatus) => {
-    switch (status) {
-        case HomeworkSolutionStatus.New:
-            return {
-                bg: "var(--secondary-background-light)",
-                color: "var(--primary-placeholder-color)",
-            };
-        case HomeworkSolutionStatus.InProgress:
-            return {
-                bg: "rgba(255, 159, 36, 0.15)",
-                color: "var(--primary-orange)",
-            };
-        case HomeworkSolutionStatus.Solved:
-            return {
-                bg: "var(--light-selected-background)",
-                color: "var(--secondary-text)",
-            };
-        case HomeworkSolutionStatus.Checked:
-            return {
-                bg: "rgba(46, 204, 113, 0.15)",
-                color: "#27ae60",
-            };
-        default:
-            return {
-                bg: "var(--secondary-background-light)",
-                color: "var(--primary-text)",
-            };
-    }
+  switch (status) {
+    case HomeworkSolutionStatus.New:
+      return {
+        bg: "var(--secondary-background-light)",
+        color: "var(--primary-placeholder-color)",
+      };
+    case HomeworkSolutionStatus.InProgress:
+      return {
+        bg: "rgba(255, 159, 36, 0.15)",
+        color: "var(--primary-orange)",
+      };
+    case HomeworkSolutionStatus.Solved:
+      return {
+        bg: "var(--light-selected-background)",
+        color: "var(--secondary-text)",
+      };
+    case HomeworkSolutionStatus.Checked:
+      return {
+        bg: "rgba(46, 204, 113, 0.15)",
+        color: "#27ae60",
+      };
+    default:
+      return {
+        bg: "var(--secondary-background-light)",
+        color: "var(--primary-text)",
+      };
+  }
 };
 
 export const StatusBadge = styled.span<{ $status: HomeworkSolutionStatus }>`
@@ -115,17 +115,18 @@ export const ActionsContainer = styled.footer`
 export const StatusMessage = styled.div<{ $variant: "solved" | "checked" }>`
   width: 100%;
   padding: 1.8rem;
+  box-sizing: border-box;
   border-radius: 1.2rem;
   text-align: center;
   font-size: 1.6rem;
   font-weight: 600;
   background-color: ${({ $variant }) =>
-        $variant === "solved"
-            ? "var(--light-selected-background)"
-            : "rgba(46, 204, 113, 0.12)"};
+    $variant === "solved"
+      ? "var(--light-selected-background)"
+      : "rgba(46, 204, 113, 0.12)"};
   color: ${({ $variant }) =>
-        $variant === "solved" ? "var(--secondary-text)" : "#27ae60"};
+    $variant === "solved" ? "var(--secondary-text)" : "#27ae60"};
   border: 1px solid
     ${({ $variant }) =>
-        $variant === "solved" ? "var(--secondary-border-color)" : "transparent"};
+    $variant === "solved" ? "var(--secondary-border-color)" : "transparent"};
 `;

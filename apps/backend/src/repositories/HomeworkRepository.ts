@@ -1,5 +1,5 @@
 import { type DataSource, Repository, In } from "typeorm";
-import { Homework, HomeworkSolution, HomeworkSolutionView, HomeworkTask, HomeworkTasksView, HomeworkView, SolutionAnswer } from "@/entities";
+import { Homework, HomeworkSolution, HomeworkSolutionView, HomeworkTask, HomeworkTasksView, HomeworkView, SolutionAnswer, SolutionAnswerView } from "@/entities";
 
 export class HomeworkRepository {
     private tableRepo: Repository<Homework>;
@@ -9,6 +9,7 @@ export class HomeworkRepository {
     private solutionsRepo: Repository<HomeworkSolution>;
     private solutionsView: Repository<HomeworkSolutionView>;
     private solutionAnswersRepo: Repository<SolutionAnswer>;
+    private solutionAnswerViewRepo: Repository<SolutionAnswerView>;
 
     constructor(dataSource: DataSource) {
         this.tableRepo = dataSource.getRepository(Homework);
@@ -18,6 +19,7 @@ export class HomeworkRepository {
         this.solutionsRepo = dataSource.getRepository(HomeworkSolution);
         this.solutionsView = dataSource.getRepository(HomeworkSolutionView);
         this.solutionAnswersRepo = dataSource.getRepository(SolutionAnswer);
+        this.solutionAnswerViewRepo = dataSource.getRepository(SolutionAnswerView);
     }
 
     async getHomeworks(): Promise<Homework[]> {
@@ -136,8 +138,24 @@ export class HomeworkRepository {
     }
 
     // Ответы учеников
+    async getSolutionAnswers(homeworkId: string, solutionId: string): Promise<SolutionAnswerView[]> {
+        const solutionAnswers = this.solutionAnswerViewRepo.find({
+            where: {
+                homeworkId: homeworkId,
+                homeworkSolutionId: solutionId
+            }
+        })
+
+        return solutionAnswers
+    }
+
     async addSolutionAnswer(solutionAnswer: SolutionAnswer): Promise<SolutionAnswer> {
         const created = this.solutionAnswersRepo.create(solutionAnswer);
         return await this.solutionAnswersRepo.save(created)
+    }
+
+    async updateSolutionAnswer(solutionAnswer: SolutionAnswer): Promise<boolean> {
+        const updated = await this.solutionAnswersRepo.update({ id: solutionAnswer.id }, solutionAnswer);
+        return Boolean(updated)
     }
 }

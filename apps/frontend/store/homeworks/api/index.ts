@@ -10,6 +10,8 @@ import getCurrentSolution from "./get-current-solution"
 import getHomeworkTasks from "./get-homework-tasks"
 import createSolutionAnswer from "./create-solution-answer"
 import updateHomeworkSolution from "./update-homework-solution"
+import getStudentAnswers from "./get-student-answers"
+import updateSolutionAnswer from "./update-solution-answer"
 
 export const homeworksApi = {
     getCurrentHomework,
@@ -18,10 +20,12 @@ export const homeworksApi = {
     getHomeworksByStudentId,
     getHomeworkTasks,
     getCurrentSolution,
+    getStudentAnswers,
     createHomework,
     createSolutionAnswer,
     freezeHomework,
     deleteHomework,
     updateHomework,
     updateHomeworkSolution,
+    updateSolutionAnswer
 }

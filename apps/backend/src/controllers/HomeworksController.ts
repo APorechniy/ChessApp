@@ -1,7 +1,7 @@
 import type { Request, Response, NextFunction, Application } from "express";
 import type { HomeworksService } from "@/services";
 import { authCheck } from "../interceptors/auth-check";
-import { type StudentsAttendedView, type HomeworkView, type SolutionAnswer, HomeworkSolutionView } from "@/entities";
+import { type StudentsAttendedView, type HomeworkView, type SolutionAnswer, HomeworkSolutionView, SolutionAnswerView } from "@/entities";
 
 type FreezeHomeworkBody = {
     homework: HomeworkView,
@@ -36,6 +36,11 @@ type GetHomeworkTasksQuery = {
     homeworkId: string
 }
 
+type GetHomeworkAnswers = {
+    homeworkId: string;
+    solutionId: string;
+}
+
 type GetSolutionByHomeworkAndStudentIdsQuery = {
     homeworkId: string;
     studentId: string;
@@ -47,6 +52,10 @@ type CreateHomeworkBody = {
 
 type CreateSolutionAnswerBody = {
     solutionAnswer: Omit<SolutionAnswer, "id">;
+};
+
+type UpdateSolutionAnswerBody = {
+    solutionAnswer: SolutionAnswerView;
 };
 
 export class HomeworksController {
@@ -186,6 +195,34 @@ export class HomeworksController {
         }
     }
 
+    async getHomeworkAnswers(req: Request, res: Response, next: NextFunction) {
+        try {
+            const { homeworkId, solutionId } = req.params as GetHomeworkAnswers;
+
+            const homeworkAnswers = await this.homeworksService.getSolutionAnswers(
+                homeworkId,
+                solutionId
+            );
+
+            if (homeworkAnswers) {
+                res.status(200).send({
+                    homeworkAnswers: homeworkAnswers,
+                });
+            } else {
+                res.status(404).send({
+                    homeworkAnswers: null,
+                });
+            }
+
+
+        } catch (error: any) {
+            this.logger.error(error);
+            res.status(500).send({
+                error: error?.message,
+            });
+        }
+    }
+
     async getSolutionByStudentId(req: Request, res: Response, next: NextFunction) {
         try {
             const { homeworkId, studentId } = req.params as GetSolutionByHomeworkAndStudentIdsQuery;
@@ -268,6 +305,39 @@ export class HomeworksController {
 
             res.status(200).send({
                 isCreatedAnswer: isCreatedAnswer,
+            });
+
+            return;
+        } catch (error: any) {
+            this.logger.error(error);
+            res.status(500).send({
+                error: error?.message,
+            });
+        }
+    }
+
+    async updateSolutionAnswer(req: Request, res: Response, next: NextFunction) {
+        try {
+            const { solutionAnswer } = req.body as UpdateSolutionAnswerBody;
+
+            if (
+                !solutionAnswer ||
+                !solutionAnswer.answerText ||
+                !solutionAnswer.homeworkTask.id ||
+                !solutionAnswer.homeworkSolutionId
+            ) {
+                throw new Error("Invalid solution answer");
+            }
+
+            const isUpdatedSolutionAnswer =
+                await this.homeworksService.updateSolutionAnswer(solutionAnswer);
+
+            if (!isUpdatedSolutionAnswer) {
+                throw new Error("Can not update solution answer");
+            }
+
+            res.status(200).send({
+                isUpdatedSolutionAnswer: isUpdatedSolutionAnswer,
             });
 
             return;
@@ -424,11 +494,17 @@ export class HomeworksController {
         app.get("/homeworks/tasks/:homeworkId", authCheck, (req, res, next) =>
             this.getHomeworkTasks(req, res, next)
         )
+        app.get("/homeworks/answers/:homeworkId/:solutionId", authCheck, (req, res, next) =>
+            this.getHomeworkAnswers(req, res, next)
+        )
         app.post("/homeworks/", authCheck, (req, res, next) =>
             this.createHomework(req, res, next),
         )
         app.post("/homeworks/solutions/answer", (req, res, next) =>
             this.createSolutionAnswer(req, res, next),
+        )
+        app.patch("/homeworks/solutions/answer", (req, res, next) =>
+            this.updateSolutionAnswer(req, res, next),
         )
         app.patch("/homeworks/", authCheck, (req, res, next) =>
             this.updateHomework(req, res, next),
