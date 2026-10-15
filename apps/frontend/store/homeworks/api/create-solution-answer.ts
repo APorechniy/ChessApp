@@ -1,5 +1,5 @@
 import { type SolutionAnswerWithoutId } from "../types";
-import { api } from "../../../axios";
+import { api } from "../../../network/instance";
 
 export type CreateSolutionAnswerParams = {
     solutionAnswer: SolutionAnswerWithoutId,

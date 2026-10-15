@@ -1,5 +1,5 @@
 import { type HomeworkTask } from "../types";
-import { api } from "../../../axios";
+import { api } from "../../../network/instance";
 
 type Response = {
     homeworkTasks: HomeworkTask[] | null;

@@ -1,5 +1,5 @@
 import { type Homework } from "../types";
-import { api } from "../../../axios";
+import { api } from "../../../network/instance";
 import { type StudentsAttended } from "../../students-attended/types";
 
 export type FreezeHomeworkParams = {

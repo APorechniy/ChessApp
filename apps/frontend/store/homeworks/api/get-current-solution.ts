@@ -1,5 +1,5 @@
 import { type HomeworkSolution } from "../types";
-import { api } from "../../../axios";
+import { api } from "../../../network/instance";
 
 type Response = {
     solution: HomeworkSolution | null;

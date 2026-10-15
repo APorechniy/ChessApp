@@ -1,5 +1,5 @@
 import { type ChessOpening } from "../types";
-import { api } from "../../../axios";
+import { api } from "../../../network/instance";
 
 type Response = {
     chessOpeningsList: ChessOpening[];

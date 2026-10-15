@@ -1,5 +1,5 @@
 import { type Level } from "../types";
-import { api } from "../../../axios";
+import { api } from "../../../network/instance";
 
 type Response = {
     levelsList: Level[];
