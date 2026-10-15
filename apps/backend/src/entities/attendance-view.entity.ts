@@ -34,14 +34,6 @@ export class AttendanceView {
         lastName: CoachView["lastName"],
     };
 
-    @ViewColumn({
-        transformer: {
-            to: (value: boolean): boolean => value,
-            from: (value: number): boolean => Boolean(value)
-        }
-    })
-    homeworkDone?: boolean;
-
     @ViewColumn()
     quality?: Omit<QualityView, "labelFor">;
 

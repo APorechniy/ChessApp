@@ -11,7 +11,7 @@ import { BaseSelect } from "../../../atoms/BaseSelect"
 import { type AttendanceTypes, type Attendance } from "../../../store/attendance/types"
 import { BaseSwitch } from "../../../atoms/BaseSwitch"
 import { getAttendances } from "../../../store/attendance/thunk/get-attendances"
-import { DetailAttendanceModal, DetailAttendanceForm, DetailAttendanceFormTitle, InputsBlock, SelectsBlock, CloseButton, StudentsBlock, DetailAttendanceSubtitle, StudentsAttendedList, StudentsAttendedRow, StudentsAttendedName } from "./styled"
+import { DetailAttendanceModal, DetailAttendanceForm, DetailAttendanceFormTitle, InputsBlock, SelectsBlock, CloseButton, StudentsBlock, DetailAttendanceSubtitle, StudentsAttendedList, StudentsAttendedRow, StudentsAttendedName, HomeworkBlock } from "./styled"
 import { updateAttendance } from "../../../store/attendance/thunk/update-attendance"
 import { LearningTopics } from "../../../store/learning-topics/types"
 import { getLearningTopics } from "../../../store/learning-topics/thunk/get-learning-topics"
@@ -20,7 +20,6 @@ import { getFilteredTasks, getTasks } from "../../../store/tasks/thunk/get-tasks
 import { MultiSelect } from "../../../atoms/MultiSelect"
 import type { Task } from "../../../store/tasks/types"
 import type { Quality } from "../../../store/quality/types"
-import { getQualitiesList } from "../../../store/quality/thunk/get-qualities-list"
 import { updateAndFreezeAttendance } from "../../../store/attendance/thunk/update-and-freeze-attendance"
 import { removeAttendance } from "../../../store/attendance/thunk/remove-attendance"
 import { handleChangeIsRemovedAttendance, handleChangeIsUpdatedAttendance } from "../../../store/attendance"
@@ -32,6 +31,13 @@ import { StudentsAttended } from "../../../store/students-attended/types"
 import { handleClearStudentsAttended } from "../../../store/students-attended"
 import { StudentsGroup } from "../../../store/students-groups/types"
 import { getStudentsGroups } from "../../../store/students-groups/thunk/get-students-groups"
+import { type Homework, type HomeworkWithoutId } from "../../../store/homeworks/types"
+import { createHomework } from "../../../store/homeworks/thunk/create-homework"
+import { getCurrentHomework } from "../../../store/homeworks/thunk/get-current-homework"
+import { freezeHomework } from "../../../store/homeworks/thunk/freeze-homework"
+import { handleClearCurrentHomework, handleClearIsDeletedHomework } from "../../../store/homeworks"
+import { deleteHomework } from "../../../store/homeworks/thunk/delete-homework"
+import { updateHomework } from "../../../store/homeworks/thunk/update-homework"
 
 type Option = { text: string, value: string }
 
@@ -57,12 +63,13 @@ const ATTENDANCE_TYPES: AttendanceTypeOption[] = [
 
 export const MainAttendance: React.FC<{ selectedAttendance: Attendance }> = ({ selectedAttendance }) => {
     const { isUpdatedAttendance, isRemovedAttendance, selectedDate } = useAppSelector(({ attendance }) => attendance)
+    const { currentHomework, isLoadingHomework, isDeletedHomework } = useAppSelector(({ homeworks }) => homeworks)
 
     const [coach, setCoach] = useState<{ id: string; firstName: string; lastName: string; }>(selectedAttendance.coach)
+    const [isOpenHomeworkForm, setIsOpenHomeworkForm] = useState<boolean>(Boolean(currentHomework))
     const [learningTopic, setLearningTopic] = useState<LearningTopics>(selectedAttendance.learningTopic)
     const [student, setStudent] = useState<Student>(selectedAttendance.student)
     const [group, setGroup] = useState<StudentsGroup>(selectedAttendance.group)
-    const [homeworkDone, setHomeworkDone] = useState(selectedAttendance.homeworkDone)
     const [startDate, setStartDate, { utcValue: startDateUtc }] = useDateInput({ initialValue: selectedAttendance.startDate });
     const [endDate, setEndDate, { utcValue: endDateUtc }] = useDateInput({ initialValue: selectedAttendance.endDate });
     const [tasks, setTasks] = useState(selectedAttendance.tasks || [])
@@ -73,6 +80,11 @@ export const MainAttendance: React.FC<{ selectedAttendance: Attendance }> = ({ s
     const [quality, setQuality] = useState<Quality>(selectedAttendance.quality)
     const [type, setType] = useState<AttendanceTypes>(selectedAttendance.type)
 
+    // HOMEWORK
+    const [homeworkName, setHomeworkName] = useState<string>(currentHomework?.name || '')
+    const [homeworkTasks, setHomeworkTasks] = useState<Task[]>(currentHomework?.tasks || [])
+    const [homeworkDueDate, setHomeworkDueDate, { utcValue: homeworkDueDateUtc }] = useDateInput({ initialValue: currentHomework?.expiresAt });
+
     const dispatch = useAppDispatch()
 
     const { studentsGroups, isLoadingStudentsGroups } = useAppSelector(({ studentsGroups }) => studentsGroups)
@@ -81,10 +93,12 @@ export const MainAttendance: React.FC<{ selectedAttendance: Attendance }> = ({ s
     const { studentsList, studentsListLoading } = useAppSelector(({ students }) => students)
     const { learningTopicsList, isLoadingLearningTopics } = useAppSelector(({ learningTopics }) => learningTopics)
     const { studentsAttended, isLoadingStudentsAttended } = useAppSelector(({ studentsAttended }) => studentsAttended)
-    const { qualitiesList } = useAppSelector(({ quality }) => quality)
 
     useEffect(() => {
         dispatch(getStudentsAttended({
+            attendanceId: selectedAttendance.id
+        }))
+        dispatch(getCurrentHomework({
             attendanceId: selectedAttendance.id
         }))
         dispatch(getAllStudents())
@@ -92,9 +106,6 @@ export const MainAttendance: React.FC<{ selectedAttendance: Attendance }> = ({ s
         dispatch(getStudentsGroups())
         dispatch(getLearningTopics())
         dispatch(getTasks({}))
-        dispatch(getQualitiesList({
-            labelFor: 'attendance'
-        }))
     }, [])
 
     useEffect(() => {
@@ -145,10 +156,29 @@ export const MainAttendance: React.FC<{ selectedAttendance: Attendance }> = ({ s
         }
     }, [isLoadingStudentsAttended])
 
+    useEffect(() => {
+        if (currentHomework && isLoadingHomework === "SUCCESS") {
+            setIsOpenHomeworkForm(true)
+            setHomeworkDueDate(currentHomework.expiresAt)
+            setHomeworkName(currentHomework?.name || '')
+            setHomeworkTasks(currentHomework.tasks)
+        }
+
+        if (isDeletedHomework === "SUCCESS") {
+            setIsOpenHomeworkForm(false)
+            setHomeworkDueDate("")
+            setHomeworkName('')
+            setHomeworkTasks([])
+            dispatch(handleClearIsDeletedHomework())
+            dispatch(handleClearCurrentHomework())
+        }
+    }, [currentHomework, isLoadingHomework, isDeletedHomework])
+
     const closeModal = () => {
         dispatch(getAttendances({
             date: selectedDate,
         }))
+        dispatch(handleClearCurrentHomework())
         dispatch(handleChangeIsRemovedAttendance())
         dispatch(handleChangeIsUpdatedAttendance())
         dispatch(handleClearStudentsAttended())
@@ -170,7 +200,6 @@ export const MainAttendance: React.FC<{ selectedAttendance: Attendance }> = ({ s
                 firstName: coach.firstName,
                 lastName: coach.lastName,
             },
-            homeworkDone: homeworkDone,
             isOnline: isOnline,
             meetLink: meetLink,
             isFreeze: false,
@@ -186,6 +215,8 @@ export const MainAttendance: React.FC<{ selectedAttendance: Attendance }> = ({ s
             attendance: attendance,
             studentsAttended: studentsAttendedList,
         }))
+
+        handleHomework()
     }
 
     const freezeAttendance = async () => {
@@ -204,7 +235,6 @@ export const MainAttendance: React.FC<{ selectedAttendance: Attendance }> = ({ s
                 firstName: coach.firstName,
                 lastName: coach.lastName,
             },
-            homeworkDone: homeworkDone,
             isOnline: isOnline,
             meetLink: meetLink,
             isFreeze: true,
@@ -220,6 +250,8 @@ export const MainAttendance: React.FC<{ selectedAttendance: Attendance }> = ({ s
             attendance: attendance,
             studentsAttended: studentsAttendedList,
         }))
+
+        await handleFreezeHomework(studentsAttendedList)
     }
 
     const handleChangeCoach = (option: Option) => {
@@ -274,16 +306,6 @@ export const MainAttendance: React.FC<{ selectedAttendance: Attendance }> = ({ s
         }
     }
 
-    const handleChangeQuality = (option: Option) => {
-        const newQuality = qualitiesList.find((q) => q.id === option.value)
-
-        if (newQuality) {
-            setQuality(newQuality)
-        } else {
-            setQuality(qualitiesList[0])
-        }
-    }
-
     const handleChangeTasks = (option: Task) => {
         const newTasks = [...tasks]
         const index = newTasks.findIndex((t) => t.id === option.id)
@@ -308,6 +330,77 @@ export const MainAttendance: React.FC<{ selectedAttendance: Attendance }> = ({ s
         }
 
         setAdditionalTasks(newTasks)
+    }
+
+    const handleChangeHomeworksTasks = (option: Task) => {
+        const newTasks = [...homeworkTasks]
+        const index = newTasks.findIndex((t) => t.id === option.id)
+
+        if (index >= 0) {
+            newTasks.splice(index, 1)
+        } else {
+            newTasks.push(option)
+        }
+
+        setHomeworkTasks(newTasks)
+    }
+
+    const handleHomework = async () => {
+        if (!homeworkDueDateUtc || !homeworkTasks?.length) {
+            return
+        }
+
+        if (currentHomework && currentHomework.id && isLoadingHomework === "SUCCESS") {
+            const newHomework: Homework = {
+                id: currentHomework.id,
+                name: homeworkName,
+                attendanceId: selectedAttendance.id,
+                expiresAt: homeworkDueDateUtc,
+                tasks: homeworkTasks
+            }
+
+            await dispatch(updateHomework({
+                homework: newHomework,
+            }))
+        } else {
+            const homework: HomeworkWithoutId = {
+                name: homeworkName,
+                attendanceId: selectedAttendance.id,
+                expiresAt: homeworkDueDateUtc,
+                tasks: homeworkTasks
+            }
+
+            await dispatch(createHomework({
+                homework,
+            }))
+        }
+    }
+
+    const handleFreezeHomework = async (studentsAttended: StudentsAttended[]) => {
+        if (!homeworkDueDateUtc || !homeworkTasks?.length || !currentHomework) {
+            return
+        }
+
+        const homework: Homework = {
+            id: currentHomework.id,
+            name: homeworkName,
+            attendanceId: selectedAttendance.id,
+            expiresAt: homeworkDueDateUtc,
+            tasks: homeworkTasks
+        }
+
+        await dispatch(freezeHomework({
+            homework,
+            studentsAttended
+        }))
+    }
+
+    const handleDeleteHomework = () => {
+        if (currentHomework) {
+            dispatch(deleteHomework({
+                homeworkId: currentHomework?.id
+            }))
+        }
     }
 
     const handleRemoveAttendance = async () => {
@@ -424,20 +517,6 @@ export const MainAttendance: React.FC<{ selectedAttendance: Attendance }> = ({ s
                             required
                             isDisabled={!Boolean(learningTopic && isLoadingTasks === "SUCCESS") || selectedAttendance.isFreeze}
                         />
-                        {/* <BaseSelect
-                            value={quality?.id || ""}
-                            options={qualitiesList.map((q) => {
-                                return {
-                                    text: `${q.label}`,
-                                    value: q.id
-                                }
-                            })}
-                            placeholder="Прилежность ученика"
-                            handleSelect={handleChangeQuality}
-                            label="Прилежность"
-                            required
-                            isDisabled={selectedAttendance.isFreeze}
-                        /> */}
                         <BaseInput
                             value={startDate}
                             handleInput={(event) => setStartDate(event.target.value)}
@@ -482,16 +561,17 @@ export const MainAttendance: React.FC<{ selectedAttendance: Attendance }> = ({ s
                     </StudentsBlock>
                     <SelectsBlock>
                         <BaseSwitch
-                            checked={isOnline}
+                            checked={Boolean(isOnline)}
                             handleChange={() => setIsOnline(!isOnline)}
                             label="Онлайн занятие"
                             isDisabled={selectedAttendance.isFreeze}
                         />
+
                         <BaseSwitch
-                            checked={homeworkDone}
-                            handleChange={() => setHomeworkDone(!homeworkDone)}
-                            label="ДЗ сделано"
-                            isDisabled={selectedAttendance.isFreeze}
+                            checked={isOpenHomeworkForm}
+                            handleChange={() => setIsOpenHomeworkForm(!isOpenHomeworkForm)}
+                            label="Создать ДЗ"
+                            isDisabled={Boolean(selectedAttendance.isFreeze || currentHomework)}
                         />
                     </SelectsBlock>
 
@@ -503,6 +583,42 @@ export const MainAttendance: React.FC<{ selectedAttendance: Attendance }> = ({ s
                             label="Ссылка на онлайн-встречу"
                             isDisabled={selectedAttendance.isFreeze}
                         />
+                    }
+
+                    {
+                        Boolean(isOpenHomeworkForm) &&
+                        <HomeworkBlock>
+                            <CloseButton>
+                                <ClearIcon onClick={handleDeleteHomework} />
+                            </CloseButton>
+                            <BaseInput
+                                value={homeworkName || ""}
+                                handleInput={(event) => setHomeworkName(event.target.value)}
+                                label="Название домашнего задания"
+                                isDisabled={selectedAttendance.isFreeze}
+                            />
+
+                            <InputsBlock>
+                                <MultiSelect
+                                    value={homeworkTasks}
+                                    options={tasksList}
+                                    handleInput={handleChangeHomeworksTasks}
+                                    label="Задачи для ДЗ"
+                                    placeholder="Выберите задачи"
+                                    required
+                                    isDisabled={isLoadingTasks !== "SUCCESS" || selectedAttendance.isFreeze}
+                                />
+
+                                <BaseInput
+                                    value={homeworkDueDate}
+                                    handleInput={(event) => setHomeworkDueDate(event.target.value)}
+                                    label="Дата истечения ДЗ"
+                                    type="datetime-local"
+                                    isDisabled={selectedAttendance.isFreeze}
+                                    required
+                                />
+                            </InputsBlock>
+                        </HomeworkBlock>
                     }
 
                     {

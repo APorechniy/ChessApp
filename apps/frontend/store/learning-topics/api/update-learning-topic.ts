@@ -1,5 +1,5 @@
 import { type LearningTopics } from "../types";
-import { api } from "../../../axios";
+import { api } from "../../../network/instance";
 import { BASE_URL } from "../const/actions";
 
 export type UpdateLearningTopicParams = {

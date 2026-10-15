@@ -14,11 +14,11 @@ const ConfirmPayment = withAuth(() => {
     useEffect(() => {
         dispatch(handleClearPayments())
         dispatch(handleClearPaymentStatus())
-    }, [])
+    }, [dispatch])
 
     return (
         <PageWrapper>
-            <PaymentStatusBanner paymentId={paymentId} />
+            <PaymentStatusBanner paymentId={paymentId as string} />
         </PageWrapper>
     )
 })

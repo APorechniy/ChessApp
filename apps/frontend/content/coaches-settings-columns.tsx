@@ -1,17 +1,14 @@
-import { type TableColumn } from "react-data-table-component";
+import { createAppColumnHelper } from '../atoms/StyledTable/Features/features';
 import { type User } from "../store/users/types";
 
-export const COLUMNS: TableColumn<User>[] = [
-    {
-        name: 'Имя',
-        width: '20rem',
-        sortable: true,
-        sortFunction: (a: User, b: User) => {
-            // Сортировка без учета регистра
-            return a.userData.lastName.localeCompare(b.userData.lastName, 'ru', { sensitivity: 'base' });
-        },
-        selector: row => `${row.userData.lastName} ${row.userData.firstName}`,
-    },
+const columnHelper = createAppColumnHelper<User>()
+
+export const COLUMNS = columnHelper.columns([
+    columnHelper.display({
+        id: "name",
+        header: 'Имя',
+        cell: ({ row }) => `${row.original?.userData?.lastName} ${row.original?.userData?.firstName}`,
+    }),
     // {
     //     name: 'Дата рождения',
     //     width: "15rem",
@@ -61,4 +58,4 @@ export const COLUMNS: TableColumn<User>[] = [
     //         </div>
     //     )
     // },
-]
+])

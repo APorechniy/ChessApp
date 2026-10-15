@@ -14,6 +14,7 @@ interface WithAuthProps {
 export const withAuth = <P extends object>(
   WrappedComponent: React.ComponentType<P>,
 ) => {
+  // eslint-disable-next-line react/display-name
   return (props: P & WithAuthProps) => {
     const redirectPath = '/sign-in'
     const router = useRouter();

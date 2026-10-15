@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { Wrapper } from "./styled";
-import { createTheme } from 'react-data-table-component';
 import { useAppDispatch, useAppSelector } from "../../../store/store";
 import { getAttendancePresets } from "../../../store/attendance-presets/thunk/get-attendance-presets";
 import { Header } from "./Header";
@@ -16,15 +15,6 @@ export const PresetsSettings = () => {
         attendancePresetsListLoading
     } = useAppSelector(({ attendancePresets }) => attendancePresets)
     const dispatch = useAppDispatch()
-
-    createTheme('dark', {
-        text: {
-            primary: 'var(--primary-text)'
-        },
-        background: {
-            default: 'var(--primary-background)'
-        }
-    })
 
     useEffect(() => {
         dispatch(getAttendancePresets())

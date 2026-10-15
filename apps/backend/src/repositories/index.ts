@@ -6,6 +6,7 @@ import { AuthRepository } from "./AuthRepository";
 import { ChessGamesRepository } from "./ChessGamesRepository";
 import { ChessOpeningsRepository } from "./ChessOpeningsRepository";
 import { CoachesRepository } from "./CoachesRepository";
+import { HomeworkRepository } from "./HomeworkRepository";
 import { LearningTopicsRepository } from "./LearningTopicsRepository";
 import { LevelsRepository } from "./LevelsRepository";
 import { PaymentsRepository } from "./PaymentsRepository";
@@ -31,6 +32,7 @@ export {
   ChessGamesRepository,
   ChessOpeningsRepository,
   CoachesRepository,
+  HomeworkRepository,
   LearningTopicsRepository,
   LevelsRepository,
   PaymentsRepository,

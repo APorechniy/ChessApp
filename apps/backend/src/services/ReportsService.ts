@@ -55,7 +55,6 @@ export class ReportsService {
             attendance_additional_tasks: agregateString(a?.additionalTasks || [], "name"),
             chess_games: "-",
             chess_opening: "-",
-            homework_done: a.homeworkDone ? "ДА" : "НЕТ",
             attended: await this.studentsAttendedRepository.getIsAttended(studentId, a.id) ? "ДА" : "НЕТ",
             is_paid: "ДА",
           },
