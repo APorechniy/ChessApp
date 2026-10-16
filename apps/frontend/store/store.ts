@@ -19,7 +19,7 @@ import userBalanceReducer from './user-balance'
 import userPaymentsReducer from './user-payments'
 import usersReducer from './users'
 import { useSelector, useDispatch, type TypedUseSelectorHook } from 'react-redux'
-import { persistStore, persistReducer, createMigrate, type MigrationManifest, PersistedState } from 'redux-persist'
+import { persistStore, persistReducer, createMigrate, type MigrationManifest } from 'redux-persist'
 import { CLEAR_STORE } from './const'
 import { persistStorage } from './persist-storage'
 import { attachAuthInterceptor } from "../network";
@@ -47,7 +47,7 @@ const reducers = combineReducers({
 });
 
 const migration: MigrationManifest = {
-    0: (_) => {
+    0: () => {
         // Версия 0: очищаем старое состояние из localStorage
         return undefined;
     },

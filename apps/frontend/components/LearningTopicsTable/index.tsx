@@ -55,7 +55,7 @@ export const LearningTopicsTable: React.FC = () => {
                 <StyledTable<LearningTopics>
                     columns={COLUMNS}
                     data={learningTopicsList}
-                    getRowId={(row: any) => String(row.id)}
+                    getRowId={(row: LearningTopics) => String(row.id)}
                     expandableRows
                     expandableRowsComponent={ExpandableTasks}
                     onRowExpandToggled={handleRowExpanded}

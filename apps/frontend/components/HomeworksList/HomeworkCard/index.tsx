@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/router";
 import { type Homework } from "../../../store/homeworks/types";
 import { useAppSelector } from "../../../store/store";
@@ -15,8 +15,15 @@ export const HomeworkCard: FC<Props> = ({ homework }) => {
     const { id, name, expiresAt, tasks } = homework;
 
     const deadlineDate = new Date(expiresAt);
-    const isExpired = deadlineDate.getTime() < Date.now();
+    const [now, setNow] = useState(() => Date.now());
     const formattedDate = getHumanityDate(expiresAt);
+
+    useEffect(() => {
+        const timer = setInterval(() => setNow(Date.now()), 60_000);
+        return () => clearInterval(timer);
+    }, []);
+
+    const isExpired = deadlineDate.getTime() < now;
 
     const handleCardClick = () => {
         const link = currentUser?.role === "student" ? `/homeworks/preview/${id}` : `/homeworks/${id}`

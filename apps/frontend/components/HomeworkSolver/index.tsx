@@ -23,10 +23,20 @@ export const HomeworkSolver: FC = () => {
 
     const solvedTaskIds: string[] = ["task-1"];
 
-    const [currentStepIndex, setCurrentStepIndex] = useState<number>(0);
-    const [currentFen, setCurrentFen] = useState<string>("");
+    const [selectedStepIndex, setSelectedStepIndex] = useState<number | null>(null);
+    const [editedFen, setEditedFen] = useState<string | null>(null);
     const [moves, setMoves] = useState<string[]>([]);
     const [resetSignal, setResetSignal] = useState<number>(0);
+
+    const defaultStepIndex = (() => {
+        if (!currentHomeworkTasks?.length) return 0;
+        const firstUnsolvedIdx = currentHomeworkTasks.findIndex(
+            (task) => !solvedTaskIds.includes(task.id)
+        );
+        return firstUnsolvedIdx !== -1 ? firstUnsolvedIdx : 0;
+    })();
+
+    const currentStepIndex = selectedStepIndex ?? defaultStepIndex;
 
     useEffect(() => {
         if (homeworkId && typeof homeworkId === "string") {
@@ -45,21 +55,10 @@ export const HomeworkSolver: FC = () => {
         }
     }, [dispatch, currentSolution, isLoadingCurrentSolution])
 
-    useEffect(() => {
-        if (currentHomeworkTasks?.length) {
-            const firstUnsolvedIdx = currentHomeworkTasks.findIndex(
-                (task: any) => !solvedTaskIds.includes(task.id)
-            );
-            const initialIdx = firstUnsolvedIdx !== -1 ? firstUnsolvedIdx : 0;
-            setCurrentStepIndex(initialIdx);
-            setCurrentFen(currentHomeworkTasks[initialIdx]?.task.position || "");
-            setMoves([]);
-        }
-    }, [currentHomeworkTasks]);
-
     const currentTask = currentHomeworkTasks?.[currentStepIndex];
     const initialFen = currentTask?.task.position || "";
     const initialStartsWhite = initialFen.includes(" w ");
+    const currentFen = editedFen ?? initialFen;
     const isCurrentWhiteTurn = currentFen
         ? currentFen.includes(" w ")
         : initialStartsWhite;
@@ -68,18 +67,18 @@ export const HomeworkSolver: FC = () => {
     const hasMoveMade = moves.length > 0;
 
     const handleSelectStep = (index: number) => {
-        setCurrentStepIndex(index);
-        setCurrentFen(currentHomeworkTasks[index]?.task.position || "");
+        setSelectedStepIndex(index);
+        setEditedFen(null);
         setMoves([]);
     };
 
     const handlePositionChange = (newFen: string, updatedMoves: string[]) => {
-        setCurrentFen(newFen);
+        setEditedFen(newFen);
         setMoves(updatedMoves);
     };
 
     const handleResetMove = () => {
-        setCurrentFen(initialFen);
+        setEditedFen(null);
         setMoves([]);
         setResetSignal((prev) => prev + 1);
     };
@@ -147,7 +146,7 @@ export const HomeworkSolver: FC = () => {
     return (
         <S.SolverContainer>
             <S.StepperHeader>
-                {currentHomeworkTasks.map((task: any, index: number) => {
+                {currentHomeworkTasks.map((task, index: number) => {
                     const isSolved = solvedTaskIds.includes(task.id);
                     const isActive = index === currentStepIndex;
 
@@ -166,6 +165,7 @@ export const HomeworkSolver: FC = () => {
 
             <S.MainGrid>
                 <SolverBoard
+                    key={`${currentStepIndex}-${resetSignal}`}
                     initialFen={initialFen}
                     onPositionChange={handlePositionChange}
                     resetSignal={resetSignal}

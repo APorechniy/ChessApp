@@ -64,7 +64,7 @@ export const CreateAttendance = () => {
     const { tasksList, isLoadingTasks, filteredTasksList, isLoadingFilteredTasks } = useAppSelector(({ tasks }) => tasks)
     const { qualitiesList, isLoadingQualitities } = useAppSelector(({ quality }) => quality)
 
-    const [coach, setCoach] = useState<CoachUser>()
+    const [coach, setCoach] = useState<CoachUser>(coachesList[0])
     const [learningTopic, setLearningTopic] = useState<LearningTopics>()
     const [student, setStudent] = useState<Student>()
     const [group, setGroup] = useState<StudentsGroup>()
@@ -84,6 +84,14 @@ export const CreateAttendance = () => {
         dispatch(getTasks({}))
         dispatch(getQualitiesList({ labelFor: 'attendance' }))
     }, [dispatch])
+
+    const closeModal = () => {
+        dispatch(getAttendances({
+            date: selectedDate,
+        }))
+        dispatch(handleChangeIsCreatedAttendance())
+        dispatch(handleCloseModal())
+    }
 
     useEffect(() => {
         if (type === "TRIAL" || type === "REGULAR") {
@@ -111,12 +119,6 @@ export const CreateAttendance = () => {
     }, [learningTopic])
 
     useEffect(() => {
-        if (isLoadingCoachesList === "SUCCESS") {
-            setCoach(coachesList[0])
-        }
-    }, [isLoadingCoachesList])
-
-    useEffect(() => {
         if (isCreatedAttendance === "SUCCESS") {
             dispatch(addNotification({
                 title: 'Занятие создано!',
@@ -134,14 +136,6 @@ export const CreateAttendance = () => {
             }))
         }
     }, [isCreatedAttendance, dispatch])
-
-    const closeModal = () => {
-        dispatch(getAttendances({
-            date: selectedDate,
-        }))
-        dispatch(handleChangeIsCreatedAttendance())
-        dispatch(handleCloseModal())
-    }
 
     const handleCreateAttendance = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()

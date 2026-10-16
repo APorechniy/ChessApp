@@ -40,6 +40,12 @@ export const CreateCoach = () => {
 
     const { isCreatedCoach } = useAppSelector(({ users }) => users)
 
+    const closeModal = () => {
+        dispatch(getCoachesList())
+        dispatch(handleClearIsCreatedCoach())
+        dispatch(handleCloseModal())
+    }
+
     useEffect(() => {
         if (isCreatedCoach === "SUCCESS") {
             dispatch(addNotification({
@@ -58,12 +64,6 @@ export const CreateCoach = () => {
             }))
         }
     }, [isCreatedCoach, dispatch])
-
-    const closeModal = () => {
-        dispatch(getCoachesList())
-        dispatch(handleClearIsCreatedCoach())
-        dispatch(handleCloseModal())
-    }
 
     const handleCreateCoach = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()

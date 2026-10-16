@@ -12,8 +12,9 @@ export const CalendarList = () => {
     const dispatch = useAppDispatch()
 
     useEffect(() => {
+        const currentDate = selectedDate ? new Date(selectedDate) : null
         dispatch(getAttendancesForStudent({
-            date: new Date(selectedDate),
+            date: currentDate,
         }))
     }, [selectedDate])
 

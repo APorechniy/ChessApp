@@ -44,13 +44,13 @@ export const withAuth = <P extends object>(
       if (!isLoadedUserData && isAuthenticated) {
         dispatch(getUser())
       }
-    }, [isLoadedUserData, isAuthenticated])
+    }, [dispatch, isLoadedUserData, isAuthenticated])
 
     useEffect(() => {
       if (!isLoadedSettings && isAuthenticated) {
         dispatch(getSettings())
       }
-    }, [isLoadedSettings, isAuthenticated])
+    }, [dispatch, isLoadedSettings, isAuthenticated])
 
     useEffect(() => {
       if (
@@ -60,7 +60,7 @@ export const withAuth = <P extends object>(
         dispatch(clearStore())
         router.push(redirectPath);
       }
-    }, [isAuthenticated, isAuth, isLoading]);
+    }, [dispatch, isAuthenticated, isAuth, isLoading]);
 
     return (isAuthenticated && isLoadedUserData && isLoadSettings)
       ?

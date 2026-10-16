@@ -1,6 +1,6 @@
-import React, { FC, useEffect, useRef, useState } from "react";
+import React, { FC, useMemo } from "react";
 import { Chessboard } from "react-chessboard";
-import { Chess, Square } from "chess.js";
+import { Chess } from "chess.js";
 import * as S from "./styled";
 
 interface BoardProps {
@@ -10,16 +10,11 @@ interface BoardProps {
 export const Board: FC<BoardProps> = ({
     initialFen,
 }) => {
-    const chessRef = useRef(new Chess(initialFen));
-    const [currentFen, setCurrentFen] = useState<string>(initialFen);
-
-    useEffect(() => {
+    const currentFen = useMemo(() => {
         try {
-            chessRef.current = new Chess(initialFen);
-            setCurrentFen(initialFen);
+            return new Chess(initialFen).fen();
         } catch {
-            chessRef.current = new Chess();
-            setCurrentFen(chessRef.current.fen());
+            return new Chess().fen();
         }
     }, [initialFen]);
 

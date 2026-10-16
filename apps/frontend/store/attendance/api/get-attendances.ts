@@ -2,7 +2,7 @@ import { type Attendance } from "../types";
 import { api } from "../../../network/instance";
 
 export type GetAttendancesParams = {
-    date?: string,
+    date?: string | null,
 }
 
 type Response = {

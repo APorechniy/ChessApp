@@ -9,9 +9,6 @@ const BACKEND_URL =
 const nextConfig: NextConfig = {
   output: 'standalone',
   reactStrictMode: false,
-  typescript: {
-    ignoreBuildErrors: true,
-  },
   outputFileTracingRoot: path.join(__dirname, '../../'),
   outputFileTracingIncludes: {
     '/**/*': [

@@ -52,6 +52,12 @@ export const CreateStudent = () => {
         dispatch(getLevels())
     }, [dispatch])
 
+    const closeModal = () => {
+        dispatch(getAllStudents())
+        dispatch(handleChangeIsCreatedStudent())
+        dispatch(handleCloseModal())
+    }
+
     useEffect(() => {
         if (isCreatedStudent === "SUCCESS") {
             dispatch(addNotification({
@@ -70,12 +76,6 @@ export const CreateStudent = () => {
             }))
         }
     }, [isCreatedStudent, dispatch])
-
-    const closeModal = () => {
-        dispatch(getAllStudents())
-        dispatch(handleChangeIsCreatedStudent())
-        dispatch(handleCloseModal())
-    }
 
     const handleCreateStudent = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()

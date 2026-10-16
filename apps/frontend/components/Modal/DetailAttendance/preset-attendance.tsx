@@ -89,6 +89,16 @@ export const PresetAttendance: React.FC<{ selectedAttendance: PartialAttendance 
         }))
     }, [])
 
+    const closeModal = () => {
+        dispatch(getAttendances({
+            date: selectedDate,
+        }))
+        dispatch(handleClearIsExcludedDate())
+        dispatch(handleChangeIsCreatedAttendance())
+        dispatch(handleChangeSelectedAttendance({ selectedAttendance: null }))
+        dispatch(handleCloseModal())
+    }
+
     useEffect(() => {
         if (isCreatedAttendance === "SUCCESS") {
             dispatch(addNotification({
@@ -130,16 +140,6 @@ export const PresetAttendance: React.FC<{ selectedAttendance: PartialAttendance 
             dispatch(getFilteredTasks({ learningTopicId: learningTopic.id }))
         }
     }, [learningTopic, isLoadingLearningTopics])
-
-    const closeModal = () => {
-        dispatch(getAttendances({
-            date: selectedDate,
-        }))
-        dispatch(handleClearIsExcludedDate())
-        dispatch(handleChangeIsCreatedAttendance())
-        dispatch(handleChangeSelectedAttendance({ selectedAttendance: null }))
-        dispatch(handleCloseModal())
-    }
 
     const handleCreateAttendance = async () => {
         if (!coach || !learningTopic) {

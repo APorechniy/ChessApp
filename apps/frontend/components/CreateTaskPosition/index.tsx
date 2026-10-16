@@ -27,8 +27,9 @@ export const ChessTaskConstructor: React.FC<ChessTaskConstructorProps> = ({
     const chessGame = chessGameRef.current;
 
     // 2. Локальный стейт позиции и очереди хода
-    const [chessPosition, setChessPosition] = useState<string>(chessGameRef.current.fen());
+    const [editedPosition, setEditedPosition] = useState<string | null>(null);
 
+    const chessPosition = editedPosition ?? editableTask?.position ?? EMPTY_FEN;
     const currentTurn = getTurnFromFen(chessPosition);
 
     const dispatch = useAppDispatch()
@@ -38,6 +39,10 @@ export const ChessTaskConstructor: React.FC<ChessTaskConstructorProps> = ({
             dispatch(getEditableTask({ taskId: taskId }))
         }
     }, [taskId])
+
+    useEffect(() => {
+        chessGameRef.current = createChessGame(chessPosition);
+    }, [chessPosition]);
 
     useEffect(() => {
         if (isUpdatedTask === "ERROR") {
@@ -59,13 +64,6 @@ export const ChessTaskConstructor: React.FC<ChessTaskConstructorProps> = ({
         }
     }, [isUpdatedTask])
 
-    useEffect(() => {
-        if (isLoadingEditableTask === "SUCCESS" && editableTask && editableTask.position) {
-            chessGameRef.current = createChessGame(editableTask?.position)
-            setChessPosition(editableTask?.position)
-        }
-    }, [isLoadingEditableTask, editableTask])
-
     // Обработчик перетаскивания и сброса фигур
     const handlePieceDrop = ({ sourceSquare, targetSquare, piece }: PieceDropHandlerArgs) => {
         const color = piece.pieceType[0] as Color;
@@ -74,7 +72,7 @@ export const ChessTaskConstructor: React.FC<ChessTaskConstructorProps> = ({
         // Сброс фигуры за пределы доски -> удаление
         if (!targetSquare) {
             chessGame.remove(sourceSquare as Square);
-            setChessPosition(chessGame.fen());
+            setEditedPosition(chessGame.fen());
             return true;
         }
 
@@ -94,32 +92,32 @@ export const ChessTaskConstructor: React.FC<ChessTaskConstructorProps> = ({
             return false;
         }
 
-        setChessPosition(chessGame.fen());
+        setEditedPosition(chessGame.fen());
         return true;
     };
 
     // Очистка всей доски
     const handleClear = () => {
         chessGame.load(EMPTY_FEN, { skipValidation: true });
-        setChessPosition(chessGame.fen());
+        setEditedPosition(chessGame.fen());
     };
 
     // Сброс к начальной шахматной позиции
     const handleResetToStart = () => {
         chessGame.load(START_FEN, { skipValidation: true });
-        setChessPosition(chessGame.fen());
+        setEditedPosition(chessGame.fen());
     };
 
     // Переключение очереди хода (Белые / Черные)
     const handleTurnChange = (newTurn: Color) => {
         const updatedFen = updateFenTurn(chessPosition, newTurn);
         chessGame.load(updatedFen, { skipValidation: true });
-        setChessPosition(chessGame.fen());
+        setEditedPosition(chessGame.fen());
     };
 
     // Ручное изменение FEN в текстовом поле
     const handleFenChange = (newFen: string) => {
-        setChessPosition(newFen);
+        setEditedPosition(newFen);
         try {
             chessGame.load(newFen, { skipValidation: true });
         } catch {
@@ -129,12 +127,15 @@ export const ChessTaskConstructor: React.FC<ChessTaskConstructorProps> = ({
 
     // Мок-сохранение в БД
     const handleSave = async () => {
-        dispatch(updateTask({
+        await dispatch(updateTask({
             task: {
                 ...editableTask,
                 position: chessPosition
             }
         }))
+
+
+        setEditedPosition(null);
     };
 
     return (

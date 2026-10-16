@@ -76,7 +76,7 @@ export const MainAttendance: React.FC<{ selectedAttendance: Attendance }> = ({ s
     const [isOnline, setIsOnline] = useState(selectedAttendance.isOnline)
     const [meetLink, setMeetLink] = useState(selectedAttendance.meetLink || "")
     const [additionalTasks, setAdditionalTasks] = useState(selectedAttendance.additionalTasks || [])
-    const [studentsAttendedList, setStudentsAttendedList] = useState<StudentsAttended[]>([])
+    const [editedStudentsAttended, setEditedStudentsAttended] = useState<StudentsAttended[] | null>(null)
     const [quality, setQuality] = useState<Quality>(selectedAttendance.quality)
     const [type, setType] = useState<AttendanceTypes>(selectedAttendance.type)
 
@@ -94,6 +94,8 @@ export const MainAttendance: React.FC<{ selectedAttendance: Attendance }> = ({ s
     const { learningTopicsList, isLoadingLearningTopics } = useAppSelector(({ learningTopics }) => learningTopics)
     const { studentsAttended, isLoadingStudentsAttended } = useAppSelector(({ studentsAttended }) => studentsAttended)
 
+    const studentsAttendedList = editedStudentsAttended ?? studentsAttended ?? []
+
     useEffect(() => {
         dispatch(getStudentsAttended({
             attendanceId: selectedAttendance.id
@@ -107,6 +109,17 @@ export const MainAttendance: React.FC<{ selectedAttendance: Attendance }> = ({ s
         dispatch(getLearningTopics())
         dispatch(getTasks({}))
     }, [])
+
+    const closeModal = () => {
+        dispatch(getAttendances({
+            date: selectedDate,
+        }))
+        dispatch(handleClearCurrentHomework())
+        dispatch(handleChangeIsRemovedAttendance())
+        dispatch(handleChangeIsUpdatedAttendance())
+        dispatch(handleClearStudentsAttended())
+        dispatch(handleCloseModal())
+    }
 
     useEffect(() => {
         if (isUpdatedAttendance === "SUCCESS") {
@@ -151,13 +164,8 @@ export const MainAttendance: React.FC<{ selectedAttendance: Attendance }> = ({ s
     }, [learningTopic, isLoadingLearningTopics])
 
     useEffect(() => {
-        if (studentsAttended) {
-            setStudentsAttendedList(studentsAttended)
-        }
-    }, [isLoadingStudentsAttended])
-
-    useEffect(() => {
         if (currentHomework && isLoadingHomework === "SUCCESS") {
+            // eslint-disable-next-line react-hooks/set-state-in-effect
             setIsOpenHomeworkForm(true)
             setHomeworkDueDate(currentHomework.expiresAt)
             setHomeworkName(currentHomework?.name || '')
@@ -165,6 +173,7 @@ export const MainAttendance: React.FC<{ selectedAttendance: Attendance }> = ({ s
         }
 
         if (isDeletedHomework === "SUCCESS") {
+            // eslint-disable-next-line react-hooks/set-state-in-effect
             setIsOpenHomeworkForm(false)
             setHomeworkDueDate("")
             setHomeworkName('')
@@ -173,17 +182,6 @@ export const MainAttendance: React.FC<{ selectedAttendance: Attendance }> = ({ s
             dispatch(handleClearCurrentHomework())
         }
     }, [currentHomework, isLoadingHomework, isDeletedHomework])
-
-    const closeModal = () => {
-        dispatch(getAttendances({
-            date: selectedDate,
-        }))
-        dispatch(handleClearCurrentHomework())
-        dispatch(handleChangeIsRemovedAttendance())
-        dispatch(handleChangeIsUpdatedAttendance())
-        dispatch(handleClearStudentsAttended())
-        dispatch(handleCloseModal())
-    }
 
     const handleUpdateAttendance = async () => {
         if (!coach || !student) {
@@ -410,16 +408,14 @@ export const MainAttendance: React.FC<{ selectedAttendance: Attendance }> = ({ s
     }
 
     const handleChangeAttended = (attendedItem: StudentsAttended) => {
-        const newAttended = [...studentsAttendedList]
-
+        const base = editedStudentsAttended ?? studentsAttended ?? []
+        const newAttended = [...base]
         const idx = newAttended.findIndex(sa => sa.student.id === attendedItem.student.id)
-
         newAttended.splice(idx, 1, {
             ...attendedItem,
             attended: !attendedItem.attended
         })
-
-        setStudentsAttendedList(newAttended)
+        setEditedStudentsAttended(newAttended)
     }
 
     return (

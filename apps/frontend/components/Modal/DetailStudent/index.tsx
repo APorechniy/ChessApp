@@ -54,6 +54,13 @@ export const DetailStudent = () => {
         dispatch(getLevels())
     }, [dispatch])
 
+    const closeModal = () => {
+        dispatch(getAllStudents())
+        dispatch(handleClearIsUpdateStudent())
+        dispatch(handleClearIsRemoveStudent())
+        dispatch(handleCloseModal())
+    }
+
     useEffect(() => {
         if (isUpdatedStudent === "SUCCESS") {
             dispatch(addNotification({
@@ -89,13 +96,6 @@ export const DetailStudent = () => {
             }))
         }
     }, [isUpdatedStudent, isRemoveStudent, dispatch])
-
-    const closeModal = () => {
-        dispatch(getAllStudents())
-        dispatch(handleClearIsUpdateStudent())
-        dispatch(handleClearIsRemoveStudent())
-        dispatch(handleCloseModal())
-    }
 
     const handleCreateStudent = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()

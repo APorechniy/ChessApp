@@ -33,6 +33,12 @@ export const CreateChessGame = () => {
     const { chessOpeningsList, isLoadingChessOpenings } = useAppSelector(({ chessOpenings }) => chessOpenings)
     const { isCreateChessGame } = useAppSelector(({ chessGames }) => chessGames)
 
+    const closeModal = () => {
+        dispatch(getChessGames({}))
+        dispatch(handleClearIsCreatedChessGame())
+        dispatch(handleCloseModal())
+    }
+
     useEffect(() => {
         dispatch(getChessOpenings())
     }, [])
@@ -55,12 +61,6 @@ export const CreateChessGame = () => {
             }))
         }
     }, [isCreateChessGame, dispatch])
-
-    const closeModal = () => {
-        dispatch(getChessGames({}))
-        dispatch(handleClearIsCreatedChessGame())
-        dispatch(handleCloseModal())
-    }
 
     const handleChangeChessOpening = (option: Option) => {
         const newChessOpening = chessOpeningsList.find((s) => s.id === option.value)

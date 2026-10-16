@@ -4,7 +4,7 @@ import { Button, IconWrapper } from "./styled"
 type TextButton = {
     text: string,
     onClick?: (e: React.MouseEvent) => void,
-    Icon?: (...props: any) => ReactNode,
+    Icon?: (...props: unknown[]) => ReactNode,
     backgroundColor?: string,
     disabled?: boolean,
     style?: CSSProperties

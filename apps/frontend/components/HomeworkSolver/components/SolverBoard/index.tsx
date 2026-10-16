@@ -15,17 +15,13 @@ export const SolverBoard: FC<SolverBoardProps> = ({
     resetSignal,
 }) => {
     const chessRef = useRef(new Chess(initialFen));
-    const [currentFen, setCurrentFen] = useState<string>(initialFen);
-
-    useEffect(() => {
+    const [currentFen, setCurrentFen] = useState<string>(() => {
         try {
-            chessRef.current = new Chess(initialFen);
-            setCurrentFen(initialFen);
+            return new Chess(initialFen).fen();
         } catch {
-            chessRef.current = new Chess();
-            setCurrentFen(chessRef.current.fen());
+            return new Chess().fen();
         }
-    }, [initialFen, resetSignal]);
+    });
 
     const handlePieceDrop = ({
         sourceSquare,

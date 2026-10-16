@@ -13,7 +13,7 @@ import { ClearIcon } from "../../../assets/ClearIcon"
 export const PutBalance = () => {
     const [isCompletedPayment, setIsCompletedPayment] = useState(false)
     const [attendacesCounter, setAttendancesCounter] = useState(1)
-    const [isRenderedPaymentForm, setIsRenderedPaymentForm] = useState(false)
+    const [renderedWidgetId, setRenderedWidgetId] = useState<string | null>(null)
 
     const { widgetId, paymentId, isLoadingPayment } = useAppSelector(({ payments }) => payments)
 
@@ -27,14 +27,13 @@ export const PutBalance = () => {
     }, [])
 
     useEffect(() => {
-        if (widgetId && isLoadingPayment === 'SUCCESS' && !isRenderedPaymentForm) {
-            // @ts-ignore
+        if (widgetId && isLoadingPayment === 'SUCCESS' && renderedWidgetId !== widgetId) {
+            // @ts-expect-error — YooKassa widget не типизирован в window
             const checkout = new window.YooMoneyCheckoutWidget({
                 confirmation_token: widgetId,
                 error_callback: function (error) {
                     console.log(error)
                 },
-
             })
 
             checkout.on('complete', () => {
@@ -42,11 +41,11 @@ export const PutBalance = () => {
                 checkout.destroy()
             })
 
-            // id контейнера для рендера
             checkout.render('payment-form')
-            setIsRenderedPaymentForm(true)
+            // eslint-disable-next-line react-hooks/set-state-in-effect
+            setRenderedWidgetId(widgetId)
         }
-    }, [widgetId, isLoadingPayment])
+    }, [widgetId, isLoadingPayment, renderedWidgetId])
 
     const closeModal = () => {
         dispatch(handleClearPayments())

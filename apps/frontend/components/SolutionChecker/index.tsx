@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/router";
 import { useAppDispatch, useAppSelector } from "../../store/store";
 import { Loader } from "../../atoms/Loader";
@@ -20,8 +20,18 @@ export const SolutionChecker: FC = () => {
 
     const solvedTaskIds: string[] = ["task-1"];
 
-    const [currentStepIndex, setCurrentStepIndex] = useState<number>(0);
-    const [moves, setMoves] = useState<string>("");
+    const [selectedStepIndex, setSelectedStepIndex] = useState<number | null>(null);
+
+    const defaultStepIndex = useMemo(() => {
+        if (!studentAnswers?.length || isLoadingStudentAnswers !== "SUCCESS") return 0;
+        const firstUnsolvedIdx = studentAnswers.findIndex(
+            (answer) => !solvedTaskIds.includes(answer.homeworkTask.id)
+        );
+        return firstUnsolvedIdx !== -1 ? firstUnsolvedIdx : 0;
+    }, [studentAnswers, isLoadingStudentAnswers]);
+
+    const currentStepIndex = selectedStepIndex ?? defaultStepIndex;
+    const moves = studentAnswers?.[currentStepIndex]?.answerText ?? '';
 
     useEffect(() => {
         if (currentSolution && currentSolution.homework.id) {
@@ -29,24 +39,12 @@ export const SolutionChecker: FC = () => {
         }
     }, [dispatch, currentSolution]);
 
-    useEffect(() => {
-        if (studentAnswers?.length && isLoadingStudentAnswers === "SUCCESS") {
-            const firstUnsolvedIdx = studentAnswers.findIndex(
-                (answer) => !solvedTaskIds.includes(answer.homeworkTask.id)
-            );
-            const initialIdx = firstUnsolvedIdx !== -1 ? firstUnsolvedIdx : 0;
-            setCurrentStepIndex(initialIdx);
-            setMoves(studentAnswers[initialIdx]?.answerText || '');
-        }
-    }, [studentAnswers, isLoadingStudentAnswers]);
-
     const currentTask = studentAnswers?.[currentStepIndex]?.homeworkTask.task;
     const initialFen = currentTask?.position || "";
     const isLastTask = currentStepIndex === studentAnswers.length - 1;
 
     const handleSelectStep = (index: number) => {
-        setCurrentStepIndex(index);
-        setMoves(studentAnswers[index]?.answerText || "");
+        setSelectedStepIndex(index);
     };
 
     const handleNext = async (newStatus: SolutionAnswerStatus) => {

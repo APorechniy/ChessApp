@@ -31,6 +31,12 @@ export const CreateLearningTopic = () => {
         dispatch(getLevels())
     }, [dispatch])
 
+    const closeModal = () => {
+        dispatch(getLearningTopics())
+        dispatch(handleClearCreateLearningTopic())
+        dispatch(handleCloseModal())
+    }
+
     useEffect(() => {
         if (isCreateLearningTopic === "SUCCESS") {
             dispatch(addNotification({
@@ -49,12 +55,6 @@ export const CreateLearningTopic = () => {
             }))
         }
     }, [isCreateLearningTopic, dispatch])
-
-    const closeModal = () => {
-        dispatch(getLearningTopics())
-        dispatch(handleClearCreateLearningTopic())
-        dispatch(handleCloseModal())
-    }
 
     const handleCreateLearningTopic = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()

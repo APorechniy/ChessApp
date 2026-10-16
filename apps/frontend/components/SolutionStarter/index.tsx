@@ -40,7 +40,7 @@ export const SolutionStarter: FC<SolutionStarterProps> = ({ homeworkId }) => {
         return () => {
             dispatch(handleClearCurrentSolution())
         }
-    }, [currentUser, homeworkId])
+    }, [currentUser, homeworkId, dispatch])
 
     const deadlineDate = currentSolution?.homework?.expiresAt
         ? getHumanityDate(currentSolution?.homework.expiresAt)

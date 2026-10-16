@@ -32,6 +32,16 @@ export const DetailGroup = () => {
         dispatch(getAllStudents())
     }, [])
 
+    const closeModal = () => {
+        dispatch(getStudentsGroups())
+        dispatch(handleClearIsUpdatedStudentsGroup())
+        dispatch(handleClearIsDeletedStudentsGroup())
+        dispatch(handleChangeSelectedStudentsGroup({
+            studentsGroup: null
+        }))
+        dispatch(handleCloseModal())
+    }
+
     useEffect(() => {
         if (isUpdatedStudentsGroup === "SUCCESS") {
             dispatch(addNotification({
@@ -67,16 +77,6 @@ export const DetailGroup = () => {
             }))
         }
     }, [isUpdatedStudentsGroup, isDeletedStudentsGroup, dispatch])
-
-    const closeModal = () => {
-        dispatch(getStudentsGroups())
-        dispatch(handleClearIsUpdatedStudentsGroup())
-        dispatch(handleClearIsDeletedStudentsGroup())
-        dispatch(handleChangeSelectedStudentsGroup({
-            studentsGroup: null
-        }))
-        dispatch(handleCloseModal())
-    }
 
     const handleUpdateStudentsGroup = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()

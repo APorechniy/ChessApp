@@ -39,6 +39,12 @@ export const CreateTask = () => {
         }))
     }, [dispatch])
 
+    const closeModal = () => {
+        dispatch(getTasks({}))
+        dispatch(handleClearCreatedTaskStatus())
+        dispatch(handleCloseModal())
+    }
+
     useEffect(() => {
         if (isCreatedTask === "SUCCESS") {
             dispatch(addNotification({
@@ -57,12 +63,6 @@ export const CreateTask = () => {
             }))
         }
     }, [isCreatedTask, dispatch])
-
-    const closeModal = () => {
-        dispatch(getTasks({}))
-        dispatch(handleClearCreatedTaskStatus())
-        dispatch(handleCloseModal())
-    }
 
     const handleCreateTask = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
