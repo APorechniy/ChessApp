@@ -1,4 +1,5 @@
 import { configureStore, createAction, combineReducers } from '@reduxjs/toolkit'
+import { baseApi } from './api/base-api'
 import attendanceReducer from './attendance'
 import attendancePresetsReducer from './attendance-presets'
 import authReducer from './auth'
@@ -44,6 +45,7 @@ const reducers = combineReducers({
     userBalance: userBalanceReducer,
     userPayments: userPaymentsReducer,
     users: usersReducer,
+    [baseApi.reducerPath]: baseApi.reducer,
 });
 
 const migration: MigrationManifest = {
@@ -84,6 +86,15 @@ const persistedReducer = persistReducer(persistConfig, reducers);
 
 export const store = configureStore({
     reducer: persistedReducer,
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware({
+            serializableCheck: {
+                ignoredActions: [
+                    'persist/PERSIST', 'persist/REHYDRATE',
+                    'persist/PAUSE', 'persist/PURGE', 'persist/REGISTER',
+                ],
+            },
+        }).concat(baseApi.middleware),
 });
 
 attachAuthInterceptor(store);

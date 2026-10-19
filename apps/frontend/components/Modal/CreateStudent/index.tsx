@@ -10,11 +10,11 @@ import { addNotification, handleCloseModal } from "../../../store/system"
 import { BaseSelect } from "../../../atoms/BaseSelect"
 
 import { type Level } from "../../../store/levels/types"
-import { getLevels } from "../../../store/levels/thunk/get-levels"
 import { createStudent } from "../../../store/students/thunk/create-student"
 import { dateToHTMLValidate } from "../../../utils/date-to-html-validate"
 import { handleChangeIsCreatedStudent } from "../../../store/students"
 import { ClearIcon } from "../../../assets/ClearIcon"
+import { useGetLevelsQuery } from "store/levels/api/levels-api"
 
 type Option = { text: string, value: string }
 
@@ -46,11 +46,10 @@ export const CreateStudent = () => {
     const dispatch = useAppDispatch()
 
     const { isCreatedStudent } = useAppSelector(({ students }) => students)
-    const { levelsList, isLoadingLevels } = useAppSelector(({ levels }) => levels)
+    const { data, isLoading } = useGetLevelsQuery()
 
-    useEffect(() => {
-        dispatch(getLevels())
-    }, [dispatch])
+    const levelsList = data?.levelsList || [];
+    const isLoadingLevels = isLoading;
 
     const closeModal = () => {
         dispatch(getAllStudents())
@@ -186,7 +185,7 @@ export const CreateStudent = () => {
                 <ClearIcon onClick={closeModal} />
             </CloseButton>
             <CreateStudentFormTitle className="create-students-form-title">Новый ученик</CreateStudentFormTitle>
-            {isLoadingLevels === "SUCCESS" &&
+            {(!isLoadingLevels && levelsList.length) &&
                 <CreateStudentForm onSubmit={handleCreateStudent}>
                     <InputsBlock>
                         <BaseInput

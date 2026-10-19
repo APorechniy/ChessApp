@@ -6,6 +6,7 @@ import { logout } from '../store/auth/thunk/logout';
 import { useAuth } from '../hooks/use-auth';
 import { getSettings } from '../store/system/thunk/get-settings';
 import { Loader } from '../atoms/Loader';
+import { baseApi } from 'store/api/base-api';
 
 interface WithAuthProps {
   children: React.ReactNode;
@@ -58,6 +59,7 @@ export const withAuth = <P extends object>(
       ) {
         dispatch(logout())
         dispatch(clearStore())
+        dispatch(baseApi.util.resetApiState())
         router.push(redirectPath);
       }
     }, [dispatch, isAuthenticated, isAuth, isLoading]);
