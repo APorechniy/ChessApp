@@ -33,14 +33,17 @@ export const CreateTask = () => {
     const { qualitiesList } = useAppSelector(({ quality }) => quality)
 
     useEffect(() => {
-        dispatch(getLearningTopics())
         dispatch(getQualitiesList({
             labelFor: "tasks"
         }))
     }, [dispatch])
 
     const closeModal = () => {
-        dispatch(getTasks({}))
+        if (learningTopic && learningTopic.id) {
+            dispatch(getTasks({
+                learningTopicId: learningTopic?.id
+            }))
+        }
         dispatch(handleClearCreatedTaskStatus())
         dispatch(handleCloseModal())
     }

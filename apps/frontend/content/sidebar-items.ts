@@ -29,14 +29,14 @@ export const SIDEBAR_ITEMS = [
         workInProgress: false,
         accessedRoles: ['admin', 'coach']
     },
-    {
-        name: 'Задачи',
-        icon: TasksIcon,
-        id: 4,
-        link: '/tasks',
-        workInProgress: false,
-        accessedRoles: ['admin', 'coach', 'student']
-    },
+    // {
+    //     name: 'Задачи',
+    //     icon: TasksIcon,
+    //     id: 4,
+    //     link: '/tasks',
+    //     workInProgress: false,
+    //     accessedRoles: ['admin', 'coach', 'student']
+    // },
     {
         name: 'Отчеты',
         icon: ReportsIcon,

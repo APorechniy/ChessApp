@@ -41,11 +41,6 @@ export const Tr = styled.tr<{
     readonly $isExpanded?: boolean;
 }>`
     cursor: ${({ $isClickable }) => ($isClickable ? 'pointer' : 'default')};
-    transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.15s ease;
-
-    &:hover {
-        transform: translateY(-2px);
-    }
 `;
 
 export const Td = styled.td<{

@@ -8,6 +8,7 @@ import {
 } from '@tanstack/react-table';
 import { appTableFeatures, type AppTableFeatures } from './Features/features';
 import * as S from './styled';
+import { TextButton } from 'atoms/TextButton';
 
 export interface StyledTableProps<TData extends RowData> {
     readonly data: readonly TData[];
@@ -23,6 +24,10 @@ export interface StyledTableProps<TData extends RowData> {
         readonly data: TData;
         readonly row: Row<AppTableFeatures, TData>;
     }>;
+    readonly lastRowConfig?: {
+        readonly buttonText: string;
+        readonly buttonHandler: () => void;
+    };
     readonly onRowExpandToggled?: (expanded: boolean, row: TData) => void;
     // Клик по всей строке карточки
     readonly onRowClicked?: (row: TData) => void;
@@ -34,9 +39,9 @@ export function StyledTable<TData extends RowData>({
     getRowId,
     mainColor,
     textColor,
-    theme = 'dark',
     expandableRows = false,
     expandableRowsComponent: ExpandableComponent,
+    lastRowConfig = undefined,
     isNested,
     onRowExpandToggled,
     onRowClicked,
@@ -165,6 +170,33 @@ export function StyledTable<TData extends RowData>({
                             </React.Fragment>
                         );
                     })}
+                    {lastRowConfig && (
+                        <S.Tr
+                            role="row"
+                            style={{
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                width: "100%"
+                            }}
+                        >
+                            <S.Td
+                                role="cell"
+                                colSpan={table.getAllColumns().length}
+                                $mainColor={mainColor}
+                                $textColor={textColor}
+                            >
+                                <TextButton
+                                    onClick={lastRowConfig.buttonHandler}
+                                    text={lastRowConfig.buttonText}
+                                    style={{
+                                        width: "auto",
+                                        padding: "1rem"
+                                    }}
+                                />
+                            </S.Td>
+                        </S.Tr>
+                    )}
                 </tbody>
             </S.TableElement>
         </S.TableContainer>

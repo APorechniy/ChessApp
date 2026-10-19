@@ -13,7 +13,8 @@ import { type AppTableFeatures } from '../../../atoms/StyledTable/Features/featu
 import { handleOpenModal } from '../../../store/system';
 import { Loader } from '../../../atoms/Loader';
 import { StyledTable } from '../../../atoms/StyledTable';
-import { Wrapper } from './styled';
+import { Wrapper, EmptyWrapper, Message } from './styled';
+import { TextButton } from 'atoms/TextButton';
 
 export interface ExpandableTasksProps {
     readonly data: LearningTopics;
@@ -30,6 +31,17 @@ export const ExpandableTasks: React.FC<ExpandableTasksProps> = ({ data: topic })
     const dispatch = useAppDispatch();
 
     const columns = useMemo(() => getTaskColumns(Boolean(isAdmin)), [isAdmin]);
+
+    const handleOpenCreateTaskModal = useCallback(
+        (): void => {
+            dispatch(
+                handleOpenModal({
+                    modalContent: 'CREATE_TASK',
+                })
+            );
+        },
+        [dispatch]
+    );
 
     const handleOpenDetailTaskModal = useCallback(
         (task: Task): void => {
@@ -48,13 +60,31 @@ export const ExpandableTasks: React.FC<ExpandableTasksProps> = ({ data: topic })
     return (
         <Wrapper key={topic.id}>
             {isLoadingTasks === 'SUCCESS' ? (
-                <StyledTable<Task>
-                    isNested
-                    columns={columns}
-                    data={tasksList}
-                    getRowId={(task) => String(task.id)}
-                    onRowClicked={handleOpenDetailTaskModal}
-                />
+                tasksList.length
+                    ?
+                    <StyledTable<Task>
+                        isNested
+                        columns={columns}
+                        data={tasksList}
+                        getRowId={(task) => String(task.id)}
+                        onRowClicked={handleOpenDetailTaskModal}
+                        lastRowConfig={{
+                            buttonText: "Создать задачу",
+                            buttonHandler: handleOpenCreateTaskModal
+                        }}
+                    />
+                    :
+                    <EmptyWrapper>
+                        <Message>Задач в теме еще нет.</Message>
+                        <TextButton
+                            onClick={handleOpenCreateTaskModal}
+                            text={"Создать задачу"}
+                            style={{
+                                width: "auto",
+                                padding: "1rem"
+                            }}
+                        />
+                    </EmptyWrapper>
             ) : (
                 <Loader />
             )}
