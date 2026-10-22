@@ -1,5 +1,5 @@
 import { AxiosResponse } from "axios";
-import { api } from "../../../axios";
+import { api } from "../../../network/instance";
 
 type Response = AxiosResponse;
 

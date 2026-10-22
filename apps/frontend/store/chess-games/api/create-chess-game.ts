@@ -1,5 +1,5 @@
 import { type ChessGameWithoutId } from "../types";
-import { api } from "../../../axios";
+import { api } from "../../../network/instance";
 
 export type CreateChessGameParams = {
     chessGame: ChessGameWithoutId,

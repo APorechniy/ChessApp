@@ -1,19 +1,20 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useSyncExternalStore } from 'react';
 import { createPortal } from 'react-dom';
 import { useAppSelector } from '../../store/store';
 import { NotificationItem } from './Item';
 import * as S from './styled';
 
-export const NotificationManager: React.FC = () => {
-    const [mounted, setMounted] = useState<boolean>(false);
-    const { notifications } = useAppSelector(({ system }) => system);
+const emptySubscribe = () => () => { };
 
-    // Избегаем Hydration mismatch в Next.js (рендерим Portal только на клиенте)
-    useEffect(() => {
-        setMounted(true);
-    }, []);
+export const NotificationManager: React.FC = () => {
+    const mounted = useSyncExternalStore(
+        emptySubscribe,
+        () => true,   // client snapshot
+        () => false   // server snapshot
+    );
+    const { notifications } = useAppSelector(({ system }) => system);
 
     if (!mounted) return null;
 

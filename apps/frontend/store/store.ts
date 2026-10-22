@@ -1,9 +1,11 @@
 import { configureStore, createAction, combineReducers } from '@reduxjs/toolkit'
+import { baseApi } from './api/base-api'
 import attendanceReducer from './attendance'
 import attendancePresetsReducer from './attendance-presets'
 import authReducer from './auth'
 import chessGamesReducer from './chess-games'
 import chessOpeningsReducer from './chess-openings'
+import homeworksReducer from './homeworks'
 import learningTopicsReducer from './learning-topics'
 import levelsReducer from './levels'
 import paymentsReducer from './payments'
@@ -21,6 +23,7 @@ import { useSelector, useDispatch, type TypedUseSelectorHook } from 'react-redux
 import { persistStore, persistReducer, createMigrate, type MigrationManifest } from 'redux-persist'
 import { CLEAR_STORE } from './const'
 import { persistStorage } from './persist-storage'
+import { attachAuthInterceptor } from "../network";
 
 const reducers = combineReducers({
     attendance: attendanceReducer,
@@ -28,6 +31,7 @@ const reducers = combineReducers({
     auth: authReducer,
     chessGames: chessGamesReducer,
     chessOpenings: chessOpeningsReducer,
+    homeworks: homeworksReducer,
     levels: levelsReducer,
     learningTopics: learningTopicsReducer,
     payments: paymentsReducer,
@@ -41,10 +45,11 @@ const reducers = combineReducers({
     userBalance: userBalanceReducer,
     userPayments: userPaymentsReducer,
     users: usersReducer,
+    [baseApi.reducerPath]: baseApi.reducer,
 });
 
 const migration: MigrationManifest = {
-    0: (state) => {
+    0: () => {
         // Версия 0: очищаем старое состояние из localStorage
         return undefined;
     },
@@ -53,7 +58,7 @@ const migration: MigrationManifest = {
         // Оставляем только то, что указано в whitelist
         return state;
     },
-    2: (state: any) => {
+    2: (state) => {
         // Версия 2: Добавляем новое поле notifications в слайс system
         if (!state) {
             return state;
@@ -62,8 +67,6 @@ const migration: MigrationManifest = {
         return {
             ...state,
             system: {
-                ...state?.system,
-                // Если system уже существовал, сохраняем его поля и гарантируем наличие notifications
                 notifications: [],
                 isDisabledNotifications: false,
             },
@@ -83,7 +86,18 @@ const persistedReducer = persistReducer(persistConfig, reducers);
 
 export const store = configureStore({
     reducer: persistedReducer,
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware({
+            serializableCheck: {
+                ignoredActions: [
+                    'persist/PERSIST', 'persist/REHYDRATE',
+                    'persist/PAUSE', 'persist/PURGE', 'persist/REGISTER',
+                ],
+            },
+        }).concat(baseApi.middleware),
 });
+
+attachAuthInterceptor(store);
 
 export const persistor = persistStore(store);
 

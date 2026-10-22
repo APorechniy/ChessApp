@@ -1,21 +1,23 @@
-import type { TableColumn } from "react-data-table-component";
+import { createAppColumnHelper } from '../atoms/StyledTable/Features/features';
 import type { ChessGame } from "../store/chess-games/types";
 
-export const COLUMNS: TableColumn<ChessGame>[] = [
-    {
-        name: 'Белые',
-        selector: row => row.whitePlayer,
-    },
-    {
-        name: 'Черные',
-        selector: row => row.blackPlayer,
-    },
-    {
-        name: 'Дата',
-        selector: row => `${new Date(row.year).toLocaleDateString()} г.`,
-    },
-    {
-        name: 'Дебют',
-        selector: row => row.chessOpening.name
-    }
-]
+const columnHelper = createAppColumnHelper<ChessGame>();
+
+export const COLUMNS = columnHelper.columns([
+    columnHelper.accessor("whitePlayer", {
+        header: "Белые",
+        cell: (info) => info.getValue()
+    }),
+    columnHelper.accessor("blackPlayer", {
+        header: "Черные",
+        cell: (info) => info.getValue()
+    }),
+    columnHelper.accessor("year", {
+        header: "Дата",
+        cell: (info) => `${new Date(info.getValue()).toLocaleDateString()} г.`
+    }),
+    columnHelper.accessor("chessOpening", {
+        header: "Дебют",
+        cell: (info) => info.getValue()?.name
+    }),
+])

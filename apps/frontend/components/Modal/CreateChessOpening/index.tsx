@@ -20,6 +20,12 @@ export const CreateChessOpening = () => {
 
     const { isCreateChessOpening } = useAppSelector(({ chessOpenings }) => chessOpenings)
 
+    const closeModal = () => {
+        dispatch(getChessOpenings())
+        dispatch(handleClearIsCreatedChessOpening())
+        dispatch(handleCloseModal())
+    }
+
     useEffect(() => {
         if (isCreateChessOpening === "SUCCESS") {
             dispatch(addNotification({
@@ -38,12 +44,6 @@ export const CreateChessOpening = () => {
             }))
         }
     }, [isCreateChessOpening, dispatch])
-
-    const closeModal = () => {
-        dispatch(getChessOpenings())
-        dispatch(handleClearIsCreatedChessOpening())
-        dispatch(handleCloseModal())
-    }
 
     const handleCreateChessOpening = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()

@@ -1,5 +1,6 @@
 import { BookIcon } from "../assets/BookIcon";
 import { DashboardIcon } from "../assets/DashboardIcon";
+import { NotebookIcon } from "../assets/NotebookIcon";
 import { ReportsIcon } from "../assets/ReportsIcon";
 import { StudentsIcon } from "../assets/StudentsIcon";
 import { TasksIcon } from "../assets/TasksIcon";
@@ -28,14 +29,14 @@ export const SIDEBAR_ITEMS = [
         workInProgress: false,
         accessedRoles: ['admin', 'coach']
     },
-    {
-        name: 'Задачи',
-        icon: TasksIcon,
-        id: 4,
-        link: '/tasks',
-        workInProgress: false,
-        accessedRoles: ['admin', 'coach', 'student']
-    },
+    // {
+    //     name: 'Задачи',
+    //     icon: TasksIcon,
+    //     id: 4,
+    //     link: '/tasks',
+    //     workInProgress: false,
+    //     accessedRoles: ['admin', 'coach', 'student']
+    // },
     {
         name: 'Отчеты',
         icon: ReportsIcon,
@@ -51,5 +52,13 @@ export const SIDEBAR_ITEMS = [
         link: '/learning-topics',
         workInProgress: false,
         accessedRoles: ['admin', 'coach']
+    },
+    {
+        name: 'Домашние задания',
+        icon: NotebookIcon,
+        id: 7,
+        link: '/homeworks',
+        workInProgress: false,
+        accessedRoles: ['admin', 'coach', 'student']
     }
 ]

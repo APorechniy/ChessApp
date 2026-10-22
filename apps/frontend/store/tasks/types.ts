@@ -7,7 +7,7 @@ export type Task = {
     name: string,
     learningTopic: LearningTopics,
     quality: Quality,
-    position?: any
+    position?: string
 }
 
 export type TaskWithoutId = Omit<Task, "id">

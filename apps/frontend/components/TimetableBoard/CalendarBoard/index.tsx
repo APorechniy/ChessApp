@@ -11,7 +11,7 @@ import { Calendar, TimeWrapper, AttendanceCard, CoachName, Row, StudentName, Tim
 import { getAttendanceTime } from '../../../utils/get-attendance-time'
 
 export const CalendarBoard = () => {
-    const [isLoading, setIsLoading] = useState(false)
+    const [isLoading] = useState(false)
 
     const { attendancesListLoading } = useAppSelector(({ attendance }) => attendance)
     const { currentUser } = useAppSelector(({ users }) => users)
@@ -32,7 +32,7 @@ export const CalendarBoard = () => {
     }
 
     const getCardColors = (attendance: Attendance | PartialAttendance) => {
-        if (currentUser.role === "admin") {
+        if (currentUser?.role === "admin") {
             if ('isPreset' in attendance && attendance.isPreset) {
                 return {
                     cardColor: "#e8fdff",
@@ -55,7 +55,7 @@ export const CalendarBoard = () => {
                 }
             }
         } else {
-            if (attendance.student.id === currentUser.id) {
+            if (attendance?.student?.id === currentUser?.id) {
                 return {
                     cardColor: "#e8fdff",
                     borderColor: "#21bdca"
@@ -110,9 +110,9 @@ export const CalendarBoard = () => {
                                         {
                                             attendance.type === "GROUP"
                                                 ?
-                                                attendance.group.name
+                                                attendance?.group?.name
                                                 :
-                                                `${attendance.student.lastName} ${attendance.student.firstName[0]}.`
+                                                `${attendance?.student?.lastName} ${attendance?.student?.firstName[0]}.`
                                         }
                                     </StudentName>
                                     <CoachName>{attendanceTime}</CoachName>

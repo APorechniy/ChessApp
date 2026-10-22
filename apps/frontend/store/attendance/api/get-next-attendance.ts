@@ -1,5 +1,5 @@
 import { type Attendance } from "../types";
-import { api } from "../../../axios";
+import { api } from "../../../network/instance";
 
 type Response = {
     nextAttendance: Attendance | null;

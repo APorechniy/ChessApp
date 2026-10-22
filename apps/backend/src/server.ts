@@ -10,6 +10,7 @@ import {
   ChessGamesRepository,
   ChessOpeningsRepository,
   CoachesRepository,
+  HomeworkRepository,
   LearningTopicsRepository,
   LevelsRepository,
   PaymentsRepository,
@@ -33,6 +34,7 @@ import {
   ChessOpeningsService,
   CoachesService,
   CoachReportService,
+  HomeworksService,
   LearningTopicService,
   LevelsService,
   PaymentsService,
@@ -54,6 +56,7 @@ import {
   ChessGamesController,
   ChessOpeningsController,
   CoachReportController,
+  HomeworksController,
   LearningTopicsController,
   LevelsController,
   PaymentsController,
@@ -82,6 +85,7 @@ export class App {
   private chessGamesController?: ChessGamesController;
   private chessOpeningsController?: ChessOpeningsController;
   private coachReportController?: CoachReportController;
+  private homeworksController?: HomeworksController;
   private learningTopicsController?: LearningTopicsController;
   private levelsController?: LevelsController;
   private paymentsController?: PaymentsController;
@@ -120,6 +124,7 @@ export class App {
     const chessGamesRepository = new ChessGamesRepository(this.appDataSource);
     const chessOpeningsRepository = new ChessOpeningsRepository(this.appDataSource);
     const coachesRepository = new CoachesRepository(this.appDataSource);
+    const homeworksRepository = new HomeworkRepository(this.appDataSource);
     const learningTopicsRepository = new LearningTopicsRepository(this.appDataSource);
     const levelsRepository = new LevelsRepository(this.appDataSource);
     const paymentsRepository = new PaymentsRepository(this.appDataSource);
@@ -160,6 +165,7 @@ export class App {
       coachesRepository
     );
     const coachReportService = new CoachReportService(attendancesRepository, coachesRepository)
+    const homeworksService = new HomeworksService(homeworksRepository);
     const learningTopicsService = new LearningTopicService(learningTopicsRepository);
     const levelsService = new LevelsService(levelsRepository);
     const paymentsService = new PaymentsService(
@@ -205,6 +211,7 @@ export class App {
     this.chessGamesController = new ChessGamesController(chessGamesService);
     this.chessOpeningsController = new ChessOpeningsController(chessOpeningsService);
     this.coachReportController = new CoachReportController(coachReportService);
+    this.homeworksController = new HomeworksController(homeworksService);
     this.learningTopicsController = new LearningTopicsController(learningTopicsService);
     this.levelsController = new LevelsController(levelsService);
     this.paymentsController = new PaymentsController(paymentsService);
@@ -250,6 +257,7 @@ export class App {
     this.chessGamesController?.setupRoutes(this.app);
     this.chessOpeningsController?.setupRoutes(this.app);
     this.coachReportController?.setupRoutes(this.app);
+    this.homeworksController?.setupRoutes(this.app);
     this.learningTopicsController?.setupRoutes(this.app);
     this.levelsController?.setupRoutes(this.app);
     this.paymentsController?.setupRoutes(this.app);

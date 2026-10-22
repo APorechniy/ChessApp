@@ -10,11 +10,11 @@ import { LearningTopics } from "../../../store/learning-topics/types"
 import { getLearningTopics } from "../../../store/learning-topics/thunk/get-learning-topics"
 import { Loader } from "../../../atoms/Loader"
 import { Level } from "../../../store/levels/types"
-import { getLevels } from "../../../store/levels/thunk/get-levels"
 import { updateLearningTopic } from "../../../store/learning-topics/thunk/update-learning-topic"
 import { removeLearningTopic } from "../../../store/learning-topics/thunk/remove-learning-topic"
 import { handleClearRemoveLearningTopic, handleClearUpdateLearningTopic } from "../../../store/learning-topics"
 import { ClearIcon } from "../../../assets/ClearIcon"
+import { useGetLevelsQuery } from "store/levels/api/levels-api"
 
 type Option = { text: string, value: string }
 
@@ -26,11 +26,19 @@ export const DetailLearningTopic = () => {
 
     const dispatch = useAppDispatch()
 
-    const { levelsList, isLoadingLevels } = useAppSelector(({ levels }) => levels)
+    const { data, isLoading } = useGetLevelsQuery()
 
-    useEffect(() => {
-        dispatch(getLevels())
-    }, [dispatch])
+    const levelsList = data?.levelsList || [];
+    const isLoadingLevels = isLoading;
+
+    const closeModal = () => {
+        if (isUpdateLearningTopic === "SUCCESS" || isRemoveLearningTopic === "SUCCESS") {
+            dispatch(getLearningTopics())
+        }
+        dispatch(handleClearUpdateLearningTopic())
+        dispatch(handleClearRemoveLearningTopic())
+        dispatch(handleCloseModal())
+    }
 
     useEffect(() => {
         if (isUpdateLearningTopic === "SUCCESS") {
@@ -67,13 +75,6 @@ export const DetailLearningTopic = () => {
             }))
         }
     }, [isRemoveLearningTopic, isUpdateLearningTopic, dispatch])
-
-    const closeModal = () => {
-        dispatch(getLearningTopics())
-        dispatch(handleClearUpdateLearningTopic())
-        dispatch(handleClearRemoveLearningTopic())
-        dispatch(handleCloseModal())
-    }
 
     const handleUpdateLearningTopic = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
@@ -112,7 +113,7 @@ export const DetailLearningTopic = () => {
                 <ClearIcon onClick={closeModal} />
             </CloseButton>
             <DetailLearningTopicFormTitle className="update-learning-topic-form-title">{selectedLearningTopic.name}</DetailLearningTopicFormTitle>
-            {(isLoadingLevels === "SUCCESS") ?
+            {(!isLoadingLevels && levelsList.length) ?
                 <DetailLearningTopicForm onSubmit={handleUpdateLearningTopic}>
                     <BaseInput
                         value={name}

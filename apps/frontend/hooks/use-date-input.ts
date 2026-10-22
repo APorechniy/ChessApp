@@ -29,7 +29,7 @@ export const useDateInput = (
     }, []);
 
     // Локальное время → UTC
-    const localToUTCDateTime = useCallback(localToUtc, [options?.allowNull]);
+    const localToUTCDateTime = useCallback((localString: string) => localToUtc(localString), [options?.allowNull]);
 
     // Геттер для значения input
     const getLocalValue = useCallback((): string => {

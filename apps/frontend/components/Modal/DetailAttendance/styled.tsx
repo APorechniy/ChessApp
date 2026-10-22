@@ -63,6 +63,9 @@ export const SelectsBlock = styled.div`
     width: 100%;
     height: auto;
 
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-auto-columns: minmax(0, 1fr);
@@ -83,6 +86,24 @@ export const StudentsBlock = styled.div`
     grid-template-columns: 1fr;
     grid-auto-columns: minmax(0, 1fr);
     gap: 1rem;   
+`
+
+export const HomeworkBlock = styled.div`
+    width: 100%;
+    height: auto;
+
+    position: relative;
+
+    box-sizing: border-box;
+    padding: 4rem 1.6rem;
+
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-auto-columns: minmax(0, 1fr);
+    gap: 1rem;   
+
+    border: 0.1rem solid var(--primary-border);
+    border-radius: 1rem;
 `
 
 export const DetailAttendanceFormTitle = styled.h3`

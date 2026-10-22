@@ -1,5 +1,5 @@
 import { type ChessGame } from "../types";
-import { api } from "../../../axios";
+import { api } from "../../../network/instance";
 
 export type GetChessGamesParams = {
     chessOpeningId?: string

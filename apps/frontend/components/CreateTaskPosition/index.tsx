@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useCallback, useMemo } from 'react';
 import { ChessboardProvider, Chessboard } from 'react-chessboard';
 import { Square, Color, PieceSymbol } from 'chess.js';
 import * as S from './styled';
@@ -21,23 +21,33 @@ import { handleClearIsUpdatedTask } from '../../store/tasks';
 export const ChessTaskConstructor: React.FC<ChessTaskConstructorProps> = ({
     taskId
 }) => {
-    const { editableTask, isLoadingEditableTask, isUpdatedTask } = useAppSelector(({ tasks }) => tasks)
-    // 1. Храним шахматный движок в useRef
+    const { editableTask, isUpdatedTask } = useAppSelector(({ tasks }) => tasks);
+
+    // 1. Шахматный движок в useRef
     const chessGameRef = useRef(createChessGame(EMPTY_FEN));
-    const chessGame = chessGameRef.current;
 
-    // 2. Локальный стейт позиции и очереди хода
-    const [chessPosition, setChessPosition] = useState<string>(chessGameRef.current.fen());
+    // 2. Локальный стейт позиции
+    const [editedPosition, setEditedPosition] = useState<string | null>();
 
+    const chessPosition = editedPosition ?? editableTask?.position ?? EMPTY_FEN;
     const currentTurn = getTurnFromFen(chessPosition);
 
-    const dispatch = useAppDispatch()
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
         if (taskId) {
-            dispatch(getEditableTask({ taskId: taskId }))
+            dispatch(getEditableTask({ taskId }));
         }
-    }, [taskId])
+    }, [taskId, dispatch]);
+
+    // Синхронизация движка с FEN без падений на промежуточных/невалидных позициях
+    useEffect(() => {
+        try {
+            chessGameRef.current.load(chessPosition, { skipValidation: true });
+        } catch {
+            chessGameRef.current = createChessGame(chessPosition);
+        }
+    }, [chessPosition]);
 
     useEffect(() => {
         if (isUpdatedTask === "ERROR") {
@@ -46,7 +56,7 @@ export const ChessTaskConstructor: React.FC<ChessTaskConstructorProps> = ({
                 subtitle: 'Повторите позднее.',
                 variant: 'error',
                 autoCloseTimer: 5000,
-            }))
+            }));
         }
 
         if (isUpdatedTask === "SUCCESS") {
@@ -54,97 +64,123 @@ export const ChessTaskConstructor: React.FC<ChessTaskConstructorProps> = ({
                 title: 'Позиция успешно сохранена',
                 variant: 'success',
                 autoCloseTimer: 5000,
-            }))
-            dispatch(handleClearIsUpdatedTask())
+            }));
+            dispatch(handleClearIsUpdatedTask());
         }
-    }, [isUpdatedTask])
-
-    useEffect(() => {
-        if (isLoadingEditableTask === "SUCCESS" && editableTask && editableTask.position) {
-            chessGameRef.current = createChessGame(editableTask?.position)
-            setChessPosition(editableTask?.position)
-        }
-    }, [isLoadingEditableTask, editableTask])
+    }, [isUpdatedTask, dispatch]);
 
     // Обработчик перетаскивания и сброса фигур
-    const handlePieceDrop = ({ sourceSquare, targetSquare, piece }: PieceDropHandlerArgs) => {
-        const color = piece.pieceType[0] as Color;
-        const type = piece.pieceType[1].toLowerCase() as PieceSymbol;
+    const handlePieceDrop = useCallback(({ sourceSquare, targetSquare, piece }: PieceDropHandlerArgs): boolean => {
+        const game = chessGameRef.current;
 
-        // Сброс фигуры за пределы доски -> удаление
-        if (!targetSquare) {
-            chessGame.remove(sourceSquare as Square);
-            setChessPosition(chessGame.fen());
+        // Если бросили на ту же клетку — ничего не меняем
+        if (sourceSquare && targetSquare && sourceSquare === targetSquare) {
             return true;
         }
 
-        // Если фигура перемещается по доске (не из запаса)
-        if (!piece.isSparePiece) {
-            chessGame.remove(sourceSquare as Square);
+        const color = piece.pieceType[0] as Color;
+        const type = piece.pieceType[1].toLowerCase() as PieceSymbol;
+
+        // 1. Сброс за пределы доски -> удаление фигуры
+        if (!targetSquare) {
+            if (!piece.isSparePiece && sourceSquare) {
+                game.remove(sourceSquare as Square);
+                setEditedPosition(game.fen());
+            }
+            return true;
         }
 
-        // Размещение фигуры на целевой клетке
-        const success = chessGame.put(
+        // Сохраняем исходные фигуры на случай отката (если put завершится неудачей)
+        const prevSourcePiece = !piece.isSparePiece && sourceSquare
+            ? game.get(sourceSquare as Square)
+            : null;
+        const prevTargetPiece = game.get(targetSquare as Square);
+
+        // 2. Если фигура перемещается по доске — удаляем с исходной клетки
+        if (!piece.isSparePiece && sourceSquare) {
+            game.remove(sourceSquare as Square);
+        }
+
+        // 3. Если на целевой клетке уже стояла фигура — удаляем её перед put,
+        // чтобы chess.js не блокировал перезапись (особенно если там стоял король)
+        if (prevTargetPiece) {
+            game.remove(targetSquare as Square);
+        }
+
+        // 4. Размещение фигуры на целевой клетке
+        const success = game.put(
             { color, type },
             targetSquare as Square
         );
 
         if (!success) {
+            // Восстанавливаем состояние клеток при ошибке
+            if (prevSourcePiece && sourceSquare) {
+                game.put(prevSourcePiece, sourceSquare as Square);
+            }
+            if (prevTargetPiece) {
+                game.put(prevTargetPiece, targetSquare as Square);
+            }
+
             alert(`Доска уже содержит ${color === 'w' ? 'белого' : 'черного'} Короля`);
             return false;
         }
 
-        setChessPosition(chessGame.fen());
+        setEditedPosition(game.fen());
         return true;
-    };
+    }, []);
 
     // Очистка всей доски
     const handleClear = () => {
-        chessGame.load(EMPTY_FEN, { skipValidation: true });
-        setChessPosition(chessGame.fen());
+        const game = chessGameRef.current;
+        game.load(EMPTY_FEN, { skipValidation: true });
+        setEditedPosition(game.fen());
     };
 
     // Сброс к начальной шахматной позиции
     const handleResetToStart = () => {
-        chessGame.load(START_FEN, { skipValidation: true });
-        setChessPosition(chessGame.fen());
+        const game = chessGameRef.current;
+        game.load(START_FEN, { skipValidation: true });
+        setEditedPosition(game.fen());
     };
 
     // Переключение очереди хода (Белые / Черные)
     const handleTurnChange = (newTurn: Color) => {
+        const game = chessGameRef.current;
         const updatedFen = updateFenTurn(chessPosition, newTurn);
-        chessGame.load(updatedFen, { skipValidation: true });
-        setChessPosition(chessGame.fen());
+        game.load(updatedFen, { skipValidation: true });
+        setEditedPosition(game.fen());
     };
 
     // Ручное изменение FEN в текстовом поле
     const handleFenChange = (newFen: string) => {
-        setChessPosition(newFen);
+        setEditedPosition(newFen);
         try {
-            chessGame.load(newFen, { skipValidation: true });
+            chessGameRef.current.load(newFen, { skipValidation: true });
         } catch {
-            // Игнорируем промежуточный невалидный FEN
+            // Игнорируем промежуточный невалидный ввод
         }
     };
 
-    // Мок-сохранение в БД
+    // Сохранение в БД
     const handleSave = async () => {
-        dispatch(updateTask({
+        await dispatch(updateTask({
             task: {
                 ...editableTask,
                 position: chessPosition
             }
-        }))
+        }));
     };
 
+    // Мемоизируем опции провайдера, чтобы избежать рассинхронизации и лишних сбросов доски
+    const providerOptions = useMemo(() => ({
+        position: chessPosition,
+        onPieceDrop: handlePieceDrop,
+        id: 'chess-task-constructor',
+    }), [chessPosition, handlePieceDrop]);
+
     return (
-        <ChessboardProvider
-            options={{
-                position: chessPosition,
-                onPieceDrop: handlePieceDrop,
-                id: 'chess-task-constructor',
-            }}
-        >
+        <ChessboardProvider options={providerOptions}>
             <S.Container>
                 {/* Шапка */}
                 <Header

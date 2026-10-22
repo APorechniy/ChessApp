@@ -1,6 +1,6 @@
-import { api } from "../../../axios";
+import { api } from "../../../network/instance";
 
-type Response = {};
+type Response = unknown;
 
 type Logout = () => Promise<Response>;
 

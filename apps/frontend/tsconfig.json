@@ -14,26 +14,25 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "strict": true,
     "baseUrl": ".",
     "paths": {
       "@/*": [
         "src/*"
-      ],
-      "@buffvpn/shared": [
-        "../../apps/shared/src/index.ts"
       ]
     },
     "allowJs": true,
     "incremental": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
   },
-  "include": [
-    "src",
-    "../../apps/shared/src/**/*"
-  ],
   "exclude": [
     "node_modules"
+  ],
+  "include": [
+    "next-env.d.ts",
+    "**/*.mts",
+    "**/*.ts",
+    "**/*.tsx"
   ]
 }

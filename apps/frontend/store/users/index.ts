@@ -91,9 +91,9 @@ export const usersSlice = createSlice({
         builder.addCase(updateCoachData.pending, (state) => {
             state.isUpdatedCoachData = "PENDING";
         });
-        builder.addCase(updateCoachData.rejected, (state, action: any) => {
+        builder.addCase(updateCoachData.rejected, (state, action) => {
             state.isUpdatedCoachData = "ERROR";
-            state.updateErrorMessage = action.payload?.message;
+            state.updateErrorMessage = action.payload?.message || '';
         });
 
         // update-student-data
@@ -103,9 +103,9 @@ export const usersSlice = createSlice({
         builder.addCase(updateStudentData.pending, (state) => {
             state.isUpdatedStudentData = "PENDING";
         });
-        builder.addCase(updateStudentData.rejected, (state, action: any) => {
+        builder.addCase(updateStudentData.rejected, (state, action) => {
             state.isUpdatedStudentData = "ERROR";
-            state.updateErrorMessage = action.payload?.message;
+            state.updateErrorMessage = action.payload?.message || '';
         });
 
         // create-coach

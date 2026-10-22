@@ -42,7 +42,6 @@ describe("CRUD attendance", () => {
             "lastName": "Иванов",
             "firstName": "Иван"
         },
-        "homeworkDone": true,
         "presetId": null,
         "quality": {
             "id": "daa7af83-c49a-4fa9-83a0-360ef0a9b888",
@@ -142,7 +141,6 @@ describe("CRUD attendance", () => {
         const updatedAttendance: AttendanceView = {
             id: attendanceId,
             ...attendancePreset,
-            homeworkDone: true,
             student: newStudent,
         }
 

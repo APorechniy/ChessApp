@@ -1,4 +1,4 @@
-import { Action, createSlice } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
 import { CLEAR_STORE } from '../const'
 import { type SystemState, type AddNotificationPayload } from './types'
 import { type PayloadAction } from '@reduxjs/toolkit'
@@ -85,7 +85,7 @@ export const systemSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(CLEAR_STORE, () => initialState);
 
-        builder.addCase(REHYDRATE, (state, action: any) => {
+        builder.addCase(REHYDRATE, (state, action: Partial<PayloadAction<{ system?: unknown } | undefined>>) => {
             // При восстановлении стора из redux-persist гарантируем,
             // что массив notifications будет пустым на старте
             if (action.payload?.system) {
