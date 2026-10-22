@@ -40,7 +40,7 @@ export class HomeworkRepository {
             .innerJoin(
                 'homework_solutions',
                 'solution',
-                'solution.studentId = :studentId',
+                'solution.homework_id = homework.id AND solution.studentId = :studentId',
                 { studentId }
             )
             .getMany();

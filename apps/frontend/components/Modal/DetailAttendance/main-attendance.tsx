@@ -184,7 +184,23 @@ export const MainAttendance: React.FC<{ selectedAttendance: Attendance }> = ({ s
     }, [currentHomework, isLoadingHomework, isDeletedHomework])
 
     const handleUpdateAttendance = async () => {
-        if (!coach || !student) {
+        if (!coach) {
+            dispatch(addNotification({
+                title: 'Ошибка при редактировании занятия!',
+                subtitle: 'Тренер не указан',
+                variant: "error",
+                autoCloseTimer: 2000,
+            }))
+            return
+        }
+
+        if (!student && !group) {
+            dispatch(addNotification({
+                title: 'Ошибка при редактировании занятия!',
+                subtitle: 'Не указан студент или группа студентов',
+                variant: "error",
+                autoCloseTimer: 2000,
+            }))
             return
         }
 
