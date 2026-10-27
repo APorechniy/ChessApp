@@ -6,6 +6,8 @@ import { useAppDispatch, useAppSelector } from "../../store/store";
 import { Loader } from "../../atoms/Loader";
 import { useGroupedHomeworks } from "../../hooks/use-grouped-homeworks";
 import { getHomeworksByStudentId } from "../../store/homeworks/thunk/get-homeworks-by-student-id";
+import { TextButton } from "atoms/TextButton";
+import { handleOpenModal } from "store/system";
 
 export const HomeworkList: FC = () => {
     const dispatch = useAppDispatch();
@@ -37,10 +39,17 @@ export const HomeworkList: FC = () => {
 
     const groups = Object.entries(groupedHomeworks);
 
+    const handleAddHomework = () => {
+        dispatch(handleOpenModal({
+            modalContent: "CREATE_HOMEWORK"
+        }))
+    };
+
     return (
         <S.DashboardContainer>
             <S.DashboardHeader>
                 <S.Title>Домашние задания</S.Title>
+                <TextButton onClick={handleAddHomework} text="Добавить занятие" style={{ width: "auto", boxSizing: "border-box", padding: "1rem" }} />
             </S.DashboardHeader>
 
             {groups.length === 0 ? (

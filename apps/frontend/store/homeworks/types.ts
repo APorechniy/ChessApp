@@ -20,7 +20,7 @@ export enum SolutionAnswerStatus {
 export type Homework = {
     id: string,
     name?: string,
-    attendanceId: string,
+    attendanceId?: string,
     expiresAt: string,
     tasks: Task[]
 }
@@ -88,7 +88,6 @@ export type HomeworksState = {
     isLoadingHomework: RequestStatus,
     isCreatedSolutionAnswer: RequestStatus,
     isCreatedHomework: RequestStatus,
-    isFreezedHomework: RequestStatus,
     isUpdatedHomework: RequestStatus,
     isUpdatedHomeworkSolution: RequestStatus,
     isUpdatedSolutionAnswer: RequestStatus,

@@ -95,15 +95,21 @@ export const HomeworkBlock = styled.div`
     position: relative;
 
     box-sizing: border-box;
-    padding: 4rem 1.6rem;
 
     display: grid;
     grid-template-columns: 1fr;
     grid-auto-columns: minmax(0, 1fr);
-    gap: 1rem;   
+    gap: 1rem;
+`
 
-    border: 0.1rem solid var(--primary-border);
-    border-radius: 1rem;
+export const HomeworkText = styled.p`
+    width: 100%;
+    text-align: left;
+    margin: 0;
+
+    color: var(--primary-text);
+    font-size: 1.6rem;
+    font-weight: 600;
 `
 
 export const DetailAttendanceFormTitle = styled.h3`

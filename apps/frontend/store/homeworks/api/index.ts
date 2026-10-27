@@ -1,6 +1,5 @@
 import createHomework from "./create-homework"
 import getCurrentHomework from "./get-current-homework"
-import freezeHomework from "./freeze-homework"
 import deleteHomework from "./delete-homework"
 import updateHomework from "./update-homework"
 import getHomeworksList from "./get-homeworks-list"
@@ -23,7 +22,6 @@ export const homeworksApi = {
     getStudentAnswers,
     createHomework,
     createSolutionAnswer,
-    freezeHomework,
     deleteHomework,
     updateHomework,
     updateHomeworkSolution,

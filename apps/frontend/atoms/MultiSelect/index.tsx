@@ -7,7 +7,8 @@ type MultiSelectProps = {
     value: unknown[],
     options: unknown[],
     optionsName?: (option: unknown) => string,
-    handleInput: (option: unknown) => void,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    handleInput: (option: any) => void,
     placeholder?: string,
     label?: string,
     isDisabled?: boolean,

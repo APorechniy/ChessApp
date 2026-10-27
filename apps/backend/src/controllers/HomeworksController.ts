@@ -48,6 +48,7 @@ type GetSolutionByHomeworkAndStudentIdsQuery = {
 
 type CreateHomeworkBody = {
     homework: Omit<HomeworkView, "id">;
+    studentsAttended: string[]
 };
 
 type CreateSolutionAnswerBody = {
@@ -253,18 +254,17 @@ export class HomeworksController {
 
     async createHomework(req: Request, res: Response, next: NextFunction) {
         try {
-            const { homework } = req.body as CreateHomeworkBody;
+            const { homework, studentsAttended } = req.body as CreateHomeworkBody;
 
             if (
                 !homework ||
-                !homework.attendanceId ||
                 !homework.tasks?.length
             ) {
                 throw new Error("Invalid homework");
             }
 
             const isCreatedHomework =
-                await this.homeworksService.createHomework(homework);
+                await this.homeworksService.createHomework(homework, studentsAttended);
 
             if (!isCreatedHomework) {
                 throw new Error("Can not create homework");
@@ -415,38 +415,6 @@ export class HomeworksController {
         }
     }
 
-    async freezeHomework(req: Request, res: Response, next: NextFunction) {
-        try {
-            const { homework, studentsAttended } = req.body as FreezeHomeworkBody;
-
-            if (
-                !homework ||
-                !homework.attendanceId ||
-                !studentsAttended?.length
-            ) {
-                throw new Error("Invalid homework");
-            }
-
-            const isFreezeHomework =
-                await this.homeworksService.freezeHomework(homework, studentsAttended);
-
-            if (!isFreezeHomework) {
-                throw new Error("Can not freeze homework");
-            }
-
-            res.status(200).send({
-                isFreezeHomework: isFreezeHomework,
-            });
-
-            return;
-        } catch (error: any) {
-            this.logger.error(error);
-            res.status(500).send({
-                error: error?.message,
-            });
-        }
-    }
-
     async deleteHomework(
         req: Request,
         res: Response,
@@ -511,9 +479,6 @@ export class HomeworksController {
         )
         app.put("/homeworks/solutions", (req, res, next) =>
             this.updateHomeworkSolution(req, res, next),
-        )
-        app.put("/homeworks/freeze", authCheck, (req, res, next) =>
-            this.freezeHomework(req, res, next),
         )
         app.delete("/homeworks/:homeworkId", authCheck, (req, res, next) =>
             this.deleteHomework(req, res, next),

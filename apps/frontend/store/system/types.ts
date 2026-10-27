@@ -51,6 +51,7 @@ export type SystemState = {
     "CREATE_PRESET" |
     "CREATE_GROUP" |
     "CREATE_COACH" |
+    "CREATE_HOMEWORK" |
     "DETAIL_STUDENT" |
     "DETAIL_COACH" |
     "CREATE_ATTENDANCE" |

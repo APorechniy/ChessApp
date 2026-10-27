@@ -3,7 +3,6 @@ import type { HomeworksState } from './types'
 import { CLEAR_STORE } from '../const'
 import { createHomework } from './thunk/create-homework'
 import { getCurrentHomework } from './thunk/get-current-homework'
-import { freezeHomework } from './thunk/freeze-homework'
 import { deleteHomework } from './thunk/delete-homework'
 import { updateHomework } from './thunk/update-homework'
 import { getHomeworksList } from './thunk/get-homeworks-list'
@@ -30,7 +29,6 @@ const initialState: HomeworksState = {
     isLoadingStudentAnswers: "IDLE",
     isCreatedSolutionAnswer: "IDLE",
     isCreatedHomework: "IDLE",
-    isFreezedHomework: "IDLE",
     isUpdatedHomework: "IDLE",
     isUpdatedHomeworkSolution: "IDLE",
     isUpdatedSolutionAnswer: "IDLE",
@@ -205,17 +203,6 @@ export const homeworksSlice = createSlice({
         });
         builder.addCase(updateHomeworkSolution.rejected, (state) => {
             state.isUpdatedHomeworkSolution = "ERROR";
-        });
-
-        // freeze-homework
-        builder.addCase(freezeHomework.fulfilled, (state, action) => {
-            state.isFreezedHomework = action.payload.isFreezeHomework ? "SUCCESS" : "ERROR";
-        });
-        builder.addCase(freezeHomework.pending, (state) => {
-            state.isFreezedHomework = "PENDING";
-        });
-        builder.addCase(freezeHomework.rejected, (state) => {
-            state.isFreezedHomework = "ERROR";
         });
 
         // delete-homework

@@ -8,7 +8,6 @@ export const ACTIONS = {
     GetStudentAnswers: "homeworks/get-student-answers",
     CreateHomework: "homeworks/create-homework",
     CreateSolutionAnswer: "homeworks/create-solution-answer",
-    FreezeHomework: "homeworks/freeze",
     DeleteHomework: "homeworks/delete",
     UpdateHomework: "homeworks/update",
     UpdateHomeworkSolution: "homeworks/solution-update",

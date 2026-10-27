@@ -235,7 +235,7 @@ CREATE TABLE attendance_additional_tasks (
 
 CREATE TABLE homeworks (
     id VARCHAR(36) PRIMARY KEY,
-    attendance_id VARCHAR(36) NOT NULL,
+    attendance_id VARCHAR(36) DEFAULT NULL,
     name TEXT NOT NULL,
     expires_at TIMESTAMP NOT NULL,
     FOREIGN KEY (attendance_id) REFERENCES attendance(id) ON DELETE CASCADE ON UPDATE CASCADE

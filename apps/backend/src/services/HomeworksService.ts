@@ -32,6 +32,7 @@ export class HomeworksService {
 
     async createHomework(
         homeworkWithoutId: Omit<HomeworkView, "id">,
+        studentsAttended: string[],
     ): Promise<boolean> {
         const homework: Homework = {
             id: uuidv4(),
@@ -46,28 +47,28 @@ export class HomeworksService {
         }))
 
         const isCreatedHomework = await this.homeworksRepository.createHomework(homework)
+        const isCreatedSolutions = await this.createSolutions(homework.id, studentsAttended)
         const isAddedTasks = await this.homeworksRepository.addTasks(homeworkTasks)
 
-        return Boolean(isCreatedHomework && isAddedTasks);
+        return Boolean(isCreatedHomework && isCreatedSolutions && isAddedTasks);
     }
 
-    async freezeHomework(
-        homework: HomeworkView,
-        studentsAttended: StudentsAttendedView[]
+    async createSolutions(
+        homeworkId: string,
+        studentsAttended: string[]
     ): Promise<boolean> {
-        const homeworksSolutions: HomeworkSolution[] = studentsAttended.map((sa) => ({
+        const homeworksSolutions: HomeworkSolution[] = studentsAttended.map((studentId) => ({
             id: uuidv4(),
-            studentId: sa.student.id,
-            homeworkId: homework.id,
+            studentId: studentId,
+            homeworkId: homeworkId,
             status: HomeworkSolutionStatus.New,
             startedAt: null,
             finishedAt: null,
         }))
 
-        const isUpdatedHomework = await this.homeworksRepository.updateHomework(homework)
         const isAddedSolutions = await this.homeworksRepository.addHomeworkSolutions(homeworksSolutions)
 
-        return Boolean(isUpdatedHomework && isAddedSolutions);
+        return Boolean(isAddedSolutions);
     }
 
     async updateHomework(

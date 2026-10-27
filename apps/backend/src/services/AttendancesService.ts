@@ -51,6 +51,10 @@ export class AttendancesService {
     }
   }
 
+  async getAttendancesListForAnySubject(groupId?: string, studentId?: string): Promise<AttendanceView[] | null> {
+    return (await this.attendancesRepository.getAttendancesForStudentOrGroup(groupId, studentId))
+  }
+
   async getUnclosedAttendances(date: string, coachId?: string): Promise<AttendanceView[] | null> {
     try {
       // Добавить валидацию даты

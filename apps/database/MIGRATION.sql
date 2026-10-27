@@ -45,10 +45,10 @@ ALTER TABLE attendance DROP COLUMN homework_done;
 
 CREATE TABLE homeworks (
     id VARCHAR(36) PRIMARY KEY,
-    attendance_id VARCHAR(36) NOT NULL,
+    attendance_id VARCHAR(36) DEFAULT NULL,
     name TEXT NOT NULL,
     expires_at TIMESTAMP NOT NULL,
-    FOREIGN KEY (attendance_id) REFERENCES attendance(id) ON DELETE CASCADE ON UPDATE CASCADE
+    FOREIGN KEY (attendance_id) REFERENCES attendance(id) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 CREATE TABLE homework_solutions (

@@ -7,8 +7,8 @@ export class Homework {
     @PrimaryGeneratedColumn('uuid')
     id!: string;
 
-    @Column({ name: "attendance_id", type: "varchar", length: 36 })
-    attendanceId!: string;
+    @Column({ name: "attendance_id", type: "varchar", length: 36, default: null })
+    attendanceId?: string;
 
     @Column({ name: "name", type: "text" })
     name!: string;

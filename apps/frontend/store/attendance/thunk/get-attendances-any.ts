@@ -1,13 +1,13 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { ACTIONS } from "../const/actions";
-import { homeworksApi } from "../api";
-import type { FreezeHomeworkParams } from "../api/freeze-homework";
+import { attendanceApi } from "../api";
+import { type GetAttendancesAnyParams } from "../api/get-attendances-any";
 
-export const freezeHomework = createAsyncThunk(
-    ACTIONS.FreezeHomework,
-    async (params: FreezeHomeworkParams, { rejectWithValue }) => {
+export const getAttendancesAny = createAsyncThunk(
+    ACTIONS.GetAttendancesAny,
+    async (params: GetAttendancesAnyParams, { rejectWithValue }) => {
         try {
-            const response = await homeworksApi.freezeHomework(params);
+            const response = await attendanceApi.getAttendancesAny(params);
 
             return response;
         } catch (error) {

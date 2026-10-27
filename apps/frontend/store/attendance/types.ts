@@ -41,6 +41,7 @@ export type PartialAttendance = MakeOptional<
 
 export type AttendanceState = {
     attendancesList: (Attendance | PartialAttendance)[],
+    attendancesListAny: Attendance[],
     unclosedAttendancesList: Attendance[],
     studentAttendancesList: Attendance[],
     selectedAttendance: (Attendance | PartialAttendance) | null,
@@ -53,6 +54,7 @@ export type AttendanceState = {
     isRemovedAttendance: RequestStatus,
 
     attendancesListLoading: RequestStatus,
+    attendancesListAnyLoading: RequestStatus,
     unclosedAttendancesLoading: RequestStatus,
     studentAttendancesListLoading: RequestStatus,
 
