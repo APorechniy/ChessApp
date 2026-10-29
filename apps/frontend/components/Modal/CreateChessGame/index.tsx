@@ -7,13 +7,11 @@ import { addNotification, handleCloseModal } from "../../../store/system"
 import { CreateChessGameFormTitle, CreateChessGameModal, CreateChessGameForm, InputsBlock, CloseButton } from "./styled"
 import { getChessOpenings } from "../../../store/chess-openings/thunk/get-chess-openings"
 import { ChessOpening } from "../../../store/chess-openings/types"
-import { createChessGame } from "../../../store/chess-games/thunk/create-chess-game"
-import { getChessGames } from "../../../store/chess-games/thunk/get-chess-games"
-import { handleClearIsCreatedChessGame } from "../../../store/chess-games"
 import { ChessGameWithoutId } from "../../../store/chess-games/types"
 import { dateToLocaleISO } from "../../../utils/date-to-locale-iso"
 import { dateToHTMLValidate } from "../../../utils/date-to-html-validate"
 import { ClearIcon } from "../../../assets/ClearIcon"
+import { useCreateChessGameMutation } from "store/chess-games/api"
 
 type Option = { text: string, value: string }
 
@@ -31,11 +29,9 @@ export const CreateChessGame = () => {
     const dispatch = useAppDispatch()
 
     const { chessOpeningsList, isLoadingChessOpenings } = useAppSelector(({ chessOpenings }) => chessOpenings)
-    const { isCreateChessGame } = useAppSelector(({ chessGames }) => chessGames)
+    const [createChessGame, { isError, isSuccess }] = useCreateChessGameMutation()
 
     const closeModal = () => {
-        dispatch(getChessGames({}))
-        dispatch(handleClearIsCreatedChessGame())
         dispatch(handleCloseModal())
     }
 
@@ -44,7 +40,7 @@ export const CreateChessGame = () => {
     }, [])
 
     useEffect(() => {
-        if (isCreateChessGame === "SUCCESS") {
+        if (isSuccess) {
             dispatch(addNotification({
                 title: 'Партия создана!',
                 variant: "success",
@@ -53,14 +49,14 @@ export const CreateChessGame = () => {
             closeModal();
         }
 
-        if (isCreateChessGame === "ERROR") {
+        if (isError) {
             dispatch(addNotification({
                 title: 'Ошибка при создании партии',
                 variant: 'error',
                 autoCloseTimer: 2000,
             }))
         }
-    }, [isCreateChessGame, dispatch])
+    }, [isError, isSuccess, dispatch])
 
     const handleChangeChessOpening = (option: Option) => {
         const newChessOpening = chessOpeningsList.find((s) => s.id === option.value)
@@ -107,7 +103,7 @@ export const CreateChessGame = () => {
             chessOpening: chessOpening,
         }
 
-        await dispatch(createChessGame({ chessGame: chessGame }))
+        await createChessGame({ chessGame: chessGame });
     }
 
     const handleChangeWhitePlayer = (event: React.ChangeEvent<HTMLInputElement>) => {
