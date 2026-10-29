@@ -2,14 +2,12 @@ import React, { useEffect, useState } from "react"
 import { BaseInput } from "../../../atoms/BaseInput/Input"
 
 import { TextButton } from "../../../atoms/TextButton"
-import { useAppDispatch, useAppSelector } from "../../../store/store"
 import { addNotification, handleCloseModal } from "../../../store/system"
 import { CreateChessOpeningFormTitle, CreateChessOpeningModal, CreateChessOpeningForm, CloseButton } from "./styled"
-import { getChessOpenings } from "../../../store/chess-openings/thunk/get-chess-openings"
 import { ChessOpeningWithoutId } from "../../../store/chess-openings/types"
-import { createChessOpening } from "../../../store/chess-openings/thunk/create-chess-opening"
-import { handleClearIsCreatedChessOpening } from "../../../store/chess-openings"
 import { ClearIcon } from "../../../assets/ClearIcon"
+import { useCreateChessOpeningMutation } from "store/chess-openings/api"
+import { useAppDispatch } from "store/store"
 
 export const CreateChessOpening = () => {
     const [name, setName] = useState("")
@@ -18,16 +16,14 @@ export const CreateChessOpening = () => {
 
     const dispatch = useAppDispatch()
 
-    const { isCreateChessOpening } = useAppSelector(({ chessOpenings }) => chessOpenings)
+    const [createChessOpening, { isSuccess, isError }] = useCreateChessOpeningMutation()
 
     const closeModal = () => {
-        dispatch(getChessOpenings())
-        dispatch(handleClearIsCreatedChessOpening())
         dispatch(handleCloseModal())
     }
 
     useEffect(() => {
-        if (isCreateChessOpening === "SUCCESS") {
+        if (isSuccess) {
             dispatch(addNotification({
                 title: 'Дебют создан!',
                 variant: "success",
@@ -36,14 +32,14 @@ export const CreateChessOpening = () => {
             closeModal();
         }
 
-        if (isCreateChessOpening === "ERROR") {
+        if (isError) {
             dispatch(addNotification({
                 title: 'Ошибка при сохранении дебюта',
                 variant: 'error',
                 autoCloseTimer: 2000,
             }))
         }
-    }, [isCreateChessOpening, dispatch])
+    }, [isSuccess, isError, dispatch])
 
     const handleCreateChessOpening = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
@@ -59,7 +55,7 @@ export const CreateChessOpening = () => {
             name: name,
         }
 
-        await dispatch(createChessOpening({ chessOpening: chessOpening }))
+        await createChessOpening({ chessOpening: chessOpening })
     }
 
     const handleChangeName = (event: React.ChangeEvent<HTMLInputElement>) => {

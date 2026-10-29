@@ -1,7 +1,7 @@
 import { baseApi } from '../../api/base-api'
 import type { ChessGame, ChessGameWithoutId } from '../types'
 
-type GetChessGamessResponse = { chessGamesList: ChessGame[]; }
+type GetChessGamesResponse = { chessGamesList: ChessGame[]; }
 
 type GetChessGamesParams = {
     chessOpeningId?: string
@@ -17,7 +17,7 @@ type CreateChessGameResponse = {
 
 export const chessGamesApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
-        getChessGames: builder.query<GetChessGamessResponse, GetChessGamesParams | void>({
+        getChessGames: builder.query<GetChessGamesResponse, GetChessGamesParams | void>({
             query: (params) => ({
                 url: '/chess-games/',
                 params: params ?? undefined,

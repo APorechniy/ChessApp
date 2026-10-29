@@ -2,16 +2,16 @@ import React, { useEffect, useState } from "react"
 import { BaseInput } from "../../../atoms/BaseInput/Input"
 import { BaseSelect } from "../../../atoms/BaseSelect"
 import { TextButton } from "../../../atoms/TextButton"
-import { useAppDispatch, useAppSelector } from "../../../store/store"
+import { useAppDispatch } from "../../../store/store"
 import { addNotification, handleCloseModal } from "../../../store/system"
 import { CreateChessGameFormTitle, CreateChessGameModal, CreateChessGameForm, InputsBlock, CloseButton } from "./styled"
-import { getChessOpenings } from "../../../store/chess-openings/thunk/get-chess-openings"
 import { ChessOpening } from "../../../store/chess-openings/types"
 import { ChessGameWithoutId } from "../../../store/chess-games/types"
 import { dateToLocaleISO } from "../../../utils/date-to-locale-iso"
 import { dateToHTMLValidate } from "../../../utils/date-to-html-validate"
 import { ClearIcon } from "../../../assets/ClearIcon"
-import { useCreateChessGameMutation } from "store/chess-games/api"
+import { useCreateChessGameMutation } from "../../../store/chess-games/api"
+import { useGetChessOpeningsQuery } from "../../../store/chess-openings/api"
 
 type Option = { text: string, value: string }
 
@@ -28,16 +28,12 @@ export const CreateChessGame = () => {
 
     const dispatch = useAppDispatch()
 
-    const { chessOpeningsList, isLoadingChessOpenings } = useAppSelector(({ chessOpenings }) => chessOpenings)
+    const { data, isSuccess: isSuccessLoadChessOpenings } = useGetChessOpeningsQuery()
     const [createChessGame, { isError, isSuccess }] = useCreateChessGameMutation()
 
     const closeModal = () => {
         dispatch(handleCloseModal())
     }
-
-    useEffect(() => {
-        dispatch(getChessOpenings())
-    }, [])
 
     useEffect(() => {
         if (isSuccess) {
@@ -59,12 +55,10 @@ export const CreateChessGame = () => {
     }, [isError, isSuccess, dispatch])
 
     const handleChangeChessOpening = (option: Option) => {
-        const newChessOpening = chessOpeningsList.find((s) => s.id === option.value)
+        const newChessOpening = data?.chessOpeningsList.find((s) => s.id === option.value)
 
         if (newChessOpening) {
             setChessOpening(newChessOpening)
-        } else {
-            setChessOpening(newChessOpening[0])
         }
 
         setChessOpeningError(false)
@@ -127,7 +121,7 @@ export const CreateChessGame = () => {
                 <ClearIcon onClick={closeModal} />
             </CloseButton>
             <CreateChessGameFormTitle className="create-chess-opening-form-title">Новая партия</CreateChessGameFormTitle>
-            {isLoadingChessOpenings === "SUCCESS" &&
+            {isSuccessLoadChessOpenings &&
                 <CreateChessGameForm onSubmit={handleCreateChessGame}>
                     <InputsBlock>
                         <BaseInput
@@ -161,7 +155,7 @@ export const CreateChessGame = () => {
 
                         <BaseSelect
                             value={chessOpening?.id || ""}
-                            options={chessOpeningsList.map((co) => {
+                            options={data.chessOpeningsList.map((co) => {
                                 return {
                                     text: co.name,
                                     value: co.id
