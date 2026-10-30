@@ -66,7 +66,7 @@ export const NavigationItem = styled.div`
 
     box-sizing: border-box;
 
-    padding-left: 3rem;
+    padding-left: 2rem;
 
     display: flex;
     align-items: center;
@@ -114,6 +114,6 @@ export const NavigationItemText = styled.p`
     width: auto;
 
     font-weight: 400;
-    font-size: 1.6rem;
+    font-size: 1.4rem;
     color: var(--primary-text-light);
 `

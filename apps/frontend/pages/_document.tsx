@@ -100,7 +100,7 @@ export default class MyDocument extends Document {
         <body>
           <Main></Main>
           <NextScript />
-          <script src="https://yookassa.ru/checkout-widget/v1/checkout-widget.js"></script>
+          <script async src="https://yookassa.ru/checkout-widget/v1/checkout-widget.js"></script>
           {SHOW_METRIKA &&
             <>
               <script

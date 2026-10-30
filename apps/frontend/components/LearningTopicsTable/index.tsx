@@ -1,57 +1,67 @@
-import React from "react";
-import { useAppDispatch, useAppSelector } from "../../store/store"
-import { useEffect } from "react"
-import { createTheme } from 'react-data-table-component';
-import { COLUMNS } from "../../content/learning-topics-table-columns";
-import { TableWrapper } from "./styled";
-import { StyledTable } from "../../atoms/StyledTable";
-import { getLearningTopics } from "../../store/learning-topics/thunk/get-learning-topics";
-import { type LearningTopics } from "../../store/learning-topics/types";
-import { handleChangeSelectedLearningTopic, handleClearUpdateLearningTopic, handleClearRemoveLearningTopic } from "../../store/learning-topics";
-import { handleOpenModal } from "../../store/system";
-import { Header } from "./Header";
+import React, { useEffect, useCallback } from 'react';
+import { useAppDispatch, useAppSelector } from '../../store/store';
+import { COLUMNS } from '../../content/learning-topics-table-columns';
+import { TableWrapper } from './styled';
+import { StyledTable } from '../../atoms/StyledTable';
+import { getLearningTopics } from '../../store/learning-topics/thunk/get-learning-topics';
+import type { LearningTopics } from '../../store/learning-topics/types';
+import {
+    handleChangeSelectedLearningTopic,
+    handleClearUpdateLearningTopic,
+    handleClearRemoveLearningTopic,
+} from '../../store/learning-topics';
+import { handleOpenModal } from '../../store/system';
+import { Header } from './Header';
+import { ExpandableTasks } from './ExpandableTasks';
+import { getTasks } from '../../store/tasks/thunk/get-tasks';
+import { handleClearTasksList } from '../../store/tasks';
 
-export const LearningTopicsTable = () => {
-    const { learningTopicsList, isLoadingLearningTopics } = useAppSelector(({ learningTopics }) => learningTopics);
+export const LearningTopicsTable: React.FC = () => {
+    const { learningTopicsList, isLoadingLearningTopics } = useAppSelector(
+        ({ learningTopics }) => learningTopics
+    );
 
-    createTheme('dark', {
-        text: {
-            primary: 'var(--primary-text)'
-        },
-        background: {
-            default: 'var(--primary-background)'
-        }
-    })
-
-    const dispatch = useAppDispatch()
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
-        dispatch(getLearningTopics())
-    }, [dispatch])
+        dispatch(getLearningTopics());
+    }, [dispatch]);
 
-    const handleOpenDetailTaskModal = (learningTopic: LearningTopics) => {
-        dispatch(handleChangeSelectedLearningTopic({
-            learningTopic: learningTopic
-        }))
-        dispatch(handleClearUpdateLearningTopic())
-        dispatch(handleClearRemoveLearningTopic())
-        dispatch(handleOpenModal({
-            modalContent: "DETAIL_LEARNING_TOPIC"
-        }))
-    }
+    const handleOpenDetailTaskModal = useCallback(
+        (learningTopic: LearningTopics): void => {
+            dispatch(handleChangeSelectedLearningTopic({ learningTopic }));
+            dispatch(handleClearUpdateLearningTopic());
+            dispatch(handleClearRemoveLearningTopic());
+            dispatch(handleOpenModal({ modalContent: 'DETAIL_LEARNING_TOPIC' }));
+        },
+        [dispatch]
+    );
+
+    const handleRowExpanded = useCallback(
+        (expanded: boolean, row: LearningTopics): void => {
+            if (expanded) {
+                dispatch(getTasks({ learningTopicId: row.id }));
+            } else {
+                dispatch(handleClearTasksList());
+            }
+        },
+        [dispatch]
+    );
 
     return (
         <TableWrapper>
             <Header />
-            {
-                isLoadingLearningTopics === 'SUCCESS' &&
-                <StyledTable
+            {isLoadingLearningTopics === 'SUCCESS' && (
+                <StyledTable<LearningTopics>
                     columns={COLUMNS}
                     data={learningTopicsList}
-                    theme="dark"
+                    getRowId={(row: LearningTopics) => String(row.id)}
+                    expandableRows
+                    expandableRowsComponent={ExpandableTasks}
+                    onRowExpandToggled={handleRowExpanded}
                     onRowClicked={handleOpenDetailTaskModal}
                 />
-            }
+            )}
         </TableWrapper>
-    )
-}
+    );
+};

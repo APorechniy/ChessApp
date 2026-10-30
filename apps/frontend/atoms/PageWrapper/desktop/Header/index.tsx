@@ -26,6 +26,8 @@ export const Header = () => {
 
     const navigation = useRouter();
 
+    const handleCloseOverlay = () => dispatch(handleHideOverlay())
+
     useClickOutside(expandedMenuRef, () => {
         setIsOpenMenu(false)
         handleCloseOverlay()
@@ -41,8 +43,6 @@ export const Header = () => {
             handleCloseOverlay()
         }
     }
-
-    const handleCloseOverlay = () => dispatch(handleHideOverlay())
 
     const handleNavigate = ({ event, url }) => {
         event.preventDefault();

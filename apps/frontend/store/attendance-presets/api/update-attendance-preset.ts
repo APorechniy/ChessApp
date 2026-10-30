@@ -1,5 +1,5 @@
 import { type AttendancePreset } from "../types";
-import { api } from "../../../axios";
+import { api } from "../../../network/instance";
 
 export type UpdateAttendancePresetParams = {
     attendancePreset: AttendancePreset,

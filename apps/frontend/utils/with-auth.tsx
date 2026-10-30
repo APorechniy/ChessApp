@@ -6,6 +6,7 @@ import { logout } from '../store/auth/thunk/logout';
 import { useAuth } from '../hooks/use-auth';
 import { getSettings } from '../store/system/thunk/get-settings';
 import { Loader } from '../atoms/Loader';
+import { baseApi } from 'store/api/base-api';
 
 interface WithAuthProps {
   children: React.ReactNode;
@@ -14,6 +15,7 @@ interface WithAuthProps {
 export const withAuth = <P extends object>(
   WrappedComponent: React.ComponentType<P>,
 ) => {
+  // eslint-disable-next-line react/display-name
   return (props: P & WithAuthProps) => {
     const redirectPath = '/sign-in'
     const router = useRouter();
@@ -43,13 +45,13 @@ export const withAuth = <P extends object>(
       if (!isLoadedUserData && isAuthenticated) {
         dispatch(getUser())
       }
-    }, [isLoadedUserData, isAuthenticated])
+    }, [dispatch, isLoadedUserData, isAuthenticated])
 
     useEffect(() => {
       if (!isLoadedSettings && isAuthenticated) {
         dispatch(getSettings())
       }
-    }, [isLoadedSettings, isAuthenticated])
+    }, [dispatch, isLoadedSettings, isAuthenticated])
 
     useEffect(() => {
       if (
@@ -57,9 +59,10 @@ export const withAuth = <P extends object>(
       ) {
         dispatch(logout())
         dispatch(clearStore())
+        dispatch(baseApi.util.resetApiState())
         router.push(redirectPath);
       }
-    }, [isAuthenticated, isAuth, isLoading]);
+    }, [dispatch, isAuthenticated, isAuth, isLoading]);
 
     return (isAuthenticated && isLoadedUserData && isLoadSettings)
       ?

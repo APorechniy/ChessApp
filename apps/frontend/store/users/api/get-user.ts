@@ -1,5 +1,5 @@
 import { type User } from "../types";
-import { api } from "../../../axios";
+import { api } from "../../../network/instance";
 
 type Response = {
     user: User;

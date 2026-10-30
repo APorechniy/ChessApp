@@ -3,7 +3,19 @@ import { ACTIONS } from "../const/actions";
 import { usersApi } from "../api";
 import type { UpdateCoachDataParams, RejectResponse } from "../api/update-coach-data";
 
-export const updateCoachData = createAsyncThunk(
+type UpdateCoachDataResult = Awaited<ReturnType<typeof usersApi.updateCoachData>>;
+
+type UpdateCoachDataReject = {
+    status?: number;
+    data?: unknown;
+    message: string;
+}
+
+export const updateCoachData = createAsyncThunk<
+    UpdateCoachDataResult,
+    UpdateCoachDataParams,
+    { rejectValue: UpdateCoachDataReject }
+>(
     ACTIONS.UpdateCoachData,
     async (params: UpdateCoachDataParams, { rejectWithValue }) => {
         try {

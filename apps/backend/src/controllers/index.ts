@@ -4,6 +4,7 @@ import { AuthController } from "./AuthController";
 import { ChessGamesController } from "./ChessGamesController";
 import { ChessOpeningsController } from "./ChessOpeningsController";
 import { CoachReportController } from "./CoachReportController";
+import { HomeworksController } from "./HomeworksController";
 import { LearningTopicsController } from "./LearningTopicsController";
 import { LevelsController } from "./LevelsController";
 import { PaymentsController } from "./PaymentsController";
@@ -25,6 +26,7 @@ export {
   ChessGamesController,
   ChessOpeningsController,
   CoachReportController,
+  HomeworksController,
   LearningTopicsController,
   LevelsController,
   PaymentsController,

@@ -3,7 +3,7 @@ import { Button } from "./styled"
 
 type IconButton = {
     Icon: React.FC,
-    onClick: () => void,
+    onClick: (e: React.MouseEvent) => void,
     backgroundColor?: string
     style?: React.CSSProperties,
 }

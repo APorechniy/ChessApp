@@ -42,6 +42,14 @@ export const DetailCoach = () => {
     const dispatch = useAppDispatch()
     const platform = usePlatform()
 
+    const closeModal = () => {
+        dispatch(getCoachesList())
+        dispatch(handleChangeEditableCoach({ coach: null }))
+        dispatch(handleClearIsUpdateCoachData())
+        dispatch(handleClearIsRemovedCoach())
+        dispatch(handleCloseModal())
+    }
+
     useEffect(() => {
         if (isUpdatedCoachData === "SUCCESS") {
             dispatch(addNotification({
@@ -77,14 +85,6 @@ export const DetailCoach = () => {
             }))
         }
     }, [isUpdatedCoachData, isRemovedCoach])
-
-    const closeModal = () => {
-        dispatch(getCoachesList())
-        dispatch(handleChangeEditableCoach({ coach: null }))
-        dispatch(handleClearIsUpdateCoachData())
-        dispatch(handleClearIsRemovedCoach())
-        dispatch(handleCloseModal())
-    }
 
     const handleSaveCoach = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()

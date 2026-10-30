@@ -21,7 +21,7 @@ export const TimetableBoard = () => {
         } else {
             dispatch(handleChangeDaysOffset({ daysOffset: 3 }))
         }
-    }, [platform])
+    }, [platform, dispatch])
 
     const CalendarComponent = userRole === "student" ? CalendarList : CalendarBoard
 

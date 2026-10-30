@@ -31,11 +31,19 @@ export const DetailTask = () => {
     const [quality, setQuality] = useState<Quality>(selectedTask.quality)
 
     useEffect(() => {
-        dispatch(getLearningTopics())
+        if (!learningTopicsList.length || isLoadingLearningTopics !== "SUCCESS") {
+            dispatch(getLearningTopics())
+        }
         dispatch(getQualitiesList({
             labelFor: "tasks"
         }))
     }, [dispatch])
+
+    const closeModal = () => {
+        dispatch(handleClearIsUpdatedTask())
+        dispatch(handleClearRemovedTaskStatus())
+        dispatch(handleCloseModal())
+    }
 
     useEffect(() => {
         if (isUpdatedTask === "SUCCESS") {
@@ -72,13 +80,6 @@ export const DetailTask = () => {
             }))
         }
     }, [isUpdatedTask, isRemovedTask, dispatch])
-
-    const closeModal = () => {
-        dispatch(getTasks({}))
-        dispatch(handleClearIsUpdatedTask())
-        dispatch(handleClearRemovedTaskStatus())
-        dispatch(handleCloseModal())
-    }
 
     const handleUpdateTask = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()

@@ -27,12 +27,17 @@ export const BaseSwitch: React.FC<BaseSwitchProps> = ({
     isDisabled = false,
     style
 }) => {
+    const onChange = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+        if (!isDisabled) {
+            handleChange(e)
+        }
+    }
     return (
         <SwitchContainer style={style?.container}>
             <Switch
                 $isDisabled={isDisabled}
                 $isChecked={checked}
-                onClick={handleChange}
+                onClick={onChange}
                 className="switch"
                 style={style?.switch}
             >

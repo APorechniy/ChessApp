@@ -20,6 +20,7 @@ import { DetailCoach } from "./DetailCoach";
 import { DetailGroup } from "./DetailGroup";
 import { CreatePreset } from "./CreatePreset";
 import { DetailPreset } from "./DetailPreset";
+import { CreateHomework } from "./CreateHomework";
 
 export const Modal: React.FC = () => {
     const { isOpenModal, modalContent } = useAppSelector(({ system }) => system);
@@ -43,6 +44,7 @@ export const Modal: React.FC = () => {
         "CREATE_CHESS_OPENING": <CreateChessOpening />,
         "CREATE_LEARNING_TOPIC": <CreateLearningTopic />,
         "CREATE_CHESS_GAME": <CreateChessGame />,
+        "CREATE_HOMEWORK": <CreateHomework />,
         "DETAIL_ATTENDANCE": <DetailAttendance />,
         "DETAIL_PRESET": <DetailPreset />,
         "DETAIL_GROUP": <DetailGroup />,

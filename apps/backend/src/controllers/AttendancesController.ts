@@ -10,6 +10,11 @@ type Query = {
   date: string;
 };
 
+type AnySubjectQuery = {
+  studentId?: string;
+  groupId?: string;
+};
+
 type UnclosedQuery = {
   coachId?: string
 }
@@ -96,6 +101,34 @@ export class AttendancesController {
 
       const attendancesList =
         await this.attendancesService.getAttendancesListForStudent(date, decodedToken.id);
+
+      res.status(200).send({
+        attendancesList: attendancesList,
+      });
+
+      return;
+    } catch (error: any) {
+      this.logger.error(error);
+      res.status(500).send({
+        error: error?.message,
+      });
+    }
+  }
+
+  async getAttendancesListForAnySubject(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<void> {
+    try {
+      const { groupId, studentId } = req.query as AnySubjectQuery;
+
+      if (!groupId && !studentId) {
+        throw new Error("Incorrect subject")
+      }
+
+      const attendancesList =
+        await this.attendancesService.getAttendancesListForAnySubject(groupId, studentId);
 
       res.status(200).send({
         attendancesList: attendancesList,
@@ -321,6 +354,9 @@ export class AttendancesController {
   setupRoutes(app: Application) {
     app.get("/attendance", authCheck, (req, res, next) =>
       this.getAttendancesList(req, res, next),
+    );
+    app.get("/attendance/any", authCheck, (req, res, next) =>
+      this.getAttendancesListForAnySubject(req, res, next),
     );
     app.get("/attendance/unclosed", authCheck, (req, res, next) =>
       this.getUnclosedAttendances(req, res, next),

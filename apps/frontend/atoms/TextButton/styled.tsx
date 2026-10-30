@@ -20,13 +20,6 @@ export const Button = styled.button<{ backgroundColor?: string }>`
     justify-content: center;
     flex-wrap: nowrap;
 
-    transition: transform 0.2s;
-
-    &:hover {
-        transform: scale(1.05);
-        border: 1px solid white;
-    }
-
     &:disabled {
         pointer-events: none;
         cursor: not-allowed;

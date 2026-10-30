@@ -1,16 +1,14 @@
 import { useEffect, useMemo } from "react";
 import { useAppSelector, useAppDispatch } from "../store/store"
 import { getAttendances } from "../store/attendance/thunk/get-attendances";
-import { Attendance } from "../store/attendance/types";
+import { Attendance, PartialAttendance } from "../store/attendance/types";
+
+type AnyAttendance = Attendance | PartialAttendance
 
 export const useAttendances = () => {
     const { attendancesList, selectedDate } = useAppSelector(({ attendance }) => attendance);
 
     const dispatch = useAppDispatch();
-
-    useEffect(() => {
-        loadAttendances()
-    }, [selectedDate])
 
     const loadAttendances = () => {
         dispatch(getAttendances({
@@ -18,11 +16,15 @@ export const useAttendances = () => {
         }))
     }
 
+    useEffect(() => {
+        loadAttendances()
+    }, [selectedDate])
+
     const dateRangeCompare = (firstDateRange: [Date, Date], secondDateRange: [Date, Date]) => {
         return firstDateRange.some((f) => f >= secondDateRange[0] && f <= secondDateRange[1])
     }
 
-    const attendanceTree: Attendance[][] = useMemo(() => {
+    const attendanceTree: AnyAttendance[][] = useMemo(() => {
         const tree = attendancesList.reduce((prev, current) => {
             let hasItem = 1;
             let i = 0;
@@ -47,7 +49,7 @@ export const useAttendances = () => {
             }
 
             return [...prev]
-        }, [])
+        }, [] as AnyAttendance[][])
 
         return tree
     }, [attendancesList])

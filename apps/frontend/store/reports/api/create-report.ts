@@ -1,4 +1,4 @@
-import { api } from "../../../axios";
+import { api } from "../../../network/instance";
 import type { Report } from "../types";
 import { getFilenameFromHeader } from "../../../utils/get-filename-from-header";
 

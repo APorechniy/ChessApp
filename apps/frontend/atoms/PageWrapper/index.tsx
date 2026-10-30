@@ -8,6 +8,7 @@ import { useAppSelector } from '../../store/store'
 type Props = {
     contentStyles?: React.CSSProperties,
     children?: ReactNode;
+    isBackButton?: boolean;
 }
 
 export const PageWrapper: React.FC<Props> = (props) => {

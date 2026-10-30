@@ -10,9 +10,11 @@ import { getNextAttendance } from './thunk/get-next-attendance'
 import { getAttendancesForStudent } from './thunk/get-attendances-for-student'
 import { getUnclosedAttendances } from './thunk/get-unclosed-attendances'
 import { createAttendanceByPreset } from './thunk/create-attendance-by-preset'
+import { getAttendancesAny } from './thunk/get-attendances-any'
 
 const initialState: AttendanceState = {
     attendancesList: [],
+    attendancesListAny: [],
     unclosedAttendancesList: [],
     studentAttendancesList: [],
     selectedDate: null,
@@ -24,6 +26,7 @@ const initialState: AttendanceState = {
     isUpdatedAttendance: "IDLE",
     isRemovedAttendance: "IDLE",
 
+    attendancesListAnyLoading: "IDLE",
     attendancesListLoading: "IDLE",
     unclosedAttendancesLoading: "IDLE",
     studentAttendancesListLoading: "IDLE",
@@ -68,6 +71,19 @@ export const attendanceSlice = createSlice({
         builder.addCase(getAttendances.rejected, (state) => {
             state.attendancesListLoading = "ERROR";
             state.attendancesList = [];
+        });
+
+        // get-attendances-any
+        builder.addCase(getAttendancesAny.fulfilled, (state, action) => {
+            state.attendancesListAny = action.payload.attendancesList;
+            state.attendancesListAnyLoading = "SUCCESS";
+        });
+        builder.addCase(getAttendancesAny.pending, (state) => {
+            state.attendancesListAnyLoading = "PENDING";
+        });
+        builder.addCase(getAttendancesAny.rejected, (state) => {
+            state.attendancesListAnyLoading = "ERROR";
+            state.attendancesListAny = [];
         });
 
         // get-unclosed-attendances

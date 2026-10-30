@@ -1,8 +1,8 @@
 import { type Attendance } from "../types";
-import { api } from "../../../axios";
+import { api } from "../../../network/instance";
 
 export type GetAttendancesForStudentParams = {
-    date?: Date
+    date?: Date | null
 }
 
 type Response = {
