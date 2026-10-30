@@ -14,14 +14,24 @@ export const SolverBoard: FC<SolverBoardProps> = ({
     onPositionChange,
     resetSignal,
 }) => {
-    const chessRef = useRef(new Chess(initialFen, { skipValidation: true }));
-    const [currentFen, setCurrentFen] = useState<string>(() => {
+    const chessRef = useRef<Chess | null>(null);
+    const [currentFen, setCurrentFen] = useState<string>(initialFen);
+
+    // Синхронизация при смене задачи / сбросе — как в конструкторе
+    useEffect(() => {
         try {
-            return new Chess(initialFen).fen();
+            if (chessRef.current) {
+                chessRef.current.load(initialFen, { skipValidation: true });
+            } else {
+                chessRef.current = new Chess(initialFen, { skipValidation: true });
+            }
+            // ВАЖНО: не берём chessRef.current.fen() — оставляем сырой FEN
+            setCurrentFen(initialFen);
         } catch {
-            return new Chess().fen();
+            setCurrentFen(initialFen); // даже если chess.js не смог — доска отрисует
+            chessRef.current = null;
         }
-    });
+    }, [initialFen, resetSignal]);
 
     const handlePieceDrop = ({
         sourceSquare,
