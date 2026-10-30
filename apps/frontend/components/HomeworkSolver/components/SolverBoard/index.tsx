@@ -14,7 +14,7 @@ export const SolverBoard: FC<SolverBoardProps> = ({
     onPositionChange,
     resetSignal,
 }) => {
-    const chessRef = useRef(new Chess(initialFen));
+    const chessRef = useRef(new Chess(initialFen, { skipValidation: true }));
     const [currentFen, setCurrentFen] = useState<string>(() => {
         try {
             return new Chess(initialFen).fen();

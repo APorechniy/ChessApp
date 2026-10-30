@@ -7,7 +7,7 @@ import { SolverSidebar } from "./components/SolverSidebar";
 import { getHomeworkTasks } from "../../store/homeworks/thunk/get-homework-tasks";
 import * as S from "./styled";
 import { createSolutionAnswer } from "../../store/homeworks/thunk/create-solution-answer";
-import { HomeworkSolution, HomeworkSolutionStatus, SolutionAnswer, SolutionAnswerStatus, SolutionAnswerWithoutId } from "../../store/homeworks/types";
+import { HomeworkSolution, HomeworkSolutionStatus, SolutionAnswerStatus, SolutionAnswerWithoutId } from "../../store/homeworks/types";
 import { getCurrentSolution } from "../../store/homeworks/thunk/get-current-solution";
 import { updateHomeworkSolution } from "../../store/homeworks/thunk/update-homework-solution";
 
