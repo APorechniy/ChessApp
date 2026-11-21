@@ -19,21 +19,27 @@ const GridContentWrapperMobile: React.CSSProperties = {
 }
 
 const HomeworkPreview = withAuth(() => {
-    const platform = usePlatform()
-    const router = useRouter();
+    // const platform = usePlatform()
+    // const router = useRouter();
 
-    const additionalStyles = platform === "desktop" ? GridContentWrapperDesktop : GridContentWrapperMobile
-    const { homeworkId } = router.query;
+    // const additionalStyles = platform === "desktop" ? GridContentWrapperDesktop : GridContentWrapperMobile
+    // const { homeworkId } = router.query;
 
-    if (!homeworkId || typeof homeworkId !== "string") {
-        return null;
-    }
+    // if (!homeworkId || typeof homeworkId !== "string") {
+    //     return null;
+    // }
+
+    // return (
+    //     <PageWrapper contentStyles={additionalStyles} isBackButton>
+    //         <SolutionStarter homeworkId={homeworkId} />
+    //     </PageWrapper>
+    // );
 
     return (
-        <PageWrapper contentStyles={additionalStyles} isBackButton>
-            <SolutionStarter homeworkId={homeworkId} />
+        <PageWrapper isBackButton>
+            Функционал временно недоступен
         </PageWrapper>
-    );
+    )
 });
 
 export default HomeworkPreview;

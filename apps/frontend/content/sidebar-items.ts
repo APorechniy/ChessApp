@@ -53,12 +53,12 @@ export const SIDEBAR_ITEMS = [
         workInProgress: false,
         accessedRoles: ['admin', 'coach']
     },
-    {
-        name: 'Домашние задания',
-        icon: NotebookIcon,
-        id: 7,
-        link: '/homeworks',
-        workInProgress: false,
-        accessedRoles: ['admin', 'coach', 'student']
-    }
+    // {
+    //     name: 'Домашние задания',
+    //     icon: NotebookIcon,
+    //     id: 7,
+    //     link: '/homeworks',
+    //     workInProgress: false,
+    //     accessedRoles: ['admin', 'coach', 'student']
+    // }
 ]
