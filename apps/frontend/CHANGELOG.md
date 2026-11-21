@@ -1,5 +1,11 @@
 # @app/frontend
 
+## 1.1.0
+
+### Minor Changes
+
+- 226e74f: - Добавлен модуль домашних заданий
+
 ## 1.0.5
 
 ### Patch Changes
