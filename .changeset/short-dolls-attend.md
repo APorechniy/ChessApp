@@ -1,6 +1,5 @@
 ---
 "@app/backend": minor
-"@app/database": minor
 "@app/frontend": minor
 ---
 
