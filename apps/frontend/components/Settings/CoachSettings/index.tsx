@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { Wrapper } from "./styled";
-import { createTheme } from 'react-data-table-component';
 import { COLUMNS } from "../../../content/coaches-settings-columns";
 import { useAppSelector, useAppDispatch } from "../../../store/store";
 import { handleOpenModal } from "../../../store/system";
@@ -12,15 +11,6 @@ import { handleChangeEditableCoach, handleClearIsRemovedCoach, handleClearIsUpda
 
 export const CoachSettings = () => {
     const { coachesList, isLoadingCoachesList } = useAppSelector(({ users }) => users)
-
-    createTheme('dark', {
-        text: {
-            primary: 'var(--primary-text)'
-        },
-        background: {
-            default: 'var(--primary-background)'
-        }
-    })
 
     const dispatch = useAppDispatch()
 

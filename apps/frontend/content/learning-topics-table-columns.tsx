@@ -1,17 +1,20 @@
-import type { TableColumn } from "react-data-table-component";
-import type { LearningTopics } from "../store/learning-topics/types";
+import { createAppColumnHelper } from '../atoms/StyledTable/Features/features';
+import type { LearningTopics } from '../store/learning-topics/types';
 
-export const COLUMNS: TableColumn<LearningTopics>[] = [
-    {
-        name: 'Название',
-        selector: row => row.name,
-    },
-    {
-        name: 'Описание',
-        selector: row => row.description,
-    },
-    {
-        name: 'Уровень подготовки',
-        selector: row => row.level.name,
-    }
-]
+const columnHelper = createAppColumnHelper<LearningTopics>();
+
+export const COLUMNS = columnHelper.columns([
+    columnHelper.accessor('name', {
+        header: 'Название',
+        cell: (info) => info.getValue(),
+    }),
+    columnHelper.accessor('description', {
+        header: 'Описание',
+        cell: (info) => info.getValue() ?? '—',
+    }),
+    columnHelper.accessor((row) => row.level?.name, {
+        id: 'levelName',
+        header: 'Уровень подготовки',
+        cell: (info) => info.getValue() ?? '—',
+    }),
+]);

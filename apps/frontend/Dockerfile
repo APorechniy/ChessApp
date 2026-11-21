@@ -3,7 +3,7 @@ RUN apk add --no-cache libc6-compat
 WORKDIR /app
 RUN corepack enable
 
-# 1. Ставим все зависимости для сборки
+# 1. Зависимости и сборка
 FROM base AS builder
 COPY .yarnrc.yml ./
 COPY .yarn ./.yarn
@@ -16,12 +16,9 @@ COPY apps/frontend ./apps/frontend
 WORKDIR /app/apps/frontend
 ENV NEXT_TELEMETRY_DISABLED 1
 ENV NODE_ENV production
+
 RUN yarn build
 
-# ВАЖНО: Yarn сам удаляет devDeps и бэкенд, оставляя ТОЛЬКО прод-модули фронта
-RUN yarn workspaces focus --production
-
-# 2. Прод-образ (весит мало, работает на 100% стабильно)
 FROM base AS runner
 WORKDIR /app
 
@@ -33,15 +30,17 @@ ENV HOSTNAME "0.0.0.0"
 RUN addgroup --system --gid 1001 nodejs && \
     adduser --system --uid 1001 nextjs
 
-# Копируем всё чистое окружение (без исходников и без dev-мусора)
-COPY --from=builder --chown=nextjs:nodejs /app/node_modules ./node_modules
-COPY --from=builder --chown=nextjs:nodejs /app/apps/frontend/.next ./apps/frontend/.next
+# Копируем публичные файлы в папку приложения
 COPY --from=builder --chown=nextjs:nodejs /app/apps/frontend/public ./apps/frontend/public
-COPY --from=builder --chown=nextjs:nodejs /app/apps/frontend/package.json ./apps/frontend/package.json
+
+# Копируем минимальное окружение сервера (сохраняя структуру монорепы)
+COPY --from=builder --chown=nextjs:nodejs /app/apps/frontend/.next/standalone ./
+
+# Копируем статику сборки строго туда, где ее ждет server.js
+COPY --from=builder --chown=nextjs:nodejs /app/apps/frontend/.next/static ./apps/frontend/.next/static
 
 USER nextjs
 
 EXPOSE 3000
 
-WORKDIR /app/apps/frontend
-CMD ["../../node_modules/.bin/next", "start"]
+CMD ["node", "apps/frontend/server.js"]

@@ -31,8 +31,7 @@
             },
             "startDate": "2025-04-28 13:00:00.000",
             "endDate": "2025-04-28 14:00:00.000",
-            "attended": 1,
-            "homeworkDone": 0
+            "attended": 1
         },
         {
             "id": "0782f6c3-ef40-469d-8bfe-6cc67796f1c8",
@@ -65,8 +64,7 @@
             },
             "startDate": "2025-04-28 13:00:00.000",
             "endDate": "2025-04-28 14:00:00.000",
-            "attended": 1,
-            "homeworkDone": 1
+            "attended": 1
         },
         {
             "id": "219162c1-7b9b-4e61-9bce-d7130088a1ad",
@@ -99,8 +97,7 @@
             },
             "startDate": "2025-04-28 13:00:00.000",
             "endDate": "2025-04-28 14:00:00.000",
-            "attended": 1,
-            "homeworkDone": 1
+            "attended": 1
         },
         {
             "id": "3475e1e1-0a81-4ccb-be31-889711971781",
@@ -133,8 +130,7 @@
             },
             "startDate": "2025-04-28 13:00:00.000",
             "endDate": "2025-04-28 14:00:00.000",
-            "attended": 1,
-            "homeworkDone": 1
+            "attended": 1
         },
         {
             "id": "61a115c2-be29-4251-b5d8-046cf218dd3d",
@@ -167,8 +163,7 @@
             },
             "startDate": "2025-04-28 13:00:00.000",
             "endDate": "2025-04-28 14:00:00.000",
-            "attended": 1,
-            "homeworkDone": 1
+            "attended": 1
         },
         {
             "id": "7025e100-ff49-400a-b2ed-545c1b49d30c",
@@ -201,8 +196,7 @@
             },
             "startDate": "2025-04-28 18:00:00.000",
             "endDate": "2025-04-28 18:55:00.000",
-            "attended": 1,
-            "homeworkDone": 1
+            "attended": 1
         },
         {
             "id": "70e1ab05-08df-489b-903c-0097ed3199f9",
@@ -235,8 +229,7 @@
             },
             "startDate": "2025-04-28 13:00:00.000",
             "endDate": "2025-04-28 14:00:00.000",
-            "attended": 1,
-            "homeworkDone": 1
+            "attended": 1
         },
         {
             "id": "7aa0f5b3-ffc4-4e2b-ab6e-ebc0777846b7",
@@ -269,8 +262,7 @@
             },
             "startDate": "2025-04-28 13:30:00.000",
             "endDate": "2025-04-28 14:30:00.000",
-            "attended": 0,
-            "homeworkDone": 0
+            "attended": 0
         },
         {
             "id": "7abca293-081f-45c3-9a33-c91c8fa1deb9",
@@ -303,8 +295,7 @@
             },
             "startDate": "2025-04-28 13:00:00.000",
             "endDate": "2025-04-28 14:00:00.000",
-            "attended": 1,
-            "homeworkDone": 1
+            "attended": 1
         },
         {
             "id": "7aca7189-9b9d-4ef7-b773-a5298df32bdc",
@@ -337,8 +328,7 @@
             },
             "startDate": "2025-04-28 14:00:00.000",
             "endDate": "2025-04-28 15:00:00.000",
-            "attended": 1,
-            "homeworkDone": 1
+            "attended": 1
         },
         {
             "id": "d0b7c745-2434-44e5-9add-941309bbe998",
@@ -371,8 +361,7 @@
             },
             "startDate": "2025-04-28 12:20:00.000",
             "endDate": "2025-04-28 13:20:00.000",
-            "attended": 1,
-            "homeworkDone": 1
+            "attended": 1
         }
     ]
 }

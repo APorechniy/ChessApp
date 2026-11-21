@@ -1,5 +1,5 @@
 import { type StudentUser } from "../types";
-import { api } from "../../../axios";
+import { api } from "../../../network/instance";
 
 export type UpdateStudentDataParams = {
     studentUser: StudentUser,

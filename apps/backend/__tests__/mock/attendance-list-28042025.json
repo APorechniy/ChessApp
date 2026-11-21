@@ -24,7 +24,6 @@
             "lastName": "Иванов",
             "firstName": "Иван"
         },
-        "homeworkDone": true,
         "quality": {
             "id": "daa7af83-c49a-4fa9-83a0-360ef0a9b888",
             "name": "GOOD",
@@ -67,7 +66,6 @@
             "lastName": "Иванов",
             "firstName": "Иван"
         },
-        "homeworkDone": true,
         "quality": {
             "id": "daa7af83-c49a-4fa9-83a0-360ef0a9b888",
             "name": "GOOD",
@@ -110,7 +108,6 @@
             "lastName": "Иванов",
             "firstName": "Иван"
         },
-        "homeworkDone": true,
         "quality": {
             "id": "daa7af83-c49a-4fa9-83a0-360ef0a9b888",
             "name": "GOOD",
@@ -153,7 +150,6 @@
             "lastName": "Иванов",
             "firstName": "Иван"
         },
-        "homeworkDone": true,
         "quality": {
             "id": "daa7af83-c49a-4fa9-83a0-360ef0a9b888",
             "name": "GOOD",
@@ -196,7 +192,6 @@
             "lastName": "Иванов",
             "firstName": "Иван"
         },
-        "homeworkDone": true,
         "quality": {
             "id": "daa7af83-c49a-4fa9-83a0-360ef0a9b888",
             "name": "GOOD",
@@ -239,7 +234,6 @@
             "lastName": "Иванов",
             "firstName": "Иван"
         },
-        "homeworkDone": true,
         "quality": {
             "id": "daa7af83-c49a-4fa9-83a0-360ef0a9b888",
             "name": "GOOD",
@@ -282,7 +276,6 @@
             "lastName": "Иванов",
             "firstName": "Иван"
         },
-        "homeworkDone": false,
         "quality": {
             "id": "daa7af83-c49a-4fa9-83a0-360ef0a9b888",
             "name": "GOOD",
@@ -325,7 +318,6 @@
             "lastName": "Иванов",
             "firstName": "Иван"
         },
-        "homeworkDone": true,
         "quality": {
             "id": "daa7af83-c49a-4fa9-83a0-360ef0a9b888",
             "name": "GOOD",
@@ -368,7 +360,6 @@
             "lastName": "Иванов",
             "firstName": "Иван"
         },
-        "homeworkDone": true,
         "quality": {
             "id": "daa7af83-c49a-4fa9-83a0-360ef0a9b888",
             "name": "GOOD",
@@ -411,7 +402,6 @@
             "lastName": "Иванов",
             "firstName": "Иван"
         },
-        "homeworkDone": true,
         "quality": {
             "id": "daa7af83-c49a-4fa9-83a0-360ef0a9b888",
             "name": "GOOD",

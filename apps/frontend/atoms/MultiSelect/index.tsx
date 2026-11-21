@@ -4,9 +4,10 @@ import { MultiSelectContainer, MultiSelectLabel, Select, OptionsList, Option, Ch
 import { useClickOutside } from '../../hooks/use-click-outside';
 
 type MultiSelectProps = {
-    value: any[],
-    options: any[],
-    optionsName?: (option: any) => string,
+    value: unknown[],
+    options: unknown[],
+    optionsName?: (option: unknown) => string,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     handleInput: (option: any) => void,
     placeholder?: string,
     label?: string,
@@ -35,7 +36,7 @@ export const MultiSelect: React.FC<MultiSelectProps> = ({
         if (!isDisabled) setIsOpenOptions(!isOpenOptions)
     }
 
-    const handleCheckOption = (event: React.MouseEvent<HTMLDivElement, MouseEvent>, option: any) => {
+    const handleCheckOption = (event: React.MouseEvent<HTMLDivElement, MouseEvent>, option: unknown) => {
         event.stopPropagation()
         handleInput(option)
     }
@@ -75,10 +76,10 @@ export const MultiSelect: React.FC<MultiSelectProps> = ({
                     <OptionsList>
                         {
                             options.map((o) => (
-                                <Option onClick={(e) => handleCheckOption(e, o)} key={o.id} title={optionsName ? optionsName(o) : o.name}>
-                                    <input type='checkbox' checked={value.some((v) => v.id === o.id)} name='multi-select-option-checkbox' id={o.id} />
+                                <Option onClick={(e) => handleCheckOption(e, o)} key={o?.id} title={optionsName ? optionsName(o) : o.name}>
+                                    <input type='checkbox' checked={value.some((v) => v?.id === o?.id)} name='multi-select-option-checkbox' id={o.id} />
                                     <OptionText>
-                                        {optionsName ? optionsName(o) : o.name}
+                                        {optionsName ? optionsName(o) : o?.name}
                                     </OptionText>
                                 </Option>
                             ))

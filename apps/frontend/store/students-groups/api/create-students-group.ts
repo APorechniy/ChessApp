@@ -1,5 +1,5 @@
 import { type StudentsGroup } from "../types";
-import { api } from "../../../axios";
+import { api } from "../../../network/instance";
 
 export type CreateStudentsGroupParams = {
     studentsGroup: Omit<StudentsGroup, "id">,

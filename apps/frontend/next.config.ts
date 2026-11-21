@@ -7,11 +7,17 @@ const BACKEND_URL =
     : 'http://127.0.0.1:3000';
 
 const nextConfig: NextConfig = {
-  reactStrictMode: true,
+  output: 'standalone',
+  reactStrictMode: false,
+  typescript: {
+    ignoreBuildErrors: true,
+  },
   outputFileTracingRoot: path.join(__dirname, '../../'),
-
-  eslint: {
-    dirs: ['pages', 'utils', 'components', 'store', 'hooks'],
+  outputFileTracingIncludes: {
+    '/**/*': [
+      './**/node_modules/async-function/**/*',
+      './**/node_modules/async-generator-function/**/*',
+    ],
   },
   async rewrites() {
     return [

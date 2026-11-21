@@ -2,23 +2,22 @@ import React, { useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '../../store/store'
 import { LeftBlock, RightBlock, WidgetItem, Tag, Wrapper, Title, NextAttendanceBlock, TitleSecondary, SubTitleSecondary } from './styled'
 import { getNextAttendance } from '../../store/attendance/thunk/get-next-attendance'
-import { getUserBalance } from '../../store/user-balance/thunk/get-user-balance'
 import { IconButton } from '../../atoms/IconButton'
 import { PlusIcon } from '../../assets/Plus'
 import { getHumanityDate } from '../../utils/get-humanity-date'
 import { getHourse } from '../../utils/get-hourse'
 import { handleOpenModal } from '../../store/system'
+import { useGetUserBalanceQuery } from '../../store/user-balance/api'
 
 export const StudentDataWidget = () => {
     const { settings } = useAppSelector(({ system }) => system)
 
-    const { balance } = useAppSelector(({ userBalance }) => userBalance)
+    const { data } = useGetUserBalanceQuery()
     const { nextAttendance, isLoadingNextAttendance } = useAppSelector(({ attendance }) => attendance)
 
     const dispatch = useAppDispatch()
 
     useEffect(() => {
-        dispatch(getUserBalance());
         dispatch(getNextAttendance());
     }, [])
 
@@ -56,7 +55,7 @@ export const StudentDataWidget = () => {
                         bgColor='var(--primary-btn-color)'
                     >
                         <p>
-                            {`${balance} ₽`}
+                            {`${data?.balance || '-'} ₽`}
                         </p>
                     </Tag>
                 </RightBlock>

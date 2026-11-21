@@ -8,21 +8,21 @@ import { CancelIcon } from "../../assets/Cancel";
 import { TextButton } from "../../atoms/TextButton";
 
 export const PaymentStatusBanner = ({ paymentId }: { paymentId: string }) => {
-    const { paymentStatus, isLoadingPaymentStatus } = useAppSelector(({ payments }) => payments)
+    const { paymentStatus } = useAppSelector(({ payments }) => payments)
 
     const dispatch = useAppDispatch()
-
-    useEffect(() => {
-        if (paymentId) {
-            handleCheckPaymentStatus()
-        }
-    }, [paymentId])
 
     const handleCheckPaymentStatus = async () => {
         await dispatch(getPaymentStatus({
             paymentId: paymentId
         }))
     }
+
+    useEffect(() => {
+        if (paymentId) {
+            handleCheckPaymentStatus()
+        }
+    }, [paymentId])
 
     return (
         <Wrapper>

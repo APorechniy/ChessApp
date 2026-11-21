@@ -21,7 +21,7 @@ export const StatisticDashboard: React.FC = () => {
                 studentId: currentUser.id
             }))
         }
-    }, [currentUser])
+    }, [currentUser, dispatch])
 
     return (
         <S.DashboardContainer>

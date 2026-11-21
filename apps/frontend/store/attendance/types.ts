@@ -21,7 +21,6 @@ export type Attendance = {
     presetId?: string,
     tasks?: Task[],
     additionalTasks?: Task[],
-    homeworkDone?: boolean,
     isOnline?: boolean,
     meetLink?: string,
     isFreeze?: boolean,
@@ -37,11 +36,12 @@ type MakeOptional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
 
 export type PartialAttendance = MakeOptional<
     Attendance,
-    'learningTopic' | 'coach' | 'homeworkDone' | 'isOnline' | 'meetLink' | 'isFreeze' | 'tasks' | 'additionalTasks'
+    'learningTopic' | 'coach' | 'isOnline' | 'meetLink' | 'isFreeze' | 'tasks' | 'additionalTasks'
 > & { isPreset: boolean }
 
 export type AttendanceState = {
     attendancesList: (Attendance | PartialAttendance)[],
+    attendancesListAny: Attendance[],
     unclosedAttendancesList: Attendance[],
     studentAttendancesList: Attendance[],
     selectedAttendance: (Attendance | PartialAttendance) | null,
@@ -54,6 +54,7 @@ export type AttendanceState = {
     isRemovedAttendance: RequestStatus,
 
     attendancesListLoading: RequestStatus,
+    attendancesListAnyLoading: RequestStatus,
     unclosedAttendancesLoading: RequestStatus,
     studentAttendancesListLoading: RequestStatus,
 

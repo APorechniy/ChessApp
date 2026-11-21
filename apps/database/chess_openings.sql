@@ -1,0 +1,4 @@
+CREATE TABLE chess_openings (
+    id VARCHAR(36) PRIMARY KEY UNIQUE NOT NULL,
+    name VARCHAR(100)
+);

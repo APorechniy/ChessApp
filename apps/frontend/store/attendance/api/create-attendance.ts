@@ -1,6 +1,5 @@
 import { type AttendanceWithoutId } from "../types";
-import { type Task } from "../../tasks/types";
-import { api } from "../../../axios";
+import { api } from "../../../network/instance";
 
 export type CreateAttendanceParams = {
     attendance: AttendanceWithoutId,

@@ -1,9 +1,11 @@
-import { type TableColumn } from "react-data-table-component";
+import { createAppColumnHelper } from '../atoms/StyledTable/Features/features';
 import type { ChessOpening } from "../store/chess-openings/types";
 
-export const COLUMNS: TableColumn<ChessOpening>[] = [
-    {
-        name: 'Название дебюта',
-        selector: row => row.name,
-    },
-]
+const columnHelper = createAppColumnHelper<ChessOpening>()
+
+export const COLUMNS = columnHelper.columns([
+    columnHelper.accessor("name", {
+        header: 'Название дебюта',
+        cell: (info) => info.getValue(),
+    }),
+])

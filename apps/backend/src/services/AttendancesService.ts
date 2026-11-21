@@ -51,6 +51,10 @@ export class AttendancesService {
     }
   }
 
+  async getAttendancesListForAnySubject(groupId?: string, studentId?: string): Promise<AttendanceView[] | null> {
+    return (await this.attendancesRepository.getAttendancesForStudentOrGroup(groupId, studentId))
+  }
+
   async getUnclosedAttendances(date: string, coachId?: string): Promise<AttendanceView[] | null> {
     try {
       // Добавить валидацию даты
@@ -107,7 +111,6 @@ export class AttendancesService {
       studentId: fullAttendance?.student?.id,
       studentsGroupId: fullAttendance?.group?.id,
       coachId: fullAttendance.coach.id,
-      homeworkDone: fullAttendance.homeworkDone,
       qualityId: fullAttendance?.quality?.id,
       isOnline: fullAttendance.isOnline,
       meetLink: fullAttendance.meetLink,
@@ -219,7 +222,6 @@ export class AttendancesService {
       studentId: fullAttendance?.student?.id,
       studentsGroupId: fullAttendance?.group?.id,
       coachId: fullAttendance.coach.id,
-      homeworkDone: fullAttendance.homeworkDone,
       qualityId: fullAttendance?.quality?.id,
       isOnline: fullAttendance.isOnline,
       meetLink: fullAttendance.meetLink,
@@ -391,7 +393,6 @@ export class AttendancesService {
       studentId: attendance?.student?.id || null,
       studentsGroupId: attendance?.group?.id || null,
       coachId: attendance.coach.id,
-      homeworkDone: attendance.homeworkDone,
       qualityId: attendance?.quality?.id,
       isOnline: attendance.isOnline,
       meetLink: attendance.meetLink,

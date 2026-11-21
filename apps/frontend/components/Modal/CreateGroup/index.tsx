@@ -31,6 +31,12 @@ export const CreateGroup = () => {
         dispatch(getAllStudents())
     }, [])
 
+    const closeModal = () => {
+        dispatch(getStudentsGroups())
+        dispatch(handleClearIsCreatedStudentsGroup())
+        dispatch(handleCloseModal())
+    }
+
     useEffect(() => {
         if (isCreatedStudentsGroup === "SUCCESS") {
             dispatch(addNotification({
@@ -49,12 +55,6 @@ export const CreateGroup = () => {
             }))
         }
     }, [isCreatedStudentsGroup, dispatch])
-
-    const closeModal = () => {
-        dispatch(getStudentsGroups())
-        dispatch(handleClearIsCreatedStudentsGroup())
-        dispatch(handleCloseModal())
-    }
 
     const handleCreateStudentsGroup = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()

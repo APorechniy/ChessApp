@@ -30,6 +30,8 @@
   --primary-text-inverted: white;
   --secondary-text: #5372E7;
   --primary-border: #646cff;
+
+  --error-color: #991b1b;
 }
 
 html {

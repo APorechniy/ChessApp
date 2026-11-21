@@ -16,11 +16,7 @@ export const PaymentsHistoryWidget = () => {
     const { paymentsHistory, isLoadingPaymentHistory } = useAppSelector(({ userPayments }) => userPayments)
     const dispatch = useAppDispatch()
 
-    useEffect(() => {
-        getHistory(searchString)
-    }, [searchString])
-
-    const getHistory = (str: string) => {
+    const getHistory = (str?: string) => {
         if (requestTimer.current) {
             clearTimeout(requestTimer.current)
         }
@@ -31,6 +27,10 @@ export const PaymentsHistoryWidget = () => {
             }))
         }, 1000)
     }
+
+    useEffect(() => {
+        getHistory(searchString)
+    }, [searchString])
 
     const handleChangeSearchString: React.ChangeEventHandler<HTMLInputElement> = (event) =>
         setSearchString(event.target.value)

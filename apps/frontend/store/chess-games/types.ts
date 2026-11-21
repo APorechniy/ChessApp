@@ -1,4 +1,3 @@
-import type { RequestStatus } from "../../types/types";
 import { ChessOpening } from "../chess-openings/types";
 
 export type ChessGame = {
@@ -13,7 +12,4 @@ export type ChessGameWithoutId = Omit<ChessGame, "id">
 
 export type ChessGamesState = {
     chessGamesList: ChessGame[],
-
-    isLoadingChessGamesList: RequestStatus,
-    isCreateChessGame: RequestStatus,
 }

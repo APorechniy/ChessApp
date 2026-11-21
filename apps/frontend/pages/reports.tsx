@@ -2,7 +2,6 @@ import React from "react";
 import { withAuth } from "../utils/with-auth";
 import { PageWrapper } from "../atoms/PageWrapper";
 import { ReportsForm } from "../components/ReportsForm";
-import { type CSSProperties } from "styled-components";
 import { usePlatform } from "../hooks/use-platform";
 
 const GridContentWrapperDesktop: React.CSSProperties = {

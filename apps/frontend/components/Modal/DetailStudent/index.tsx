@@ -6,7 +6,6 @@ import { TextButton } from "../../../atoms/TextButton"
 import { useAppDispatch, useAppSelector } from "../../../store/store"
 import { getAllStudents } from "../../../store/students/thunk/get-all-students"
 import { addNotification, handleCloseModal } from "../../../store/system"
-import { getLevels } from "../../../store/levels/thunk/get-levels"
 import { BaseSelect } from "../../../atoms/BaseSelect"
 import { type Level } from "../../../store/levels/types"
 import { DetailStudentModal, DetailStudentFormTitle, DetailStudentForm, InputsBlock, CloseButton } from "./styled"
@@ -16,6 +15,7 @@ import { dateToLocaleISO } from "../../../utils/date-to-locale-iso"
 import { removeStudent } from "../../../store/students/thunk/remove-student"
 import { handleClearIsRemoveStudent, handleClearIsUpdateStudent } from "../../../store/students"
 import { ClearIcon } from "../../../assets/ClearIcon"
+import { useGetLevelsQuery } from "store/levels/api/levels-api"
 
 type Option = { text: string, value: string }
 
@@ -48,11 +48,17 @@ export const DetailStudent = () => {
 
     const dispatch = useAppDispatch()
 
-    const { levelsList, isLoadingLevels } = useAppSelector(({ levels }) => levels)
+    const { data, isLoading } = useGetLevelsQuery()
 
-    useEffect(() => {
-        dispatch(getLevels())
-    }, [dispatch])
+    const levelsList = data?.levelsList || [];
+    const isLoadingLevels = isLoading;
+
+    const closeModal = () => {
+        dispatch(getAllStudents())
+        dispatch(handleClearIsUpdateStudent())
+        dispatch(handleClearIsRemoveStudent())
+        dispatch(handleCloseModal())
+    }
 
     useEffect(() => {
         if (isUpdatedStudent === "SUCCESS") {
@@ -89,13 +95,6 @@ export const DetailStudent = () => {
             }))
         }
     }, [isUpdatedStudent, isRemoveStudent, dispatch])
-
-    const closeModal = () => {
-        dispatch(getAllStudents())
-        dispatch(handleClearIsUpdateStudent())
-        dispatch(handleClearIsRemoveStudent())
-        dispatch(handleCloseModal())
-    }
 
     const handleCreateStudent = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
@@ -201,7 +200,7 @@ export const DetailStudent = () => {
                 <ClearIcon onClick={closeModal} />
             </CloseButton>
             <DetailStudentFormTitle className="detail-students-form-title">Редактировать ученика</DetailStudentFormTitle>
-            {isLoadingLevels === "SUCCESS" &&
+            {(!isLoadingLevels && levelsList.length) &&
                 <DetailStudentForm onSubmit={handleCreateStudent}>
                     <InputsBlock>
                         <BaseInput

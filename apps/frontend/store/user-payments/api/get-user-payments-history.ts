@@ -1,4 +1,4 @@
-import { api } from "../../../axios";
+import { api } from "../../../network/instance";
 import { isValidSearchString } from "../../../utils/validate-search-string";
 import { UserPayment } from "../types";
 

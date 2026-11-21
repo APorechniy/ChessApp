@@ -75,6 +75,14 @@ export const DetailPreset = () => {
         dispatch(getStudentsGroups())
     }, [dispatch])
 
+    const closeModal = () => {
+        dispatch(getAttendancePresets())
+        dispatch(handleClearIsUpdatedPreset())
+        dispatch(handleClearIsDeletedPreset())
+        dispatch(handleClearCurrentAttendancePreset())
+        dispatch(handleCloseModal())
+    }
+
     useEffect(() => {
         if (isUpdatedAttendancePreset === "SUCCESS") {
             dispatch(addNotification({
@@ -123,17 +131,10 @@ export const DetailPreset = () => {
                 }
             })
 
+            // eslint-disable-next-line react-hooks/set-state-in-effect
             setRule(selectedDays)
         }
     }, [currentAttendancePreset])
-
-    const closeModal = () => {
-        dispatch(getAttendancePresets())
-        dispatch(handleClearIsUpdatedPreset())
-        dispatch(handleClearIsDeletedPreset())
-        dispatch(handleClearCurrentAttendancePreset())
-        dispatch(handleCloseModal())
-    }
 
     const handleUpdateAttendancePreset = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()

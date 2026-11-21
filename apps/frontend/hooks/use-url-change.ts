@@ -17,6 +17,7 @@ const pageMap: PageMap = {
     "/reports": "Отчёты",
     "/dashboard": "Дашборд",
     "/profile": "Настройки профиля",
+    "/homeworks": "Домашние задания",
     "/students": "Ученики",
     "/timetable": "Расписание",
     "/tasks": "Задачи",

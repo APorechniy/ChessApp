@@ -68,6 +68,12 @@ export const CreatePreset = () => {
         dispatch(getStudentsGroups())
     }, [dispatch])
 
+    const closeModal = () => {
+        dispatch(getAttendancePresets())
+        dispatch(handleClearIsCreatedPreset())
+        dispatch(handleCloseModal())
+    }
+
     useEffect(() => {
         if (isCreatedAttendancePreset === "SUCCESS") {
             dispatch(addNotification({
@@ -86,12 +92,6 @@ export const CreatePreset = () => {
             }))
         }
     }, [isCreatedAttendancePreset, dispatch])
-
-    const closeModal = () => {
-        dispatch(getAttendancePresets())
-        dispatch(handleClearIsCreatedPreset())
-        dispatch(handleCloseModal())
-    }
 
     const handleCreateAttendancePreset = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()

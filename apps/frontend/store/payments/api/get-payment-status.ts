@@ -1,4 +1,4 @@
-import { api } from "../../../axios";
+import { api } from "../../../network/instance";
 import { BASE_URL } from "../const/actions";
 import type { PaymentStatus } from "../types";
 

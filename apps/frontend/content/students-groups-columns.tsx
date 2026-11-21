@@ -1,10 +1,11 @@
-import { type TableColumn } from "react-data-table-component";
+import { createAppColumnHelper } from '../atoms/StyledTable/Features/features';
 import { type StudentsGroup } from "../store/students-groups/types";
 
-export const COLUMNS: TableColumn<StudentsGroup>[] = [
-    {
-        name: 'Имя',
-        sortable: true,
-        selector: row => row.name,
-    },
-]
+const columnHelper = createAppColumnHelper<StudentsGroup>()
+
+export const COLUMNS = columnHelper.columns([
+    columnHelper.accessor("name", {
+        header: 'Имя',
+        cell: info => info.getValue(),
+    })
+])

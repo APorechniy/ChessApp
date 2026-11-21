@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react'
+import React, { useMemo } from 'react'
 import { useAppDispatch, useAppSelector } from '../../../store/store'
 import { DateItem, DateNumber, DateWrapper, Day } from './styled'
 import { DAYS } from '../../../content/calendar'
@@ -38,7 +38,7 @@ export const DatePicker = () => {
 
             return []
         }
-    }, [selectedDate, datePickerDaysOffset])
+    }, [selectedDate, datePickerDaysOffset, dispatch])
 
     const changeSelectedDate = (date: string) => {
         // Получаем дату без времени и таймзоны

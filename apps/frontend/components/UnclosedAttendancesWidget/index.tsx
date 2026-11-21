@@ -14,11 +14,17 @@ export const UnclosedAttendancesWidget = () => {
     const { isOpenModal } = useAppSelector(({ system }) => system)
     const dispatch = useAppDispatch()
 
-    useEffect(() => {
-        if (!isOpenModal) {
-            handleGetUnclosedAttendances()
+    const handleGetUnclosedAttendances = () => {
+        if (currentUser?.role === "admin") {
+            dispatch(getUnclosedAttendances({}))
         }
-    }, [isOpenModal])
+
+        if (currentUser?.role === "coach") {
+            dispatch(getUnclosedAttendances({
+                coachId: currentUser.id
+            }))
+        }
+    }
 
     const handleOpenDetailAttendance = async (attendance: Attendance) => {
         await dispatch(handleChangeIsUpdatedAttendance())
@@ -31,17 +37,11 @@ export const UnclosedAttendancesWidget = () => {
         }))
     }
 
-    const handleGetUnclosedAttendances = () => {
-        if (currentUser?.role === "admin") {
-            dispatch(getUnclosedAttendances({}))
+    useEffect(() => {
+        if (!isOpenModal) {
+            handleGetUnclosedAttendances()
         }
-
-        if (currentUser?.role === "coach") {
-            dispatch(getUnclosedAttendances({
-                coachId: currentUser.id
-            }))
-        }
-    }
+    }, [isOpenModal])
 
     const getCardsColor = (attendance: Attendance) => {
         if (attendance.type === "TRIAL") {
@@ -85,9 +85,9 @@ export const UnclosedAttendancesWidget = () => {
                                         {
                                             attendance.type === "GROUP"
                                                 ?
-                                                attendance.group.name
+                                                attendance?.group?.name
                                                 :
-                                                `${attendance.student.lastName} ${attendance.student.firstName[0]}.`
+                                                `${attendance?.student?.lastName} ${attendance?.student?.firstName[0]}.`
                                         }
                                     </StudentName>
                                     <CoachName>{`${attendance.coach.firstName} ${attendance.coach.lastName}`}</CoachName>

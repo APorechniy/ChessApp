@@ -18,13 +18,13 @@ export const CARDS = [
         dataTestId: "timetable-card",
     },
     {
-        name: 'Задачи',
-        description: 'Шахматные задачи на тактику и стратегию',
-        id: 3,
-        link: '/tasks',
-        accessedRoles: ['admin', 'coach', 'student'],
-        image: "images/Tasks.png",
-        dataTestId: "tasks-card",
+        name: 'Темы для обучения',
+        description: 'Создание, редактирование, просмотр текущих тем для обучения',
+        id: 4,
+        link: '/learning-topics',
+        workInProgress: false,
+        image: "images/LearningTopics.png",
+        accessedRoles: ['admin', 'coach']
     },
     {
         name: 'Отчеты',
@@ -61,13 +61,5 @@ export const CARDS = [
         accessedRoles: ['student'],
         image: "images/Reports.png",
         dataTestId: "reports-card",
-    },
-    // {
-    //     name: 'Темы для обучения',
-    //     description: 'Создание, редактирование, просмотр текущих тем для обучения',
-    //     id: 7,
-    //     link: '/learning-topics',
-    //     workInProgress: false,
-    //     accessedRoles: ['admin', 'coach']
-    // }
+    }
 ]

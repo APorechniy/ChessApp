@@ -1,5 +1,3 @@
-import type { RequestStatus } from "../../types/types"
-
 export type Level = {
     id: string,
     name: string,
@@ -9,6 +7,4 @@ export type Level = {
 
 export type LevelsState = {
     levelsList: Level[],
-
-    isLoadingLevels: RequestStatus
 }

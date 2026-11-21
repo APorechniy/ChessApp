@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { Wrapper } from "./styled";
-import { createTheme } from 'react-data-table-component';
 import { COLUMNS } from "../../../content/students-groups-columns";
 import { useAppSelector, useAppDispatch } from "../../../store/store";
 import { handleOpenModal } from "../../../store/system";
@@ -13,15 +12,6 @@ import { type StudentsGroup } from "../../../store/students-groups/types";
 
 export const GroupsSettings = () => {
     const { studentsGroups, isLoadingStudentsGroups } = useAppSelector(({ studentsGroups }) => studentsGroups)
-
-    createTheme('dark', {
-        text: {
-            primary: 'var(--primary-text)'
-        },
-        background: {
-            default: 'var(--primary-background)'
-        }
-    })
 
     const dispatch = useAppDispatch()
 

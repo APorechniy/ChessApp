@@ -1,39 +1,21 @@
 import React from "react";
-import { useAppDispatch, useAppSelector } from "../../store/store"
-import { useEffect } from "react"
-import { createTheme } from 'react-data-table-component';
 import { COLUMNS } from "../../content/chess-games-table-columns";
 import { TableWrapper } from "./styled";
 import { StyledTable } from "../../atoms/StyledTable";
 import { Header } from "./Header";
-import { getChessGames } from "../../store/chess-games/thunk/get-chess-games";
+import { useGetChessGamesQuery } from "../../store/chess-games/api";
 
 export const ChessGamesTable = () => {
-    const { chessGamesList, isLoadingChessGamesList } = useAppSelector(({ chessGames }) => chessGames);
-
-    createTheme('dark', {
-        text: {
-            primary: 'var(--primary-text)'
-        },
-        background: {
-            default: 'var(--primary-background)'
-        }
-    })
-
-    const dispatch = useAppDispatch()
-
-    useEffect(() => {
-        dispatch(getChessGames({}))
-    }, [dispatch])
+    const { data, isSuccess } = useGetChessGamesQuery();
 
     return (
         <TableWrapper>
             <Header />
             {
-                isLoadingChessGamesList === 'SUCCESS' &&
+                (isSuccess && data?.chessGamesList) &&
                 <StyledTable
                     columns={COLUMNS}
-                    data={chessGamesList}
+                    data={data.chessGamesList}
                     theme="dark"
                 />
             }

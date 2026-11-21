@@ -1,5 +1,5 @@
 import { type CoachUser } from "../types";
-import { api } from "../../../axios";
+import { api } from "../../../network/instance";
 
 type Response = {
     coachesList: CoachUser[];

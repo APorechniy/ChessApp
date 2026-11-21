@@ -22,7 +22,6 @@
     "useDefineForClassFields": false // Без этого поля сущностей будут затираться
   },
   "include": [
-    "src/**/*",
-    "../../apps/shared/src/**/*"
+    "src/**/*"
   ]
 }

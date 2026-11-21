@@ -1,6 +1,7 @@
 import createAttendance from "./create-attendance"
 import createAttendanceByPreset from "./create-attendance-by-preset"
 import getAttendances from "./get-attendances"
+import getAttendancesAny from "./get-attendances-any"
 import getAttendancesForStudent from "./get-attendances-for-student"
 import getNextAttendance from "./get-next-attendance"
 import getUnclosedAttendances from "./get-unclosed-attendances"
@@ -12,6 +13,7 @@ export const attendanceApi = {
     createAttendance,
     createAttendanceByPreset,
     getAttendances,
+    getAttendancesAny,
     getUnclosedAttendances,
     getAttendancesForStudent,
     getNextAttendance,

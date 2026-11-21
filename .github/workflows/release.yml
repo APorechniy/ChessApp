@@ -36,8 +36,6 @@ jobs:
           corepack enable
           yarn install --immutable
 
-      # 1. Changesets создает/обновляет PR "Version Packages".
-      # Мы НЕ передаем параметр publish, чтобы он не пытался умничать.
       - name: Create or Update Version PR
         uses: changesets/action@v1
         with:
@@ -45,7 +43,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # 2. ЖЕЛЕЗНОЕ ОПРЕДЕЛЕНИЕ: изменилась ли версия в package.json?
       - name: Detect Version Bumps
         id: detect
         run: |
@@ -67,7 +64,6 @@ jobs:
             echo "backend_version=$CURR_BE" >> $GITHUB_OUTPUT
           fi
 
-      # 3. Создаем Git-теги и страницу в GitHub Releases через официальный GitHub CLI
       - name: Create Git Tags & GitHub Releases
         if: steps.detect.outputs.frontend_bumped == 'true' || steps.detect.outputs.backend_bumped == 'true'
         env:
@@ -81,7 +77,6 @@ jobs:
             node scripts/create-release.mjs backend
           fi
 
-  # --- СБОРКА ФРОНТЕНДА ---
   build-frontend:
     needs: release
     if: needs.release.outputs.frontend_bumped == 'true'
@@ -107,7 +102,6 @@ jobs:
             ghcr.io/aporechniy/chessappfrontend:${{ needs.release.outputs.frontend_version }}
             ghcr.io/aporechniy/chessappfrontend:latest
 
-  # --- СБОРКА БЭКЕНДА ---
   build-backend:
     needs: release
     if: needs.release.outputs.backend_bumped == 'true'

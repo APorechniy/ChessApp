@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import { FormWrapper, StyledInputWrapper, StyledInput, StudentItem, LeftStudentBlock, Name, InnerBlocks, ReportBlock, LinkBlock, LinkText } from "../styled";
 import { useAppDispatch, useAppSelector } from "../../../store/store";
 import { getAllStudents } from "../../../store/students/thunk/get-all-students";
@@ -15,7 +15,6 @@ import { TextButton } from "../../../atoms/TextButton";
 export const StudentsForm = () => {
     const [searchString, setSearchString] = useState<string>()
     const [selectedStudent, setSelectedStudent] = useState<Student>()
-    const [filteredStudentsList, setFilteredStudentsList] = useState<Student[]>()
 
     const { studentsList, studentsListLoading } = useAppSelector(({ students }) => students)
     const { currentReport, isLoadingReport } = useAppSelector(({ reports }) => reports)
@@ -30,25 +29,15 @@ export const StudentsForm = () => {
         }
     }, [])
 
-    useEffect(() => {
-        if (studentsList) {
-            setFilteredStudentsList(studentsList)
-        }
-    }, [studentsList])
-
-    useEffect(() => {
-        filterStudents(searchString)
-    }, [searchString])
-
-    const filterStudents = (str: string) => {
-        if (str) {
-            // [TODO]: Унести фильтрацию на бэк, переработать дизайн
-            const newStudentsList = studentsList.filter((s) => s.firstName.toLowerCase().includes(str.toLowerCase()) || s.lastName.toLowerCase().includes(str.toLowerCase()))
-            setFilteredStudentsList(newStudentsList)
-        } else {
-            setFilteredStudentsList([...studentsList])
-        }
-    }
+    const filteredStudentsList = useMemo(() => {
+        if (!studentsList) return []
+        if (!searchString) return studentsList
+        // [TODO]: Унести фильтрацию на бэк, переработать дизайн
+        const str = searchString.toLowerCase()
+        return studentsList.filter(
+            (s) => s.firstName.toLowerCase().includes(str) || s.lastName.toLowerCase().includes(str)
+        )
+    }, [studentsList, searchString])
 
     const handleChangeSearchString: React.ChangeEventHandler<HTMLInputElement> = (event) =>
         setSearchString(event.target.value)
@@ -110,10 +99,10 @@ export const StudentsForm = () => {
             <ReportBlock>
                 {
                     Boolean(isLoadingReport && currentReport && currentReport.reportFile && currentReport.reportFile.size && currentReport.reportFile.size !== 0 && currentReport.reportFileName) &&
-                    <a href={URL.createObjectURL(currentReport?.reportFile)} download={currentReport.reportFileName}>
+                    <a href={URL.createObjectURL(currentReport?.reportFile)} download={currentReport?.reportFileName}>
                         <LinkBlock>
                             <Excel />
-                            <LinkText>{currentReport.reportFileName}</LinkText>
+                            <LinkText>{currentReport?.reportFileName}</LinkText>
                         </LinkBlock>
                     </a>
                 }

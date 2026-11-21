@@ -1,5 +1,5 @@
 import { type Task } from "../types";
-import { api } from "../../../axios";
+import { api } from "../../../network/instance";
 
 type Response = {
     tasksList: Task[];
@@ -10,7 +10,7 @@ export type GetTasksListParams = {
     learningTopicId?: string
 }
 
-type GetTasksList = (params) => Promise<Response>;
+type GetTasksList = (params: GetTasksListParams) => Promise<Response>;
 
 const getTasks: GetTasksList = async (params) => {
     const response = await api.get(`/tasks/${params?.learningTopicId ? `?learningTopicId=${params.learningTopicId}` : ""}`, {

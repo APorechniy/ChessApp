@@ -1,6 +1,5 @@
 import { type Attendance } from "../types";
-import { api } from "../../../axios";
-import { type Task } from "../../tasks/types";
+import { api } from "../../../network/instance";
 import { type StudentsAttended } from "../../students-attended/types";
 
 export type UpdateAttendanceParams = {

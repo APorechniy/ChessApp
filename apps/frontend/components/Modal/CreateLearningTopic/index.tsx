@@ -10,10 +10,10 @@ import { LearningTopicWithoutId } from "../../../store/learning-topics/types"
 import { getLearningTopics } from "../../../store/learning-topics/thunk/get-learning-topics"
 import { Loader } from "../../../atoms/Loader"
 import { Level } from "../../../store/levels/types"
-import { getLevels } from "../../../store/levels/thunk/get-levels"
 import { createLearningTopic } from "../../../store/learning-topics/thunk/create-learning-topic"
 import { handleClearCreateLearningTopic } from "../../../store/learning-topics"
 import { ClearIcon } from "../../../assets/ClearIcon"
+import { useGetLevelsQuery } from "store/levels/api/levels-api"
 
 type Option = { text: string, value: string }
 
@@ -24,12 +24,18 @@ export const CreateLearningTopic = () => {
 
     const dispatch = useAppDispatch()
 
-    const { levelsList, isLoadingLevels } = useAppSelector(({ levels }) => levels)
     const { isCreateLearningTopic } = useAppSelector(({ learningTopics }) => learningTopics)
 
-    useEffect(() => {
-        dispatch(getLevels())
-    }, [dispatch])
+    const { data, isLoading } = useGetLevelsQuery()
+
+    const levelsList = data?.levelsList || [];
+    const isLoadingLevels = isLoading;
+
+    const closeModal = () => {
+        dispatch(getLearningTopics())
+        dispatch(handleClearCreateLearningTopic())
+        dispatch(handleCloseModal())
+    }
 
     useEffect(() => {
         if (isCreateLearningTopic === "SUCCESS") {
@@ -49,12 +55,6 @@ export const CreateLearningTopic = () => {
             }))
         }
     }, [isCreateLearningTopic, dispatch])
-
-    const closeModal = () => {
-        dispatch(getLearningTopics())
-        dispatch(handleClearCreateLearningTopic())
-        dispatch(handleCloseModal())
-    }
 
     const handleCreateLearningTopic = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
@@ -88,7 +88,7 @@ export const CreateLearningTopic = () => {
                 <ClearIcon onClick={closeModal} />
             </CloseButton>
             <CreateLearningTopicFormTitle className="create-learning-topic-title">Новая тема</CreateLearningTopicFormTitle>
-            {(isLoadingLevels === "SUCCESS") ?
+            {(!isLoadingLevels && levelsList.length) ?
                 <CreateLearningTopicForm onSubmit={handleCreateLearningTopic}>
                     <BaseInput
                         value={name}

@@ -1,5 +1,5 @@
 import { type CoachData } from "../types";
-import { api } from "../../../axios";
+import { api } from "../../../network/instance";
 
 export type CreateCoachParams = {
     coach: Omit<CoachData, "id">,

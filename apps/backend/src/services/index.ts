@@ -5,6 +5,7 @@ import { ChessGamesService } from "./ChessGamesService";
 import { ChessOpeningsService } from "./ChessOpeningsService";
 import { CoachesService } from "./CoachesService";
 import { CoachReportService } from "./CoachReportService";
+import { HomeworksService } from "./HomeworksService";
 import { LearningTopicService } from "./LearningTopicsService";
 import { LevelsService } from "./LevelsService";
 import { PaymentsService } from "./PaymentsService";
@@ -27,6 +28,7 @@ export {
   ChessOpeningsService,
   CoachesService,
   CoachReportService,
+  HomeworksService,
   LearningTopicService,
   LevelsService,
   PaymentsService,

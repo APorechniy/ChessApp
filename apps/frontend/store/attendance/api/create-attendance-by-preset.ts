@@ -1,5 +1,5 @@
 import { type AttendanceWithoutId } from "../types";
-import { api } from "../../../axios";
+import { api } from "../../../network/instance";
 
 export type CreateAttendanceByPresetParams = {
     attendance: AttendanceWithoutId,

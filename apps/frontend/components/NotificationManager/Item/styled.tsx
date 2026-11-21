@@ -25,7 +25,7 @@ const variantStyles = {
   error: css`
     background-color: #fef2f2;
     border-left-color: #ef4444;
-    color: #991b1b;
+    color: var(--error-color);
   `,
   warning: css`
     background-color: #fffbeb;

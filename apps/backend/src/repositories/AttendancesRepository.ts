@@ -119,6 +119,33 @@ export class AttendancesRepository {
     return queryBuilder.getMany();
   }
 
+  async getAttendancesForStudentOrGroup(groupId?: string, studentId?: string) {
+    const now = new Date();
+    const from = new Date(now);
+    from.setDate(now.getDate() - 7);
+    from.setHours(0, 0, 0, 0);
+
+    const to = new Date(now);
+    to.setDate(now.getDate() + 7);
+    to.setHours(23, 59, 59, 999);
+
+    const queryBuilder = this.viewRepo
+      .createQueryBuilder("abv")
+      .where("abv.startDate BETWEEN :from AND :to", { from, to });
+
+    if (groupId) {
+      queryBuilder.andWhere("JSON_EXTRACT(abv.group, '$.id') = :groupId", {
+        groupId,
+      });
+    } else {
+      queryBuilder.andWhere("JSON_EXTRACT(abv.student, '$.id') = :studentId", {
+        studentId,
+      });
+    }
+
+    return queryBuilder.getMany();
+  }
+
   // Используется только для отчетов
   async getAllAttendancesListByStudentId(studentId: string) {
     const attendancesList = await this.viewRepo.find({

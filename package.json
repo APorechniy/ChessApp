@@ -4,7 +4,8 @@
   "private": true,
   "packageManager": "yarn@4.18.0",
   "workspaces": [
-    "apps/*",
+    "apps/frontend",
+    "apps/backend",
     "packages/*"
   ],
   "scripts": {

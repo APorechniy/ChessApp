@@ -33,11 +33,20 @@ export const CreateTask = () => {
     const { qualitiesList } = useAppSelector(({ quality }) => quality)
 
     useEffect(() => {
-        dispatch(getLearningTopics())
         dispatch(getQualitiesList({
             labelFor: "tasks"
         }))
     }, [dispatch])
+
+    const closeModal = () => {
+        if (learningTopic && learningTopic.id) {
+            dispatch(getTasks({
+                learningTopicId: learningTopic?.id
+            }))
+        }
+        dispatch(handleClearCreatedTaskStatus())
+        dispatch(handleCloseModal())
+    }
 
     useEffect(() => {
         if (isCreatedTask === "SUCCESS") {
@@ -57,12 +66,6 @@ export const CreateTask = () => {
             }))
         }
     }, [isCreatedTask, dispatch])
-
-    const closeModal = () => {
-        dispatch(getTasks({}))
-        dispatch(handleClearCreatedTaskStatus())
-        dispatch(handleCloseModal())
-    }
 
     const handleCreateTask = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()

@@ -6,6 +6,7 @@ import { Content } from "./Content";
 type Props = {
     contentStyles?: React.CSSProperties,
     children?: ReactNode;
+    isBackButton?: boolean;
 }
 
 export const DesktopLayout: React.FC<Props> = (props) => {

@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { Header } from "./Header";
 import { Wrapper } from "./styled";
-import { createTheme } from 'react-data-table-component';
 import { getColumns } from "../../content/students-table-columns";
 import { useAppSelector, useAppDispatch } from "../../store/store";
 import { getAllStudents } from "../../store/students/thunk/get-all-students";
@@ -13,15 +12,6 @@ import { StyledTable } from "../../atoms/StyledTable";
 export const StudentsTable = () => {
     const { currentUser } = useAppSelector(({ users }) => users)
     const { studentsList, studentsListLoading } = useAppSelector(({ students }) => students)
-
-    createTheme('dark', {
-        text: {
-            primary: 'var(--primary-text)'
-        },
-        background: {
-            default: 'var(--primary-background)'
-        }
-    })
 
     const dispatch = useAppDispatch()
 

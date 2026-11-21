@@ -35,7 +35,7 @@ export const authSlice = createSlice({
         });
 
         // update-token
-        builder.addCase(updateToken.fulfilled, (state, action) => {
+        builder.addCase(updateToken.fulfilled, (state) => {
             state.isAuth = true;
 
             state.authLoading = "SUCCESS";

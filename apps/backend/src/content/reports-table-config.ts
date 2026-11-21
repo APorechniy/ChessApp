@@ -39,7 +39,6 @@ export const reportsColumns: Partial<Column>[] = [
     },
     { key: "chess_games", width: 17.77734375 },
     { key: "chess_opening", width: 18 },
-    { key: "homework_done", width: 27.77734375 },
     { key: "attended", width: 14 },
     { key: "is_paid", width: 8.77734375 },
 ]
@@ -58,7 +57,6 @@ const headerRowsCells: Partial<Cell>[] = [
     },
     { value: "Разбор партий", name: "chess_games", style: headerCellStyle },
     { value: "Дебют", name: "chess_opening", style: headerCellStyle },
-    { value: "Домашнее задание", name: "homework_done", style: headerCellStyle },
     { value: "Посещение", name: "attended", style: headerCellStyle },
     { value: "Оплата", name: "is_paid", style: headerCellStyle },
 ];
