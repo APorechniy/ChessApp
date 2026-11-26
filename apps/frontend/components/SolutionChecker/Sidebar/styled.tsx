@@ -29,6 +29,13 @@ export const TaskTitle = styled.h2`
   margin: 0;
 `;
 
+export const TaskDescription = styled.p`
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: var(--primary-text);
+  margin: 0;
+`;
+
 export const NotationBlock = styled.div`
   display: flex;
   flex-direction: column;

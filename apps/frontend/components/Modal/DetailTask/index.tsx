@@ -10,12 +10,12 @@ import { type LearningTopics } from "../../../store/learning-topics/types"
 import { getLearningTopics } from "../../../store/learning-topics/thunk/get-learning-topics"
 import type { Task } from "../../../store/tasks/types"
 import { handleClearIsUpdatedTask, handleClearRemovedTaskStatus } from "../../../store/tasks"
-import { getTasks } from "../../../store/tasks/thunk/get-tasks"
 import { updateTask } from "../../../store/tasks/thunk/update-task"
 import { removeTask } from "../../../store/tasks/thunk/remove-task"
 import { Quality } from "../../../store/quality/types"
 import { getQualitiesList } from "../../../store/quality/thunk/get-qualities-list"
 import { ClearIcon } from "../../../assets/ClearIcon"
+import { BaseTextarea } from "atoms/BaseTextarea"
 
 type Option = { text: string, value: string }
 
@@ -27,6 +27,7 @@ export const DetailTask = () => {
     const { qualitiesList } = useAppSelector(({ quality }) => quality)
 
     const [name, setName] = useState(selectedTask.name)
+    const [description, setDescription] = useState(selectedTask?.description)
     const [learningTopic, setLearningTopic] = useState<LearningTopics>(selectedTask.learningTopic)
     const [quality, setQuality] = useState<Quality>(selectedTask.quality)
 
@@ -91,6 +92,7 @@ export const DetailTask = () => {
         const task: Task = {
             id: selectedTask.id,
             name: name,
+            description: description,
             learningTopic: learningTopic,
             quality: quality,
         }
@@ -135,6 +137,12 @@ export const DetailTask = () => {
                         handleInput={(event) => setName(event.target.value)}
                         label="Название"
                         required
+                    />
+
+                    <BaseTextarea
+                        value={description || ""}
+                        handleInput={(event) => setDescription(event.target.value)}
+                        label="Описание"
                     />
 
                     <BaseSelect

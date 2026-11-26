@@ -5,6 +5,7 @@ SELECT
         JSON_OBJECT(
             "id", tv.id, 
             "name", tv.name, 
+            "description", tv.description,
             "learningTopic", tv.learningTopic, 
             "quality", tv.quality
         )

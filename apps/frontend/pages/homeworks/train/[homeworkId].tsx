@@ -19,27 +19,21 @@ const GridContentWrapperMobile: React.CSSProperties = {
 }
 
 const HomeworkTrain = withAuth(() => {
-    // const platform = usePlatform()
-    // const router = useRouter();
+    const platform = usePlatform()
+    const router = useRouter();
 
-    // const additionalStyles = platform === "desktop" ? GridContentWrapperDesktop : GridContentWrapperMobile
-    // const { homeworkId } = router.query;
+    const additionalStyles = platform === "desktop" ? GridContentWrapperDesktop : GridContentWrapperMobile
+    const { homeworkId } = router.query;
 
-    // if (!homeworkId || typeof homeworkId !== "string") {
-    //     return null;
-    // }
-
-    // return (
-    //     <PageWrapper contentStyles={additionalStyles} isBackButton>
-    //         <HomeworkSolver />
-    //     </PageWrapper>
-    // );
+    if (!homeworkId || typeof homeworkId !== "string") {
+        return null;
+    }
 
     return (
-        <PageWrapper isBackButton>
-            Функционал временно недоступен
+        <PageWrapper contentStyles={additionalStyles} isBackButton>
+            <HomeworkSolver />
         </PageWrapper>
-    )
+    );
 });
 
 export default HomeworkTrain;

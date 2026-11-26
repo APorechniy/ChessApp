@@ -128,6 +128,7 @@ export const SolutionChecker: FC = () => {
 
                 <Sidebar
                     taskName={currentTask?.name || `Задача #${currentStepIndex + 1}`}
+                    taskDescription={currentTask?.description || ''}
                     moves={moves}
                     onPrev={handlePrev}
                     handleNext={handleNext}

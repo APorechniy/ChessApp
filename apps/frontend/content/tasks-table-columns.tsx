@@ -34,6 +34,11 @@ export const BASE_TASK_COLUMNS = columnHelper.columns([
         cell: (info) => info.getValue(),
     }),
 
+    columnHelper.accessor('description', {
+        header: 'Описание',
+        cell: (info) => info.getValue() || '-',
+    }),
+
     columnHelper.accessor((row) => row.learningTopic.name, {
         id: 'learningTopicName',
         header: 'Тема задачи',

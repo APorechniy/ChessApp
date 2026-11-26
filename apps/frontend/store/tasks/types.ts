@@ -5,6 +5,7 @@ import type { Quality } from "../quality/types"
 export type Task = {
     id: string,
     name: string,
+    description?: string,
     learningTopic: LearningTopics,
     quality: Quality,
     position?: string

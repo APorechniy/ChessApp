@@ -3,8 +3,7 @@ import styled from "styled-components";
 export const DetailTaskModal = styled.div`
     width: min(100vw,60rem);
     max-width: 60rem;
-    height: 35rem;
-    max-height: 53rem;
+    min-height: 35rem;
 
     padding: 2rem;
 

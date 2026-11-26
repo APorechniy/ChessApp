@@ -5,6 +5,7 @@ import { SolutionAnswerStatus } from "../../../store/homeworks/types";
 
 interface SidebarProps {
     taskName: string;
+    taskDescription?: string;
     moves: string;
     onPrev: () => void;
     handleNext: (newStatus: SolutionAnswerStatus) => void;
@@ -13,6 +14,7 @@ interface SidebarProps {
 
 export const Sidebar: FC<SidebarProps> = ({
     taskName,
+    taskDescription,
     moves,
     onPrev,
     handleNext,
@@ -23,6 +25,10 @@ export const Sidebar: FC<SidebarProps> = ({
             <div style={{ display: "flex", flexDirection: "column", gap: "1.6rem" }}>
                 <S.TaskMeta>
                     <S.TaskTitle>{taskName}</S.TaskTitle>
+                </S.TaskMeta>
+
+                <S.TaskMeta>
+                    <S.TaskDescription>{taskDescription}</S.TaskDescription>
                 </S.TaskMeta>
 
                 <S.NotationBlock>

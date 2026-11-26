@@ -4,6 +4,7 @@ import { TextButton } from "../../../../atoms/TextButton";
 
 interface SolverSidebarProps {
     taskName: string;
+    taskDescription?: string;
     isWhiteTurn: boolean;
     moves: string[];
     initialStartsWhite: boolean;
@@ -17,6 +18,7 @@ interface SolverSidebarProps {
 
 export const SolverSidebar: FC<SolverSidebarProps> = ({
     taskName,
+    taskDescription,
     isWhiteTurn,
     moves,
     initialStartsWhite,
@@ -71,6 +73,7 @@ export const SolverSidebar: FC<SolverSidebarProps> = ({
             <div style={{ display: "flex", flexDirection: "column", gap: "1.6rem" }}>
                 <S.TaskMeta>
                     <S.TaskTitle>{taskName}</S.TaskTitle>
+                    <S.TaskDescription>{taskDescription}</S.TaskDescription>
                     <S.TurnIndicator $isWhiteTurn={isWhiteTurn}>
                         Очередь хода: {isWhiteTurn ? "Белые" : "Черные"}
                     </S.TurnIndicator>

@@ -6,6 +6,7 @@ SELECT
     JSON_OBJECT(
         'id',         tv.id,
         'name',      tv.name,
+        'description', tv.description,
         'position',   tv.position,
         'learningTopic', tv.learningTopic
     ) as task

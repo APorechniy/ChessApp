@@ -5,9 +5,8 @@ import { TextButton } from "../../../atoms/TextButton"
 import { useAppDispatch, useAppSelector } from "../../../store/store"
 import { addNotification, handleCloseModal } from "../../../store/system"
 import { BaseSelect } from "../../../atoms/BaseSelect"
-import { CreateTaskFormTitle, CreateTaskModal, CreateTaskForm, InputsBlock, CloseButton } from "./styled"
+import { CreateTaskFormTitle, CreateTaskModal, CreateTaskForm, CloseButton } from "./styled"
 import { type LearningTopics } from "../../../store/learning-topics/types"
-import { getLearningTopics } from "../../../store/learning-topics/thunk/get-learning-topics"
 import type { TaskWithoutId } from "../../../store/tasks/types"
 import { handleClearCreatedTaskStatus } from "../../../store/tasks"
 import { createTask } from "../../../store/tasks/thunk/create-task"
@@ -15,11 +14,13 @@ import { getTasks } from "../../../store/tasks/thunk/get-tasks"
 import { Quality } from "../../../store/quality/types"
 import { getQualitiesList } from "../../../store/quality/thunk/get-qualities-list"
 import { ClearIcon } from "../../../assets/ClearIcon"
+import { BaseTextarea } from "atoms/BaseTextarea"
 
 type Option = { text: string, value: string }
 
 export const CreateTask = () => {
     const [name, setName] = useState("")
+    const [description, setDescription] = useState("")
     const [learningTopic, setLearningTopic] = useState<LearningTopics>()
     const [quality, setQuality] = useState<Quality>()
 
@@ -83,6 +84,7 @@ export const CreateTask = () => {
         const task: TaskWithoutId = {
             name: name,
             learningTopic: learningTopic,
+            description: description,
             quality: quality,
         }
 
@@ -104,6 +106,10 @@ export const CreateTask = () => {
     const handleChangeName = (event: React.ChangeEvent<HTMLInputElement>) => {
         setName(event.target.value);
         setNameError(false);
+    }
+
+    const handleChangeDescription = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setDescription(event.target.value);
     }
 
     const handleChangeQuality = (option: Option) => {
@@ -131,6 +137,13 @@ export const CreateTask = () => {
                         required
                         isError={nameError}
                         errorMessage="Введите название задачи"
+                    />
+
+                    <BaseTextarea
+                        value={description}
+                        handleInput={handleChangeDescription}
+                        label="Описание"
+                        errorMessage="Введите описание задачи"
                     />
 
                     <BaseSelect

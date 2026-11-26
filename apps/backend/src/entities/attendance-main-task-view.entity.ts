@@ -12,6 +12,7 @@ export class AttendanceMainTaskView {
     mainTasks!: Array<{
         id: TaskView["id"];
         name: TaskView["name"];
+        description: TaskView["description"];
         learningTopic: TaskView["learningTopic"];
         quality: TaskView["quality"];
     }>;

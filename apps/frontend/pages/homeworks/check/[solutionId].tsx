@@ -19,27 +19,21 @@ const GridContentWrapperMobile: React.CSSProperties = {
 }
 
 const SolutionCheck = withAuth(() => {
-    // const platform = usePlatform()
-    // const router = useRouter();
+    const platform = usePlatform()
+    const router = useRouter();
 
-    // const additionalStyles = platform === "desktop" ? GridContentWrapperDesktop : GridContentWrapperMobile
-    // const { solutionId } = router.query;
+    const additionalStyles = platform === "desktop" ? GridContentWrapperDesktop : GridContentWrapperMobile
+    const { solutionId } = router.query;
 
-    // if (!solutionId || typeof solutionId !== "string") {
-    //     return null;
-    // }
-
-    // return (
-    //     <PageWrapper contentStyles={additionalStyles} isBackButton>
-    //         <SolutionChecker />
-    //     </PageWrapper>
-    // );
+    if (!solutionId || typeof solutionId !== "string") {
+        return null;
+    }
 
     return (
-        <PageWrapper isBackButton>
-            Функционал временно недоступен
+        <PageWrapper contentStyles={additionalStyles} isBackButton>
+            <SolutionChecker />
         </PageWrapper>
-    )
+    );
 });
 
 export default SolutionCheck;

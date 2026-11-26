@@ -9,7 +9,7 @@ export const TableContainer = styled.div<{ readonly $isNested?: boolean }>`
     ${({ $isNested }) =>
         $isNested &&
         css`
-            padding: 0.2rem 0;
+            padding: 0.1rem 0;
         `}
 `;
 

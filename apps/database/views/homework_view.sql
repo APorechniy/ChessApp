@@ -9,6 +9,7 @@ SELECT
             JSON_OBJECT(
                 'id',         t.id,
                 'name',      t.name,
+                'description', t.description,
                 'position',   t.position,
                 'orderIndex', ht.order_index
             )
