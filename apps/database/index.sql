@@ -84,6 +84,7 @@ CREATE TABLE user_balance (
 CREATE TABLE tasks (
     id VARCHAR(36) PRIMARY KEY NOT NULL,
     name VARCHAR(100) UNIQUE,
+    description TEXT,
     learning_topic_id VARCHAR(36) NOT NULL,
     quality_id VARCHAR(36) NOT NULL,
     is_removed BOOLEAN DEFAULT 0,
@@ -323,7 +324,7 @@ ORDER BY last_name;
 
 --
 CREATE VIEW task_view AS 
-SELECT t.id, t.name, t.position,
+SELECT t.id, t.name, t.description, t.position,
     JSON_OBJECT("id", ltv.id, "name", ltv.name, "description", ltv.description, "level", ltv.level) as learningTopic,    
     JSON_OBJECT("id", q.id, "name", q.name, "label", q.label, "labelFor", q.labelFor, "lightColor", q.lightColor, "darkColor", q.darkColor) as quality  
 FROM tasks t
@@ -388,6 +389,7 @@ SELECT
         JSON_OBJECT(
             "id", tv.id, 
             "name", tv.name, 
+            "description", tv.description,
             "learningTopic", tv.learningTopic, 
             "quality", tv.quality
         )
@@ -404,6 +406,7 @@ SELECT
         JSON_OBJECT(
             "id", tv.id, 
             "name", tv.name, 
+            "description", tv.description,
             "learningTopic", tv.learningTopic, 
             "quality", tv.quality
         )
@@ -600,6 +603,7 @@ SELECT
             JSON_OBJECT(
                 'id',         t.id,
                 'name',      t.name,
+                'description', t.description,
                 'position',   t.position,
                 'orderIndex', ht.order_index
             )
@@ -620,6 +624,7 @@ SELECT
     JSON_OBJECT(
         'id',         tv.id,
         'name',      tv.name,
+        'description', tv.description,
         'position',   tv.position,
         'learningTopic', tv.learningTopic
     ) as task

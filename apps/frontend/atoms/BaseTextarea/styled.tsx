@@ -2,11 +2,13 @@ import styled from 'styled-components';
 
 export const InputContainer = styled.div`
     box-sizing: border-box;
-    height: 7rem;
+    min-height: 8rem;
     width: 100%;
     display: flex;
     align-items: flex-start;
     flex-direction: column;
+
+    margin-bottom: 1rem;
 
     &:disabled {
         color: grey;
@@ -28,7 +30,7 @@ export const InputLabel = styled.label`
 
 export const Input = styled.textarea`
     width: 100%;
-    height: 8rem;
+    min-height: 8rem;
     font-size: 2rem;
     line-height: 3rem;
 

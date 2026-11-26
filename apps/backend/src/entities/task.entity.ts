@@ -8,6 +8,9 @@ export class Task {
     @Column({ name: 'name', type: 'varchar', length: 100, unique: true })
     name!: string;
 
+    @Column({ name: 'description', type: 'text' })
+    description!: string | null;
+
     @Column({ name: "learning_topic_id", type: 'varchar', length: 36 })
     learningTopicId!: string
 

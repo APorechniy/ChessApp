@@ -19,18 +19,12 @@ const GridContentWrapperMobile: React.CSSProperties = {
 }
 
 const Homeworks = withAuth(() => {
-    // const platform = usePlatform()
+    const platform = usePlatform()
 
-    // const additionalStyles = platform === "desktop" ? GridContentWrapperDesktop : GridContentWrapperMobile
-    // return (
-    //     <PageWrapper contentStyles={additionalStyles}>
-    //         <HomeworkList />
-    //     </PageWrapper>
-    // )
-
+    const additionalStyles = platform === "desktop" ? GridContentWrapperDesktop : GridContentWrapperMobile
     return (
-        <PageWrapper isBackButton>
-            Функционал временно недоступен
+        <PageWrapper contentStyles={additionalStyles}>
+            <HomeworkList />
         </PageWrapper>
     )
 })

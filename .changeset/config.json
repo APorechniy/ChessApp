@@ -5,7 +5,9 @@
   "format": "auto",
   "changelog": "@changesets/cli/changelog",
   "commit": false,
-  "ignore": [],
+  "ignore": [
+    "@app/database"
+  ],
   "fixed": [],
   "linked": [],
   "updateInternalDependencies": "patch"

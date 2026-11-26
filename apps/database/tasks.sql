@@ -1,6 +1,7 @@
 CREATE TABLE tasks (
     id VARCHAR(36) PRIMARY KEY UNIQUE NOT NULL,
     name VARCHAR(100) UNIQUE,
+    description TEXT,
     learning_topic_id VARCHAR(36) NOT NULL,
     quality_id VARCHAR(36) NOT NULL,
     position VARCHAR(87),

@@ -13,6 +13,9 @@ export class TaskView {
     name!: string;
 
     @ViewColumn()
+    description!: string | null;
+
+    @ViewColumn()
     learningTopic!: LearningTopicView;
 
     @ViewColumn()

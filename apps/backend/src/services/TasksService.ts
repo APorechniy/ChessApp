@@ -32,6 +32,7 @@ export class TasksService {
     const task: Task = {
       id: uuidv4(),
       name: taskWithoutId.name,
+      description: taskWithoutId.description,
       learningTopicId: taskWithoutId.learningTopic.id,
       qualityId: taskWithoutId.quality.id,
       position: taskWithoutId.position,
@@ -45,6 +46,7 @@ export class TasksService {
     const task: Task = {
       id: taskView.id,
       name: taskView.name,
+      description: taskView.description,
       learningTopicId: taskView.learningTopic.id,
       qualityId: taskView.quality.id,
       position: taskView.position,
